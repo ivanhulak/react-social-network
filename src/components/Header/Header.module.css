@@ -1,0 +1,13 @@
+.header{
+    background-color: rgb(227, 227, 227);
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    grid-area: header;
+}
+.header img{
+    max-width: 50px;
+    border-radius: 50%;
+}

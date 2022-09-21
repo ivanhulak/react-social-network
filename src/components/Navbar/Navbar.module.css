@@ -1,0 +1,16 @@
+.navbar{
+    font-size: 22px;
+    padding: 20px 10px;
+    background-color: rgb(227, 227, 227);
+    height: 100%;
+    grid-area: nav;
+}
+.item{
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin: 5px 0px;
+}
+.item:last-child{
+    margin: 0;
+}
