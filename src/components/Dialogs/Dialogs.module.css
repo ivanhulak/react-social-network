@@ -1,0 +1,14 @@
+.dialogs{
+    padding: 0px 30px;
+}
+.dialogsRow{
+    display: flex;
+    justify-content: flex-start;
+    gap: 50px;
+    font-size: 22px;
+}
+
+.dialogsBlock a{
+    text-decoration: none;
+    color: #000;
+}

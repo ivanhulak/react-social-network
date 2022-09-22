@@ -1,3 +1,9 @@
+.profileInfo{
+    margin-left: 10px;
+}
+.profileInfo img{
+    max-width: 100%;
+}
 .profileInfoRow{
     padding: 0px 30px;
     display: flex;
