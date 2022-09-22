@@ -1,7 +1,6 @@
 .Container{
   max-width: 1200px;
   margin: 0 auto;
-  border: 1px solid #000;
   min-height: 100vh;
 }
 

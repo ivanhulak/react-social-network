@@ -2,7 +2,6 @@
     font-size: 22px;
     padding: 20px 10px;
     background-color: rgb(227, 227, 227);
-    height: 100%;
     grid-area: nav;
 }
 .item{
@@ -13,4 +12,7 @@
 }
 .item:last-child{
     margin: 0;
+}
+.item.active{
+    color: rgb(136, 109, 245);
 }
