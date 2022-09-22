@@ -11,7 +11,6 @@ const Post = () => {
             <div>
                 like
                 comment
-                message
             </div>
 
         </div>
