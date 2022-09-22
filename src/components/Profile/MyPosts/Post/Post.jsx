@@ -1,18 +1,17 @@
 import React from "react";
 import styles from './Post.module.css';
 
-const Post = () => {
+const Post = (props) => {
     return (
         <div className={styles.post}>
             <div className={styles.postRow}>
-                <img src="https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png" alt="ava"/>
-                <div className={styles.postText}>post</div>
+                <img src={props.photo} alt="ava"/>
+                <div className={styles.postText}>{props.postText}</div>
             </div>
             <div>
-                like
-                comment
+                <p>like {props.likesCount}</p>
+                <p>comment {props.comments}</p>
             </div>
-
         </div>
     );
 }
