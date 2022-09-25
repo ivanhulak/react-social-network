@@ -1,6 +1,8 @@
-import { rerenderEntireTree } from "./render";
+let rerenderEntireTree = () => {
+    console.log('State changed');
+}
 
-export let state = {
+const state = {
     profilePage: {
         posts: [
             { id: 1, postText: 'Hello! It is Ivan Hulak!', likes: 20, comments: 2, photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
@@ -27,6 +29,8 @@ export let state = {
     }
 }
 
+export default state;
+
 export const addPost = (post) => {
     let newPost = {
         id: 5,
@@ -42,6 +46,10 @@ export const addPost = (post) => {
 export const updatePostText = (postText) => {
     state.profilePage.newPostText = postText;
     rerenderEntireTree(state);
+}
+
+export const subscribe = (observer) => {
+    rerenderEntireTree = observer;
 }
 
 window.state = state;
