@@ -6,9 +6,36 @@
     justify-content: flex-start;
     gap: 50px;
     font-size: 22px;
+    margin-bottom: 30px;
 }
 
 .dialogsBlock a{
     text-decoration: none;
     color: #000;
+}
+
+textarea{
+    width: 350px;
+    height: 50px;
+    resize: vertical;
+    font-size: 22px;
+    margin: 10px 0px;
+}
+button{
+    background-color: #eee;
+    font-size: 20px;
+    border: 1px solid #000;
+    border-radius: 24px;
+    padding: 5px 15px;
+    cursor: pointer;
+    transition: ease 0.3s all;
+}
+button:hover{
+    background-color: #000;
+    color: #fff;
+}
+button:active{
+    background-color: #666;
+    color: #fff;
+    transform: translate(2px, 3px);
 }
