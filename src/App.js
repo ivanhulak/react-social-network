@@ -7,7 +7,6 @@ import Profile from "./components/Profile/Profile";
 import { Routes, Route } from 'react-router-dom';
 
 const App = (props) => {
-
   return (
     <div className={styles.Container}>
       <div className={styles.wrapper}>
@@ -16,7 +15,7 @@ const App = (props) => {
         <div className={styles.wrapperContent}>
           <Routes>
             <Route path="/profile" element={<Profile profilePage={props.state.profilePage} dispatch={props.dispatch} />} />
-            <Route path="/dialogs" element={<Dialogs dialogsPageData={props.state.dialogsPageData} dispatch={props.dispatch}/>} />
+            <Route path="/dialogs" element={<Dialogs dialogsPage={props.state.dialogsPage} dispatch={props.dispatch}/>} />
           </Routes>
         </div>
       </div>

@@ -10,7 +10,7 @@ let store = {
             ],
             newPostText: 'Ivan',
         },
-        dialogsPageData: {
+        dialogsPage: {
             dialogs: [
                 { id: 1, name: 'Kristina', photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
                 { id: 2, name: 'Kevin', photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
@@ -39,7 +39,7 @@ let store = {
     },
     dispatch(action){
         this._state.profilePage = profileReducer(this._state.profilePage, action);
-        this._state.dialogsPageData = dialogsReducer(this._state.dialogsPageData, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
         this._rerenderEntireTree(this._state);
     }
 }

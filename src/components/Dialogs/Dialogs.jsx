@@ -6,9 +6,9 @@ import {sendMessageAC, updateTextSendMessageAC} from './../../redux/dialogs-redu
 
 const Dialogs = (props) => {
 
-    const dialogsElements = props.dialogsPageData.dialogs
+    const dialogsElements = props.dialogsPage.dialogs
             .map(d => <DialogItem id={d.id} name={d.name} photo={d.photo} key={d.id}/>)
-    const messagesElements = props.dialogsPageData.messages
+    const messagesElements = props.dialogsPage.messages
             .map(m => <MessageItem message={m.message} key={m.id}/>)
     
     const onSendMessageClick = () => {
@@ -33,7 +33,7 @@ const Dialogs = (props) => {
             </div>
             <textarea placeholder="Отправить сообщение"
                       onChange={onSendMessageChange} 
-                      value={props.dialogsPageData.newMessageText}/>
+                      value={props.dialogsPage.newMessageText}/>
             <div><button onClick={onSendMessageClick}>Send Message</button></div>
         </div>
     );
