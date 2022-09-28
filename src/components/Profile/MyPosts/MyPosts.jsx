@@ -1,25 +1,20 @@
 import React from "react";
-import styles from './MyPosts.module.css'
 import Post from './Post/Post';
-import {addPostAC, updatePostTextAC} from './../../../redux/profile-reducer';
+import styles from './MyPosts.module.css'
 
 const MyPosts = (props) => {
-    
+
     const postsElements = props.posts
-        .map(p => <Post postText={p.postText} 
-                        likesCount={p.likes} 
-                        comments={p.comments} 
-                        photo={p.photo} 
-                        key={p.id}/>)
+                .map(p => <Post postText={p.postText} likesCount={p.likes} 
+                    comments={p.comments} photo={p.photo} key={p.id}/>)
 
     const onAddPost = () => {
-        props.dispatch(addPostAC());
-        props.dispatch(updatePostTextAC(''));
+        props.addPost();
     }
 
     const onPostChange = (e) => {
         let text = e.target.value;
-        props.dispatch(updatePostTextAC(text));
+        props.updatePostText(text);
     }
 
     return (

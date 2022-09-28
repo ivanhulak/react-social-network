@@ -21,6 +21,7 @@ const profileReducer = (state = initialState, action) => {
                 photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png'
             }
             state.posts.push(newPost);
+            state.newPostText = '';
             return state;
         case UPDATE_POST_TEXT:
             state.newPostText = action.postText;
