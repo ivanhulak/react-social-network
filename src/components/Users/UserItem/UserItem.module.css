@@ -1,0 +1,23 @@
+.userItem{
+    flex: 0 1 30.5%;
+}
+
+.userItemInner{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.itemImage{
+    width: 35%;
+}
+.itemImage img{
+    max-width: 100%;
+}
+.itemInfo{
+    width: 60%;
+}
+.ItemStatus{
+    text-align: center;
+    flex: 0 1 100%;
+}

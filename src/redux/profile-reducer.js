@@ -7,7 +7,7 @@ let initialState = {
         { id: 2, postText: 'New Post', likes: 12, comments: 1, photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
         { id: 3, postText: 'React app', likes: 1, comments: 5, photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
     ],
-    newPostText: 'Ivan',
+    newPostText: '',
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -20,12 +20,16 @@ const profileReducer = (state = initialState, action) => {
                 comments: 2,
                 photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png'
             }
-            state.posts.push(newPost);
-            state.newPostText = '';
-            return state;
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newPostText: '',
+            }
         case UPDATE_POST_TEXT:
-            state.newPostText = action.postText;
-            return state;
+            return {
+                ...state,
+                newPostText: action.postText,
+            }
         default: 
             return state;
     }
