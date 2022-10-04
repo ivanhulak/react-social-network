@@ -1,10 +1,11 @@
 import React from "react";
 import styles from './App.module.css';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import Header from "./components/Header/Header";
+import HeaderContainer from "./components/Header/HeaderContainer";
 import Navbar from "./components/Navbar/Navbar";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import LoginPage from "./components/Login/LoginPage.jsx";
 import { Routes, Route } from 'react-router-dom';
 
 
@@ -12,7 +13,7 @@ const App = (props) => {
   return (
     <div className={styles.Container}>
       <div className={styles.wrapper}>
-        <Header />
+        <HeaderContainer />
         <Navbar />
         <div className={styles.wrapperContent}>
           <Routes>
@@ -20,6 +21,7 @@ const App = (props) => {
             <Route path="/profile/:userId" element={<ProfileContainer />} />
             <Route path="/dialogs" element={<DialogsContainer />} />
             <Route path="/users" element={<UsersContainer />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </div>
       </div>
