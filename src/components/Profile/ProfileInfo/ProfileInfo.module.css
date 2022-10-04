@@ -14,7 +14,10 @@
 .avatar{
     width: 150px;
     height: 150px;
-    border-radius: 50%;
     background-color: #666;
     background: url('https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png') 0 0/100% no-repeat;
+}
+.avatar img{
+    width: 100%;
+    border-radius: 50%;
 }

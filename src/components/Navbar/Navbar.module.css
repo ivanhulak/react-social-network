@@ -1,17 +1,14 @@
-nav{
+.navBar{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     font-size: 22px;
     padding: 20px 10px;
     background-color: rgb(227, 227, 227);
     grid-area: nav;
 }
-nav a{
+a{
     text-decoration: none;
     color: #000;
     cursor: pointer;
-}
-.item{
-    margin: 5px 0px;
-}
-.item:last-child{
-    margin: 0px;
 }

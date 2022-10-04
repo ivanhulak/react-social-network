@@ -1,5 +1,6 @@
 export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
+export const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 let initialState = {
     posts: [
@@ -8,6 +9,7 @@ let initialState = {
         { id: 3, postText: 'React app', likes: 1, comments: 5, photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
     ],
     newPostText: '',
+    profile: null,
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -26,10 +28,9 @@ const profileReducer = (state = initialState, action) => {
                 newPostText: '',
             }
         case UPDATE_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.postText,
-            }
+            return {...state, newPostText: action.postText}
+        case SET_USER_PROFILE:
+            return {...state, profile: action.profile}
         default: 
             return state;
     }
@@ -39,3 +40,4 @@ export default profileReducer;
 
 export const addPostAC = () => ({type: ADD_POST});
 export const updatePostTextAC = (postText) => ({type: UPDATE_POST_TEXT, postText});
+export const setUserProfileAC = (profile) => ({type: SET_USER_PROFILE, profile});
