@@ -2,7 +2,7 @@ import React from "react";
 import Header from './Header';
 import * as axios from 'axios';
 import { connect } from "react-redux";
-import { authUserProfileAC } from './../../redux/auth-reducer';
+import { authUserProfile } from './../../redux/auth-reducer';
 
 class HeaderContainer extends React.Component {
   
@@ -30,12 +30,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    authUserProfile: (id, email, login) => {
-      dispatch(authUserProfileAC(id, email, login))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);
+export default connect(mapStateToProps, {authUserProfile})(HeaderContainer);

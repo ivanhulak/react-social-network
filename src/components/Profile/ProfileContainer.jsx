@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
 import * as axios from 'axios';
-import { setUserProfileAC } from "../../redux/profile-reducer";
+import { setUserProfile } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import {withLocationAndMatch} from '../HOC/withLocationAndMatch';
 
@@ -29,14 +29,7 @@ const mapStateToProps = (state) => {
     profile: state.profilePage.profile,
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setUserProfile: (profile) => {
-      dispatch(setUserProfileAC(profile))
-    }
-  }
-}
 
 let WithUrlDataContainerComponent = withLocationAndMatch(ProfileContainer)
 
-export default connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent);
+export default connect(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent);

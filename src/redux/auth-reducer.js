@@ -20,6 +20,6 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const authUserProfileAC = (userId, email, login) => ({type: AUTH_USER_PROFILE, data: {userId, email, login}})
+export const authUserProfile = (userId, email, login) => ({type: AUTH_USER_PROFILE, data: {userId, email, login}})
 
 export default authReducer;
