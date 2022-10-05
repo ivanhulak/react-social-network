@@ -2,6 +2,7 @@ import React from "react";
 import styles from './UserItem.module.css';
 import userPhoto from './../../../assets/images/userPhoto.png'
 import { Link } from "react-router-dom";
+import * as axios from 'axios';
 
 const UserItem = (props) => {
   return (
@@ -19,8 +20,31 @@ const UserItem = (props) => {
         <div className={styles.ItemStatus}>{props.status}</div>
         <div>
           {props.followed
-            ? <button onClick={() => { props.unfollow(props.userId) }}>Unfollow</button>
-            : <button onClick={() => { props.follow(props.userId) }}>Follow</button>
+            ? <button onClick={() => {
+              axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${props.userId}`, {
+                withCredentials: true,
+                headers: { 'API-KEY': '9c002004-137b-4963-a140-b7463730abeb' }
+              }).then(response => {
+                if (response.data.resultCode === 0) {
+                  props.unfollow(props.userId)
+                } else {
+                  alert(response.data.messages[0])
+                }
+              })
+            }}>Unfollow</button>
+
+            : <button onClick={() => {
+              axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${props.userId}`, {}, {
+                withCredentials: true,
+                headers: { 'API-KEY': '9c002004-137b-4963-a140-b7463730abeb' }
+              }).then(response => {
+                if (response.data.resultCode === 0) {
+                  props.follow(props.userId)
+                } else {
+                  alert(response.data.messages[0])
+                }
+              })
+            }}>Follow</button>
           }
         </div>
       </div>

@@ -5,12 +5,16 @@ import { connect } from "react-redux";
 import { authUserProfileAC } from './../../redux/auth-reducer';
 
 class HeaderContainer extends React.Component {
-
+  
   componentDidMount() {
     axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', { withCredentials: true })
       .then(response => {
-        let { id, email, login } = response.data.data;
-        this.props.authUserProfile(id, email, login);
+        if (response.data.resultCode === 0){
+          let { id, email, login } = response.data.data;
+          this.props.authUserProfile(id, email, login);
+        } else {
+          alert(response.data.messages[0]);
+        }
       })
   }
 
@@ -22,6 +26,7 @@ class HeaderContainer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     login: state.auth.login,
+    email: state.auth.email,
   }
 }
 
