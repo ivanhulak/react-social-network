@@ -2,7 +2,6 @@ import React from "react";
 import UserItem from "./UserItem/UserItem";
 import styles from './Users.module.css';
 
-
 const Users = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize) / 140;
     let pages = []
@@ -14,7 +13,6 @@ const Users = (props) => {
             <div>
                 <button
                     onClick={(e) => { props.onPageChanged(p) }}
-                    // disabled={props.isFetching ? disabled : ''}
                     className={props.currentPage === p ? styles.currentPage : ''}>{p}</button>
             </div>)
     })
@@ -26,7 +24,11 @@ const Users = (props) => {
             userName={u.name}
             status={u.status}
             follow={props.follow}
-            unfollow={props.unfollow} />)
+            unfollow={props.unfollow}
+            isFetching={props.isFetching}
+            setIsFetching={props.setIsFetching}
+            followingInProgress={props.followingInProgress}
+            setFollowingInProgress={props.setFollowingInProgress}/>)
 
     return (
         <div className={styles.users}>

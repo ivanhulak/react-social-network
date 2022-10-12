@@ -21,3 +21,6 @@
     text-align: center;
     flex: 0 1 100%;
 }
+.isFetching{
+    color: red;
+}
