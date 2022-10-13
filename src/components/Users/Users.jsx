@@ -23,12 +23,12 @@ const Users = (props) => {
             followed={u.followed}
             userName={u.name}
             status={u.status}
-            follow={props.follow}
-            unfollow={props.unfollow}
             isFetching={props.isFetching}
             setIsFetching={props.setIsFetching}
+            setFollowingInProgress={props.setFollowingInProgress}
             followingInProgress={props.followingInProgress}
-            setFollowingInProgress={props.setFollowingInProgress}/>)
+            followSuccess={props.followSuccess}
+            unfollowSuccess={props.unfollowSuccess} />)
 
     return (
         <div className={styles.users}>

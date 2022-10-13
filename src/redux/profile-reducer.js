@@ -1,3 +1,5 @@
+import {ProfileAPI} from '../DAL/api';
+
 export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 export const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -36,8 +38,14 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-export default profileReducer;
-
 export const addPost = () => ({type: ADD_POST});
 export const updatePostText = (postText) => ({type: UPDATE_POST_TEXT, postText});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
+
+export const SetProfileThunkCreator = (userId) => (dispatch) => {
+    ProfileAPI.getProfile(userId).then(data => {
+        dispatch(setUserProfile(data));
+      })
+}
+
+export default profileReducer;

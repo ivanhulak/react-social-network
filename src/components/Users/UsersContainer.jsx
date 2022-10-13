@@ -1,17 +1,17 @@
 import React from "react";
 import {connect} from "react-redux";
-import {follow, unfollow, setIsFetching, setTotalUserCount, setFollowingInProgress, 
-        GetUsersThunkCreator, GetUsersCountThunkCreator } from "../../redux/users-reducer";
+import {setIsFetching, setFollowingInProgress, getUsers, 
+        getUsersCount, followSuccess, unfollowSuccess } from "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../../common/Preloader";
 
 class UsersAPIComponent extends React.Component{
     componentDidMount(){
-        this.props.GetUsersThunkCreator(this.props.currentPage, this.props.pageSize);
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (page) => {
-        this.props.GetUsersCountThunkCreator(this.props.pageSize, page)
+        this.props.getUsersCount(this.props.pageSize, page)
     }
 
     render(){
@@ -21,13 +21,13 @@ class UsersAPIComponent extends React.Component{
                     pageSize={this.props.pageSize}
                     currentPage={this.props.currentPage}
                     users={this.props.users}
-                    follow={this.props.follow}
-                    unfollow={this.props.unfollow}
                     onPageChanged={this.onPageChanged}
                     isFetching={this.props.isFetching}
                     setIsFetching={this.props.setIsFetching}
+                    setFollowingInProgress={this.props.setFollowingInProgress}
                     followingInProgress={this.props.followingInProgress}
-                    setFollowingInProgress={this.props.setFollowingInProgress}/>
+                    followSuccess={this.props.followSuccess}
+                    unfollowSuccess={this.props.unfollowSuccess}/>
         </>
     }
 }
@@ -44,6 +44,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, 
-    {follow, unfollow, setTotalUserCount, setIsFetching, 
-    setFollowingInProgress, GetUsersThunkCreator,
-    GetUsersCountThunkCreator})(UsersAPIComponent);
+    {setIsFetching, setFollowingInProgress, getUsers, getUsersCount, 
+    followSuccess, unfollowSuccess})(UsersAPIComponent);
