@@ -4,6 +4,7 @@ import {setIsFetching, setFollowingInProgress, getUsers,
         getUsersCount, followSuccess, unfollowSuccess } from "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../../common/Preloader";
+import { compose } from "redux";
 
 class UsersAPIComponent extends React.Component{
     componentDidMount(){
@@ -43,6 +44,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, 
-    {setIsFetching, setFollowingInProgress, getUsers, getUsersCount, 
-    followSuccess, unfollowSuccess})(UsersAPIComponent);
+export default compose(
+    connect(mapStateToProps, {setIsFetching, setFollowingInProgress, getUsers, 
+            getUsersCount, followSuccess, unfollowSuccess})
+)(UsersAPIComponent)

@@ -9,7 +9,7 @@ import LoginPage from "./components/Login/LoginPage.jsx";
 import { Routes, Route } from 'react-router-dom';
 
 
-const App = (props) => {
+const App = () => {
   return (
     <div className={styles.Container}>
       <div className={styles.wrapper}>
