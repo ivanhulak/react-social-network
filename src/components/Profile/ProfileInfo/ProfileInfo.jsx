@@ -5,8 +5,8 @@ import UserStatus from './UserStatus';
 
 const ProfileInfo = (props) => {
 
-  if (!props.profile){
-      return <Preloader/> 
+  if (!props.profile) {
+    return <Preloader />
   }
 
   return (
@@ -24,7 +24,7 @@ const ProfileInfo = (props) => {
           <p>{props.profile.aboutMe}</p>
         </div>
       </div>
-      <UserStatus />
+      <UserStatus status={props.status} updateStatus={props.updateStatus}/>
     </div>
   );
 }
