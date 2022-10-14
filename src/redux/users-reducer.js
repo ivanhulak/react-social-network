@@ -1,4 +1,4 @@
-import { UsersAPI } from "../DAL/api.js";
+import { usersAPI } from "../DAL/api.js";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -71,7 +71,7 @@ export const setFollowingInProgress = (isFetching, userId) => ({
 
 export const getUsers = (currentPage, pageSize) => (dispatch) => {
     dispatch(setIsFetching(true));
-    UsersAPI.getUsers(currentPage, pageSize).then(data => {
+    usersAPI.getUsers(currentPage, pageSize).then(data => {
         dispatch(setUsers(data.items));
         dispatch(setTotalUserCount(data.totalCount));
         dispatch(setIsFetching(false));
@@ -80,7 +80,7 @@ export const getUsers = (currentPage, pageSize) => (dispatch) => {
 export const getUsersCount = (pageSize, page) => (dispatch) => {
     dispatch(setCurrentPage(page));
     dispatch(setIsFetching(true));
-    UsersAPI.getUsersCount(pageSize, page)
+    usersAPI.getUsersCount(pageSize, page)
         .then(data => {
             dispatch(setUsers(data.items));
             dispatch(setTotalUserCount(data.totalCount));

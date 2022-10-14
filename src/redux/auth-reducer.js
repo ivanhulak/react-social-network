@@ -1,4 +1,4 @@
-import { ProfileAPI } from '../DAL/api';
+import { authAPI } from '../DAL/api';
 
 const AUTH_USER_PROFILE = 'AUTH_USER_PROFILE';
 
@@ -25,7 +25,7 @@ const authReducer = (state = initialState, action) => {
 export const authUserProfile = (userId, email, login) => ({ type: AUTH_USER_PROFILE, data: { userId, email, login } })
 
 export const AuthMeThunkCreator = () => (dispatch) => {
-    ProfileAPI.authMe().then(data => {
+    authAPI.authMe().then(data => {
         if (data.resultCode === 0) {
             let { id, email, login } = data.data;
             dispatch(authUserProfile(id, email, login));

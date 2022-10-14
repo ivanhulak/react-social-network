@@ -1,6 +1,6 @@
 import React from "react";
 import Profile from "./Profile";
-import { SetProfileThunkCreator } from "../../redux/profile-reducer";
+import { SetProfile } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import {withLocationAndMatch} from '../HOC/withLocationAndMatch';
 import {withAuthRedirect} from '../HOC/withAuthRedirect';
@@ -13,7 +13,7 @@ class ProfileContainer extends React.Component {
     if(!userId){
       userId = 2;
     }
-    this.props.SetProfileThunkCreator(userId);
+    this.props.SetProfile(userId);
   }
 
   render() {
@@ -29,6 +29,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withAuthRedirect,
-  connect(mapStateToProps, {SetProfileThunkCreator}),
+  connect(mapStateToProps, {SetProfile}),
   withLocationAndMatch
 )(ProfileContainer)
