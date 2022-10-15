@@ -1,0 +1,32 @@
+.formBlock {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.loginForm {
+   padding: 30px 20px;
+   border: 3px solid rgb(136, 109, 245);
+   border-radius: 15px;
+}
+
+.loginForm h3 {
+   text-align: center;
+}
+
+.email input {
+   width: 20vmax;
+}
+
+.password input {
+   width: 20vmax;
+   margin-bottom: 20px;
+}
+
+.rememberMe {
+   margin-bottom: 20px;
+}
+
+.button {
+   text-align: center;
+}

@@ -1,18 +1,15 @@
 import React from "react";
+import LoginForm from './LoginForm';
+import styles from './Login.module.css';
 
 const LoginPage = () => {
+    const onSubmit = (formData) => {
+        console.log(formData);
+    }
+
     return (
-        <div>
-            <div>
-                <p>Login</p>
-                <input type="text" />
-            </div>
-            <div>
-                <p>Password</p>
-                <input type="password" />
-            </div>
-            
-            
+        <div className={styles.formBlock}>
+            <LoginForm onSubmit={onSubmit} />
         </div>
     );
 }
