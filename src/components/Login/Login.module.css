@@ -10,16 +10,35 @@
    border-radius: 15px;
 }
 
-.loginForm h3 {
+.title {
+   font-size: 22px;
+   color: rgb(136, 109, 245);
+   font-weight: 700;
    text-align: center;
+   margin-bottom: 15px;
+}
+
+.email label,
+.password label {
+   color: rgb(136, 109, 245);
+   font-weight: 600;
 }
 
 .email input {
    width: 20vmax;
+   margin-top: 5px;
+}
+
+.email {
+   margin-bottom: 10px;
 }
 
 .password input {
    width: 20vmax;
+   margin-top: 5px;
+}
+
+.password {
    margin-bottom: 20px;
 }
 
@@ -27,6 +46,17 @@
    margin-bottom: 20px;
 }
 
-.button {
-   text-align: center;
+.buttons {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 15px;
+}
+
+.formBtn{
+   font-size: 18px;
+}
+.formBtn:hover{
+   background-color:rgb(136, 109, 245);
+   border: 1px solid rgb(136, 109, 245);
 }
