@@ -16,7 +16,7 @@ const Header = (props) => {
         </div>
         : <div>
           <Link to='/login'>
-            <div>Login</div>
+            <button>Login</button>
           </Link>
         </div>
       }

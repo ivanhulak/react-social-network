@@ -2,24 +2,28 @@ import React from "react";
 import Profile from "./Profile";
 import { SetProfile, getStatus, updateStatus } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
-import {withLocationAndMatch} from '../HOC/withLocationAndMatch';
-import {withAuthRedirect} from '../HOC/withAuthRedirect';
+import { withLocationAndMatch } from '../HOC/withLocationAndMatch';
+import { withAuthRedirect } from '../HOC/withAuthRedirect';
 import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
 
-  componentDidMount(){
+  componentDidMount() {
     let userId = this.props.params.userId;
-    if(!userId){
+    if (!userId) {
+      debugger
       userId = this.props.userId;
+      if (!userId) {
+        this.props.history.push('/login');
+      }
     }
     this.props.SetProfile(userId);
     this.props.getStatus(userId);
   }
 
   render() {
-    return <Profile {...this.props} profile={this.props.profile} 
-                    status={this.props.status} updateStatus={this.props.updateStatus}/>
+    return <Profile {...this.props} profile={this.props.profile}
+      status={this.props.status} updateStatus={this.props.updateStatus} />
   }
 }
 
@@ -33,6 +37,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withAuthRedirect,
-  connect(mapStateToProps, {SetProfile, getStatus, updateStatus}),
+  connect(mapStateToProps, { SetProfile, getStatus, updateStatus }),
   withLocationAndMatch
 )(ProfileContainer)
