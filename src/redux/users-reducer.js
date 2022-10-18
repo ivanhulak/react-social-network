@@ -69,24 +69,25 @@ export const setFollowingInProgress = (isFetching, userId) => ({
     type: SET_FOLLOWING_IN_PROGRESS, isFetching, userId
 });
 
-export const getUsers = (currentPage, pageSize) => (dispatch) => {
+export const requestUsers = (page, pageSize) => (dispatch) => {
     dispatch(setIsFetching(true));
-    usersAPI.getUsers(currentPage, pageSize).then(data => {
+    dispatch(setCurrentPage(page));
+    usersAPI.getUsers(page, pageSize).then(data => {
         dispatch(setUsers(data.items));
         dispatch(setTotalUserCount(data.totalCount));
         dispatch(setIsFetching(false));
     })
 }
-export const getUsersCount = (pageSize, page) => (dispatch) => {
-    dispatch(setCurrentPage(page));
-    dispatch(setIsFetching(true));
-    usersAPI.getUsersCount(pageSize, page)
-        .then(data => {
-            dispatch(setUsers(data.items));
-            dispatch(setTotalUserCount(data.totalCount));
-            dispatch(setIsFetching(false));
-        })
-}
+// export const getUsersCount = (pageSize, page) => (dispatch) => {
+//     dispatch(setCurrentPage(page));
+//     dispatch(setIsFetching(true));
+//     usersAPI.getUsersCount(pageSize, page)
+//         .then(data => {
+//             dispatch(setUsers(data.items));
+//             dispatch(setTotalUserCount(data.totalCount));
+//             dispatch(setIsFetching(false));
+//         })
+// }
 
 // Have some problems with that
 // Uncaught in promise (403) forbidden

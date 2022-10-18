@@ -1,18 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
-import {setIsFetching, setFollowingInProgress, getUsers, 
-        getUsersCount, followSuccess, unfollowSuccess } from "../../redux/users-reducer";
+import {setIsFetching, setFollowingInProgress, requestUsers, 
+        followSuccess, unfollowSuccess } from "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../../common/Preloader";
 import { compose } from "redux";
+import { getCurrentPage, getFollowingInProgress, getIsFetching, 
+         getPageSize, getTotalUsersCount, getUsers } from "../../redux/selectors/users-selectors";
 
 class UsersAPIComponent extends React.Component{
     componentDidMount(){
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (page) => {
-        this.props.getUsersCount(this.props.pageSize, page)
+        this.props.requestUsers(page, this.props.pageSize)
     }
 
     render(){
@@ -35,16 +37,16 @@ class UsersAPIComponent extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        pageSize: state.usersPage.pageSize,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
+        users: getUsers(state),
+        totalUsersCount: getTotalUsersCount(state),
+        pageSize: getPageSize(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 
 export default compose(
-    connect(mapStateToProps, {setIsFetching, setFollowingInProgress, getUsers, 
-            getUsersCount, followSuccess, unfollowSuccess})
+    connect(mapStateToProps, {setIsFetching, setFollowingInProgress, 
+            requestUsers, followSuccess, unfollowSuccess})
 )(UsersAPIComponent)
