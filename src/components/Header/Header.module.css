@@ -3,9 +3,16 @@
     padding: 10px 10px;
     margin-bottom: 10px;
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    grid-area: header;
+}
+.headerInnerRow{
+    width: 100%;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    grid-area: header;
 }
 .header img{
     max-width: 50px;

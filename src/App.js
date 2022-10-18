@@ -5,7 +5,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import Navbar from "./components/Navbar/Navbar";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import UsersContainer from "./components/Users/UsersContainer";
-import LoginPage from "./components/Login/LoginPage.jsx";
+import LoginPageContainer from "./components/Login/LoginPageContainer.jsx";
 import { Routes, Route } from 'react-router-dom';
 
 
@@ -21,7 +21,7 @@ const App = () => {
             <Route path="/profile/:userId" element={<ProfileContainer />} />
             <Route path="/dialogs" element={<DialogsContainer />} />
             <Route path="/users" element={<UsersContainer />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPageContainer />} />
           </Routes>
         </div>
       </div>

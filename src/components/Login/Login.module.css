@@ -53,10 +53,22 @@
    gap: 15px;
 }
 
-.formBtn{
+.formBtn {
    font-size: 18px;
+   margin-bottom: 10px;
 }
-.formBtn:hover{
-   background-color:rgb(136, 109, 245);
+
+.formBtn:hover {
+   background-color: rgb(136, 109, 245);
    border: 1px solid rgb(136, 109, 245);
+}
+
+.fullFormError {
+   border: 2px solid red;
+}
+
+.fullFormErrorMessage {
+   color: red;
+   font-size: 20px;
+   font-style: italic;
 }
