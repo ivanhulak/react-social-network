@@ -7,6 +7,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USER_COUNT = 'SET_TOTAL_USER_COUNT';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
 const SET_FOLLOWING_IN_PROGRESS = 'SET_FOLLOWING_IN_PROGRESS';
+const FAKE = 'FAKE';
 
 let initialState = {
     users: [],
@@ -15,6 +16,7 @@ let initialState = {
     currentPage: 1,
     isFetching: false,
     followingInProgress: [],
+    fake: 0,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -54,6 +56,8 @@ const userReducer = (state = initialState, action) => {
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
             }
+        case FAKE:
+            return {...state, fake: state.fake + 1}
         default:
             return state;
     }
@@ -78,16 +82,6 @@ export const requestUsers = (page, pageSize) => (dispatch) => {
         dispatch(setIsFetching(false));
     })
 }
-// export const getUsersCount = (pageSize, page) => (dispatch) => {
-//     dispatch(setCurrentPage(page));
-//     dispatch(setIsFetching(true));
-//     usersAPI.getUsersCount(pageSize, page)
-//         .then(data => {
-//             dispatch(setUsers(data.items));
-//             dispatch(setTotalUserCount(data.totalCount));
-//             dispatch(setIsFetching(false));
-//         })
-// }
 
 // Have some problems with that
 // Uncaught in promise (403) forbidden
