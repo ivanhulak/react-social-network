@@ -1,7 +1,7 @@
 import { authAPI } from '../DAL/api';
 import { stopSubmit } from 'redux-form';
 
-const AUTH_USER_PROFILE = 'AUTH_USER_PROFILE';
+const AUTH_USER_PROFILE = 'my-social-network/auth/AUTH_USER_PROFILE';
 
 let initialState = {
     userId: null,

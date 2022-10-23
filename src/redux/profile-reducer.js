@@ -1,9 +1,9 @@
 import { profileAPI } from '../DAL/api';
 
-export const ADD_POST = 'ADD_POST';
-export const DELETE_POST = 'DELETE_POST';
-export const SET_USER_PROFILE = 'SET_USER_PROFILE';
-export const SET_STATUS = 'SET_STATUS';
+export const ADD_POST = 'my-social-network/profile/ADD_POST';
+export const DELETE_POST = 'my-social-network/profile/DELETE_POST';
+export const SET_USER_PROFILE = 'my-social-network/profile/SET_USER_PROFILE';
+export const SET_STATUS = 'my-social-network/profile/SET_STATUS';
 
 let initialState = {
     posts: [
@@ -31,7 +31,7 @@ const profileReducer = (state = initialState, action) => {
             }
         case DELETE_POST:
             return {
-                ...state, posts: state.posts.filter(post => post.id != action.postId)
+                ...state, posts: state.posts.filter(post => post.id !== action.postId)
             }
         case SET_USER_PROFILE:
             return { ...state, profile: action.profile }
@@ -48,7 +48,7 @@ export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({ type: SET_STATUS, status });
 
 // Thunk Creators
-export const SetProfile = (userId) => (dispatch) => {
+export const setProfile = (userId) => (dispatch) => {
     profileAPI.getProfile(userId).then(data => {
         dispatch(setUserProfile(data));
     })

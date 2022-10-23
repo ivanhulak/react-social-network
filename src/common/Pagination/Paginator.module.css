@@ -1,0 +1,10 @@
+.paginationBlock {
+   display: flex;
+   justify-content: center;
+   gap: 10px;
+}
+
+.currentPage {
+   font-weight: 700;
+   background: #666;
+}

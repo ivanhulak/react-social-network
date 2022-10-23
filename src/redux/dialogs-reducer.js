@@ -1,5 +1,5 @@
-export const SEND_MESSAGE = 'SEND_MESSAGE';
-export const DELETE_MESSAGE = 'DELETE_MESSAGE';
+export const SEND_MESSAGE = 'my-social-network/dialogs/SEND_MESSAGE';
+export const DELETE_MESSAGE = 'my-social-network/dialogs/DELETE_MESSAGE';
 
 let initialState = {
     dialogs: [

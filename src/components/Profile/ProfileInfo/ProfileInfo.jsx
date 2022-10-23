@@ -14,7 +14,7 @@ const ProfileInfo = (props) => {
       <img src="https://thumbs.dreamstime.com/b/sunny-beach-beautiful-tropical-island-paradise-middle-sea-39398691.jpg" alt="Sunny Beach" />
       <div className={styles.profileInfoRow}>
         <div className={styles.avatar}>
-          <img src={props.profile.photos.small} alt="Avatar" />
+          <img src={props.profile.photos ? "https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png" : props.profile.photos.small} alt="Avatar" />
         </div>
         <div className={styles.info}>
           <p>{props.profile.fullName}</p>
@@ -24,7 +24,7 @@ const ProfileInfo = (props) => {
           <p>{props.profile.aboutMe}</p>
         </div>
       </div>
-      <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
+      <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
     </div>
   );
 }

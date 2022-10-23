@@ -1,12 +1,13 @@
 import { usersAPI } from "../DAL/api.js";
+import { updateObjectInArray } from "../common/object-helpers";
 
-const FOLLOW = 'FOLLOW';
-const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET_USERS';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SET_TOTAL_USER_COUNT = 'SET_TOTAL_USER_COUNT';
-const SET_IS_FETCHING = 'SET_IS_FETCHING';
-const SET_FOLLOWING_IN_PROGRESS = 'SET_FOLLOWING_IN_PROGRESS';
+const FOLLOW = 'my-social-network/users/FOLLOW';
+const UNFOLLOW = 'my-social-network/users/UNFOLLOW';
+const SET_USERS = 'my-social-network/users/SET_USERS';
+const SET_CURRENT_PAGE = 'my-social-network/users/SET_CURRENT_PAGE';
+const SET_TOTAL_USER_COUNT = 'my-social-network/users/SET_TOTAL_USER_COUNT';
+const SET_IS_FETCHING = 'my-social-network/users/SET_IS_FETCHING';
+const SET_FOLLOWING_IN_PROGRESS = 'my-social-network/users/SET_FOLLOWING_IN_PROGRESS';
 
 let initialState = {
     users: [],
@@ -22,22 +23,24 @@ const userReducer = (state = initialState, action) => {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return { ...u, followed: true }
-                    }
-                    return u;
-                }),
+                users: updateObjectInArray(state.users, "id", action.userId, { followed: true })
+                // users: state.users.map(u => {
+                //     if (u.id === action.userId) {
+                //         return { ...u, followed: true }
+                //     }
+                //     return u;
+                // }),
             }
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return { ...u, followed: false }
-                    }
-                    return u;
-                }),
+                users: updateObjectInArray(state.users, "id", action.userId, { followed: false })
+                // users: state.users.map(u => {
+                //     if (u.id === action.userId) {
+                //         return { ...u, followed: false }
+                //     }
+                //     return u;
+                // }),
             }
         case SET_USERS:
             return { ...state, users: action.users }

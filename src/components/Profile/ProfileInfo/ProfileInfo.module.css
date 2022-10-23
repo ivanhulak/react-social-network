@@ -15,7 +15,8 @@
     width: 150px;
     height: 150px;
     background-color: #666;
-    background: url('https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png') 0 0/100% no-repeat;
+    border-radius: 50%;
+    overflow: hidden;
 }
 .avatar img{
     width: 100%;

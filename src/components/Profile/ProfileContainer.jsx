@@ -1,6 +1,6 @@
 import React from "react";
 import Profile from "./Profile";
-import { SetProfile, getStatus, updateStatus } from "../../redux/profile-reducer";
+import { setProfile, getStatus, updateStatus } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import { withLocationAndMatch } from '../HOC/withLocationAndMatch';
 import { withAuthRedirect } from '../HOC/withAuthRedirect';
@@ -16,7 +16,7 @@ class ProfileContainer extends React.Component {
         this.props.history.push('/login');
       }
     }
-    this.props.SetProfile(userId);
+    this.props.setProfile(userId);
     this.props.getStatus(userId);
   }
 
@@ -36,6 +36,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withAuthRedirect,
-  connect(mapStateToProps, { SetProfile, getStatus, updateStatus }),
+  connect(mapStateToProps, { setProfile, getStatus, updateStatus }),
   withLocationAndMatch
 )(ProfileContainer)
