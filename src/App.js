@@ -12,14 +12,14 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withLocationAndMatch } from "./components/HOC/withLocationAndMatch";
 import Preloader from "./common/Preloader";
-
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './redux/redux-store';
 
 class App extends React.Component {
-
   componentDidMount() {
     this.props.initializeApp();
   }
-
   render() {
     if(!this.props.initialized){
       return <Preloader/>
@@ -39,8 +39,7 @@ class App extends React.Component {
             </Routes>
           </div>
         </div>
-      </div>
-    )
+      </div>)
   }
 }
 
@@ -48,4 +47,14 @@ const mapStateToProps = (state) => ({
   initialized: state.app.initialized
 })
 
-export default compose(withLocationAndMatch, connect(mapStateToProps, {initializeApp}))(App);
+const AppContainer = compose(withLocationAndMatch, connect(mapStateToProps, {initializeApp}))(App);
+
+const MySocialNetworkApp = () => {
+  return <BrowserRouter>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </BrowserRouter>
+}
+
+export default MySocialNetworkApp;

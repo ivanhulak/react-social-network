@@ -10,10 +10,8 @@ const MyPosts = React.memo((props) => {
             comments={p.comments} photo={p.photo} key={p.id} />)
 
     const onAddPost = (formData) => {
-        console.log(formData);
         props.addPost(formData.postText);
     }
-    console.log('Render')
     return (
         <div className={styles.myPosts}>
             <h1>My Posts</h1>
