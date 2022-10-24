@@ -1,10 +1,18 @@
-.users{
+.users {
     padding: 0px 20px;
 }
-.userItemsRow{
+
+.userItemsRow {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+}
+
+.paginationBlock {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }

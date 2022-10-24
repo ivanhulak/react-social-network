@@ -11,7 +11,7 @@ const SET_FOLLOWING_IN_PROGRESS = 'my-social-network/users/SET_FOLLOWING_IN_PROG
 
 let initialState = {
     users: [],
-    totalUsersCount: 0,
+    totalItemsCount: 0,
     pageSize: 9,
     currentPage: 1,
     isFetching: false,
@@ -24,30 +24,18 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: updateObjectInArray(state.users, "id", action.userId, { followed: true })
-                // users: state.users.map(u => {
-                //     if (u.id === action.userId) {
-                //         return { ...u, followed: true }
-                //     }
-                //     return u;
-                // }),
             }
         case UNFOLLOW:
             return {
                 ...state,
                 users: updateObjectInArray(state.users, "id", action.userId, { followed: false })
-                // users: state.users.map(u => {
-                //     if (u.id === action.userId) {
-                //         return { ...u, followed: false }
-                //     }
-                //     return u;
-                // }),
             }
         case SET_USERS:
             return { ...state, users: action.users }
         case SET_CURRENT_PAGE:
             return { ...state, currentPage: action.pageNumber }
         case SET_TOTAL_USER_COUNT:
-            return { ...state, totalUsersCount: action.totalCount }
+            return { ...state, totalItemsCount: action.totalCount }
         case SET_IS_FETCHING:
             return { ...state, isFetching: action.isFetching }
         case SET_FOLLOWING_IN_PROGRESS:
@@ -81,36 +69,6 @@ export const requestUsers = (page, pageSize) => (dispatch) => {
         dispatch(setIsFetching(false));
     })
 }
-
-// Have some problems with that
-// Uncaught in promise (403) forbidden
-// I think it is problems on backend side
-// export const follow = (userId) => {
-//     return (dispatch) => {
-//         dispatch(setIsFetching(true));
-//         dispatch(setFollowingInProgress(true, userId));
-//         UsersAPI.follow(userId).then(data => {
-//             if (data.resultCode === 0) {
-//                 dispatch(followSuccess(userId));
-//             }
-//             dispatch(setIsFetching(false));
-//             dispatch(setFollowingInProgress(false, userId));
-//         })
-//     }
-// }
-// export const unfollow = (userId) => {
-//     return (dispatch) => {
-//         dispatch(setIsFetching(true));
-//         dispatch(setFollowingInProgress(true, userId));
-//         UsersAPI.unfollow(userId).then(data => {
-//             if (data.resultCode === 0) {
-//                 dispatch(unfollowSuccess(userId));
-//             }
-//             dispatch(setIsFetching(false));
-//             dispatch(setFollowingInProgress(false, userId));
-//         })
-//     }
-// }
 
 export default userReducer;
 
