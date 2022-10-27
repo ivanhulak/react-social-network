@@ -60,14 +60,13 @@ export const setFollowingInProgress = (isFetching, userId) => ({
     type: SET_FOLLOWING_IN_PROGRESS, isFetching, userId
 });
 
-export const requestUsers = (page, pageSize) => (dispatch) => {
+export const requestUsers = (page, pageSize) => async (dispatch) => {
     dispatch(setIsFetching(true));
     dispatch(setCurrentPage(page));
-    usersAPI.getUsers(page, pageSize).then(data => {
-        dispatch(setUsers(data.items));
-        dispatch(setTotalUserCount(data.totalCount));
-        dispatch(setIsFetching(false));
-    })
+    let data = await usersAPI.getUsers(page, pageSize)
+    dispatch(setUsers(data.items));
+    dispatch(setTotalUserCount(data.totalCount));
+    dispatch(setIsFetching(false));
 }
 
 export default userReducer;
