@@ -1,0 +1,7 @@
+.status {
+   padding: 0px 20px;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   margin-bottom: 10px;
+}

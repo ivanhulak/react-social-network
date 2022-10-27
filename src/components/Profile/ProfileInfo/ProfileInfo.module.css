@@ -1,24 +1,29 @@
-.profileInfo{
+.profileInfo {
     margin-left: 10px;
 }
-.profileInfo img{
+
+.profileInfo img {
     max-width: 100%;
+    margin-bottom: 10px;
 }
-.profileInfoRow{
-    padding: 0px 30px;
+
+.profileInfoRow {
+    padding: 0px 20px;
     display: flex;
     align-items: center;
     gap: 50px;
     margin-bottom: 30px;
 }
-.avatar{
+
+.avatar {
     width: 150px;
     height: 150px;
     background-color: #666;
     border-radius: 50%;
     overflow: hidden;
 }
-.avatar img{
+
+.avatar img {
     width: 100%;
     border-radius: 50%;
 }
