@@ -1,9 +1,10 @@
 import React from "react";
+import styles from './Preloader.module.css';
 import loading from './../assets/images/load.gif'
 
 const Preloader = () => {
     return (
-        <div>
+        <div className={styles.preloader}>
             <img src={loading} alt="Loading..." />
         </div>
     );
