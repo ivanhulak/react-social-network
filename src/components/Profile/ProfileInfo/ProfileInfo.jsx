@@ -8,13 +8,18 @@ const ProfileInfo = (props) => {
   if (!props.profile) {
     return <Preloader />
   }
-
+  const handleUploadFileData = (e) => {
+    props.uploadPhoto(e.target.files);
+  }
   return (
     <div className={styles.profileInfo}>
-      <img src="https://thumbs.dreamstime.com/b/sunny-beach-beautiful-tropical-island-paradise-middle-sea-39398691.jpg" alt="Sunny Beach" />
+      <img src="https://thumbs.dreamstime.com/b/sunny-beach-beautiful-tropical-island-paradise-middle-sea-39398691.jpg" alt="" />
       <div className={styles.profileInfoRow}>
-        <div className={styles.avatar}>
-          <img src={props.profile.photos ? "https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png" : props.profile.photos.small} alt="Avatar" />
+        <div>
+          <div className={styles.avatar}>
+            <img src={props.profile.photos.small || "https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png"} alt="" />
+          </div>
+          <input type="file" onChange={handleUploadFileData} />
         </div>
         <div className={styles.info}>
           <p>{props.profile.fullName}</p>

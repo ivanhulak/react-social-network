@@ -4,6 +4,7 @@ export const ADD_POST = 'my-social-network/profile/ADD_POST';
 export const DELETE_POST = 'my-social-network/profile/DELETE_POST';
 export const SET_USER_PROFILE = 'my-social-network/profile/SET_USER_PROFILE';
 export const SET_STATUS = 'my-social-network/profile/SET_STATUS';
+export const UPLOAD_PHOTO_SUCCESS = 'my-social-network/profile/UPLOAD_PHOTO_SUCCESS';
 
 let initialState = {
     posts: [
@@ -37,6 +38,8 @@ const profileReducer = (state = initialState, action) => {
             return { ...state, profile: action.profile }
         case SET_STATUS:
             return { ...state, status: action.status }
+        case UPLOAD_PHOTO_SUCCESS:
+            return { ...state, profile: {...state.profile, photos: action.photo} }
         default:
             return state;
     }
@@ -46,6 +49,7 @@ export const addPost = (newPostText) => ({ type: ADD_POST, newPostText });
 export const deletePost = (postId) => ({ type: DELETE_POST, postId }); // for testing
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const setStatus = (status) => ({ type: SET_STATUS, status });
+export const uploadPhotoSuccess = (photo) => ({ type: UPLOAD_PHOTO_SUCCESS, photo});
 
 // Thunk Creators
 export const setProfile = (userId) => async (dispatch) => {
@@ -60,6 +64,12 @@ export const updateStatus = (status) => async (dispatch) => {
     let response = await profileAPI.updateStatus(status)
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status));
+    }
+}
+export const uploadPhoto = (photo) => async (dispatch) => {
+    let response = await profileAPI.uploadPhoto(photo);
+    if (response.data.resultCode === 0) {
+        dispatch(uploadPhotoSuccess(response.data.data.photos));
     }
 }
 
