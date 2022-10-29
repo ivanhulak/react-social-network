@@ -4,15 +4,14 @@
 
 .profileInfo img {
     max-width: 100%;
-    margin-bottom: 10px;
 }
 
 .profileInfoRow {
     padding: 0px 20px;
     display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 20px;
-    margin-bottom: 30px;
+    padding: 10px 0px 30px;
 }
 
 .avatar {
@@ -27,4 +26,23 @@
 .avatar img {
     width: 100%;
     border-radius: 50%;
+}
+
+/* Edit Btn */
+.editBtn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+.editBtn:active{
+    transform: translate(5px, 5px);
+}
+.editIconImg {
+    width: 30px;
+    margin: 0;
 }

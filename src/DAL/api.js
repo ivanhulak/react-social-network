@@ -13,16 +13,6 @@ export const usersAPI = {
         return instance.get(`users?count=${pageSize}&page=${currentPage}`)
             .then(response => response.data);
     },
-    // getUsersCount(pageSize, page) {
-    //     return instance.get(`users?count=${pageSize}&page=${page}`)
-    //         .then(response => response.data);
-    // },
-    // unfollow(userId) {
-    //     return instance.delete(`follow/${userId}`).then(response => response.data)
-    // },
-    // follow(userId) {
-    //     return instance.post(`follow/${userId}`).then(response => response.data)
-    // },
 }
 export const profileAPI = {
     getProfile(userId) {
@@ -42,6 +32,9 @@ export const profileAPI = {
                 'Content-Type': 'multipart/form-data'
             }
         });
+    },
+    upgradeProfile(profileData) {
+        return instance.put('profile', profileData);
     },
 
 }
