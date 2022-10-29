@@ -39,7 +39,7 @@ const profileReducer = (state = initialState, action) => {
         case SET_STATUS:
             return { ...state, status: action.status }
         case UPLOAD_PHOTO_SUCCESS:
-            return { ...state, profile: {...state.profile, photos: action.photo} }
+            return { ...state, profile: { ...state.profile, photos: action.photos } }
         default:
             return state;
     }
@@ -49,7 +49,7 @@ export const addPost = (newPostText) => ({ type: ADD_POST, newPostText });
 export const deletePost = (postId) => ({ type: DELETE_POST, postId }); // for testing
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const setStatus = (status) => ({ type: SET_STATUS, status });
-export const uploadPhotoSuccess = (photo) => ({ type: UPLOAD_PHOTO_SUCCESS, photo});
+export const uploadPhotoSuccess = (photos) => ({ type: UPLOAD_PHOTO_SUCCESS, photos });
 
 // Thunk Creators
 export const setProfile = (userId) => async (dispatch) => {
@@ -66,11 +66,13 @@ export const updateStatus = (status) => async (dispatch) => {
         dispatch(setStatus(status));
     }
 }
-export const uploadPhoto = (photo) => async (dispatch) => {
-    let response = await profileAPI.uploadPhoto(photo);
+export const uploadPhoto = (file) => async (dispatch) => {
+    let response = await profileAPI.uploadPhoto(file)
+    console.log(response);
     if (response.data.resultCode === 0) {
         dispatch(uploadPhotoSuccess(response.data.data.photos));
     }
+
 }
 
 export default profileReducer;

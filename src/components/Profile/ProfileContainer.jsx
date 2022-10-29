@@ -8,7 +8,7 @@ import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
 
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.params.userId;
     if (!userId) {
       userId = this.props.userId;
@@ -19,10 +19,18 @@ class ProfileContainer extends React.Component {
     this.props.setProfile(userId);
     this.props.getStatus(userId);
   }
+  componentDidMount() {
+    this.refreshProfile();
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.params.userId !== prevProps.params.userId) {
+      this.refreshProfile();
+    }
+  }
 
   render() {
     return <Profile {...this.props} profile={this.props.profile} uploadPhoto={this.props.uploadPhoto}
-      status={this.props.status} updateStatus={this.props.updateStatus} />
+      status={this.props.status} updateStatus={this.props.updateStatus} isOwner={!this.props.params.userId}/>
   }
 }
 
@@ -30,7 +38,7 @@ const mapStateToProps = (state) => {
   return {
     profile: state.profilePage.profile,
     status: state.profilePage.status,
-    userId: state.auth.userId
+    userId: state.auth.userId,
   }
 }
 

@@ -8,8 +8,10 @@ const ProfileInfo = (props) => {
   if (!props.profile) {
     return <Preloader />
   }
-  const handleUploadFileData = (e) => {
-    props.uploadPhoto(e.target.files);
+  const onAvatarPhotoSelected = (e) => {
+    if(e.target.files.length){
+      props.uploadPhoto(e.target.files[0]); 
+    }
   }
   return (
     <div className={styles.profileInfo}>
@@ -19,7 +21,7 @@ const ProfileInfo = (props) => {
           <div className={styles.avatar}>
             <img src={props.profile.photos.small || "https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png"} alt="" />
           </div>
-          <input type="file" onChange={handleUploadFileData} />
+          {props.isOwner && <input type="file" onChange={onAvatarPhotoSelected} />}
         </div>
         <div className={styles.info}>
           <p>{props.profile.fullName}</p>

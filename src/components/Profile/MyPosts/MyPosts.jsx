@@ -11,6 +11,7 @@ const MyPosts = React.memo((props) => {
 
     const onAddPost = (formData) => {
         props.addPost(formData.postText);
+        formData.postText = '';
     }
     return (
         <div className={styles.myPosts}>
