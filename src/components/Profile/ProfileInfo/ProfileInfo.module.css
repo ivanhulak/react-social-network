@@ -7,16 +7,21 @@
 }
 
 .profileInfoRow {
-    padding: 0px 20px;
     display: flex;
     justify-content: center;
     gap: 20px;
     padding: 10px 0px 30px;
+    border: 1px solid #000;
+}
+
+.ProfileDataForm {
+    max-width: 60%;
+    border: 1px solid #000;
 }
 
 .avatar {
-    width: 150px;
-    height: 150px;
+    max-width: 150px;
+    max-height: 150px;
     background-color: #666;
     border-radius: 50%;
     overflow: hidden;
@@ -39,9 +44,11 @@
     cursor: pointer;
     transition: all .3s ease;
 }
-.editBtn:active{
+
+.editBtn:active {
     transform: translate(5px, 5px);
 }
+
 .editIconImg {
     width: 30px;
     margin: 0;

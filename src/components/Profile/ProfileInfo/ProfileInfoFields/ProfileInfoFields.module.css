@@ -51,6 +51,7 @@
    background-color: #fff;
    border: 1px solid rgb(136, 109, 245);
    transition: .3s all ease;
+   margin: 10px 10px 0px 0px;
 }
 
 .changeBtn:hover {

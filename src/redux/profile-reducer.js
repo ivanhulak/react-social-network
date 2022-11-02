@@ -6,6 +6,7 @@ export const SET_USER_PROFILE = 'my-social-network/profile/SET_USER_PROFILE';
 export const SET_STATUS = 'my-social-network/profile/SET_STATUS';
 export const UPLOAD_PHOTO_SUCCESS = 'my-social-network/profile/UPLOAD_PHOTO_SUCCESS';
 export const UPGRADE_PROFILE_SUCCESS = 'my-social-network/profile/UPGRADE_PROFILE_SUCCESS';
+export const LOAD = 'my-social-network/profile/LOAD';
 
 let initialState = {
     posts: [
@@ -41,8 +42,8 @@ const profileReducer = (state = initialState, action) => {
             return { ...state, status: action.status }
         case UPLOAD_PHOTO_SUCCESS:
             return { ...state, profile: { ...state.profile, photos: action.photos } }
-        case UPGRADE_PROFILE_SUCCESS:
-            return { ...state, profile: { ...state.profile, profile: action.updatedProfile } }
+        case LOAD:
+            return { ...state, profile: { ...state.profile, profile: action.data } }
         default:
             return state;
     }
@@ -53,7 +54,7 @@ export const deletePost = (postId) => ({ type: DELETE_POST, postId }); // for te
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const setStatus = (status) => ({ type: SET_STATUS, status });
 export const uploadPhotoSuccess = (photos) => ({ type: UPLOAD_PHOTO_SUCCESS, photos });
-export const upgradeProfileSuccess = (updatedProfile) => ({ type: UPGRADE_PROFILE_SUCCESS, updatedProfile });
+export const loadDataToProfileDataForm = (data) => ({ type: LOAD, data });
 
 // Thunk Creators
 export const setProfile = (userId) => async (dispatch) => {
@@ -76,10 +77,11 @@ export const uploadPhoto = (file) => async (dispatch) => {
         dispatch(uploadPhotoSuccess(response.data.data.photos));
     }
 }
-export const upgradeProfile = (profileData) => async (dispatch) => {
+export const upgradeProfile = (profileData) => async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     let response = await profileAPI.upgradeProfile(profileData)
     if (response.data.resultCode === 0) {
-        dispatch(upgradeProfileSuccess(response.data.data));
+        dispatch(setProfile(userId));
     }
 }
 

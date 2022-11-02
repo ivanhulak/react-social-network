@@ -1,6 +1,6 @@
 import React from "react";
 import Profile from "./Profile";
-import { setProfile, getStatus, updateStatus, uploadPhoto, upgradeProfile } from "../../redux/profile-reducer";
+import { setProfile, getStatus, updateStatus, uploadPhoto, upgradeProfile, loadDataToProfileDataForm } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import { withLocationAndMatch } from '../HOC/withLocationAndMatch';
 import { withAuthRedirect } from '../HOC/withAuthRedirect';
@@ -31,7 +31,7 @@ class ProfileContainer extends React.Component {
   render() {
     return <Profile {...this.props} profile={this.props.profile} uploadPhoto={this.props.uploadPhoto}
       status={this.props.status} updateStatus={this.props.updateStatus} isOwner={!this.props.params.userId}
-      upgradeProfile={this.props.upgradeProfile}/>
+      upgradeProfile={this.props.upgradeProfile} loadDataToProfileDataForm={this.props.loadDataToProfileDataForm}/>
   }
 }
 
@@ -45,6 +45,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withAuthRedirect,
-  connect(mapStateToProps, { setProfile, getStatus, updateStatus, uploadPhoto, upgradeProfile }),
+  connect(mapStateToProps, { setProfile, getStatus, updateStatus, uploadPhoto, upgradeProfile, loadDataToProfileDataForm }),
   withLocationAndMatch
 )(ProfileContainer)

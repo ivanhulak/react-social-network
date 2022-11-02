@@ -22,8 +22,9 @@ const ProfileInfo = (props) => {
     props.upgradeProfile(formData);
     setEditMode(false);
   }
-
-
+  const goToEditMode = () => {
+    setEditMode(!editMode);
+  }
   return (
     <div className={styles.profileInfo}>
       <img src="https://thumbs.dreamstime.com/b/sunny-beach-beautiful-tropical-island-paradise-middle-sea-39398691.jpg" alt="" />
@@ -35,17 +36,20 @@ const ProfileInfo = (props) => {
           {props.isOwner && <input type="file" onChange={onAvatarPhotoSelected} />}
         </div>
 
-        {editMode
-          ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} />
-          : <ProfileInfoFields profile={props.profile} status={props.status} updateStatus={props.updateStatus} />}
+        <div className={styles.ProfileDataForm}>
+          {editMode
+            ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} loadDataToProfileDataForm={props.loadDataToProfileDataForm} />
+            : <ProfileInfoFields profile={props.profile} status={props.status} updateStatus={props.updateStatus} />}
+        </div>
+        {props.isOwner && <div>
+          <button onClick={goToEditMode} className={styles.editBtn}>
+            <img className={styles.editIconImg} src={editIcon} alt="" />
+          </button>
+        </div>}
       </div>
 
 
-      {props.isOwner && <div>
-        <button onClick={() => { setEditMode(!editMode) }} className={styles.editBtn}>
-          <img className={styles.editIconImg} src={editIcon} alt="" />
-        </button>
-      </div>}
+
 
     </div>
   );
