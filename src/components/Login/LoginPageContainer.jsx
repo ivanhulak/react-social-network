@@ -5,12 +5,13 @@ import { login } from '../../redux/auth-reducer';
 
 const LoginPageContainer = (props) => {
 
-    return <LoginPage login={props.login} isAuth={props.isAuth} userId={props.userId}/>
+    return <LoginPage login={props.login} isAuth={props.isAuth} userId={props.userId} captchaURL={props.captchaURL}/>
 }
 
 const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
-    userId: state.auth.userId
+    userId: state.auth.userId,
+    captchaURL: state.auth.captchaURL
 })
 
 export default connect(mapStateToProps, {login})(LoginPageContainer);

@@ -25,6 +25,11 @@ const LoginForm = (props) => {
          <div className={styles.rememberMe}>
             <Field type="checkbox" name='rememberMe' component='input' />Remember me
          </div>
+         {props.captchaURL && <div>
+            <img src={props.captchaURL} alt="" />
+            <Field placeholder='anti-bot symbols' type="text" name='captcha'
+               component={Input} validate={[required]} />
+         </div>}
          <div className={styles.buttons}>
             <button className={styles.formBtn} type="submit" disabled={submitting}>Sign in</button>
             <button className={styles.formBtn} type="button" disabled={pristine || submitting}
