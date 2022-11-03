@@ -27,11 +27,14 @@ class ProfileContainer extends React.Component {
       this.refreshProfile();
     }
   }
+  // I can edit only my profile (cannot edit others)
+  // some Id in URL -- it means I am not an owner (but when those Id in Url === my id --> I am owner ) 
+  isOwner = !(this.props.params.userId && (Number(this.props.params.userId) !== this.props.userId))
 
   render() {
     return <Profile {...this.props} profile={this.props.profile} uploadPhoto={this.props.uploadPhoto}
-      status={this.props.status} updateStatus={this.props.updateStatus} isOwner={!this.props.params.userId}
-      upgradeProfile={this.props.upgradeProfile} loadDataToProfileDataForm={this.props.loadDataToProfileDataForm}/>
+      status={this.props.status} updateStatus={this.props.updateStatus} isOwner={this.isOwner}
+      upgradeProfile={this.props.upgradeProfile} loadDataToProfileDataForm={this.props.loadDataToProfileDataForm} />
   }
 }
 

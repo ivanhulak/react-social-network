@@ -7,6 +7,7 @@ export const SET_STATUS = 'my-social-network/profile/SET_STATUS';
 export const UPLOAD_PHOTO_SUCCESS = 'my-social-network/profile/UPLOAD_PHOTO_SUCCESS';
 export const UPGRADE_PROFILE_SUCCESS = 'my-social-network/profile/UPGRADE_PROFILE_SUCCESS';
 export const LOAD = 'my-social-network/profile/LOAD';
+export const CATCH_ERRORS_SUCCESS = 'my-social-network/profile/CATCH_ERRORS_SUCCESS';
 
 let initialState = {
     posts: [
@@ -15,7 +16,8 @@ let initialState = {
         { id: 3, postText: 'React app', likes: 1, comments: 5, photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
     ],
     profile: null,
-    status: ''
+    status: '',
+    errorsData: {},
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -44,6 +46,8 @@ const profileReducer = (state = initialState, action) => {
             return { ...state, profile: { ...state.profile, photos: action.photos } }
         case LOAD:
             return { ...state, profile: { ...state.profile, profile: action.data } }
+        case CATCH_ERRORS_SUCCESS:
+            return { ...state, errorsData: action.data }
         default:
             return state;
     }
@@ -55,6 +59,7 @@ export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({ type: SET_STATUS, status });
 export const uploadPhotoSuccess = (photos) => ({ type: UPLOAD_PHOTO_SUCCESS, photos });
 export const loadDataToProfileDataForm = (data) => ({ type: LOAD, data });
+export const catchErrorSuccess = (data) => ({ type: CATCH_ERRORS_SUCCESS, data });
 
 // Thunk Creators
 export const setProfile = (userId) => async (dispatch) => {
@@ -66,10 +71,15 @@ export const getStatus = (userId) => async (dispatch) => {
     dispatch(setStatus(data));
 }
 export const updateStatus = (status) => async (dispatch) => {
-    let response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === 0) {
-        dispatch(setStatus(status));
+    try {
+        let response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status));
+        }
+    } catch (error) {
+        dispatch(catchErrors(error.response.status, error.response.data.message, error.code))
     }
+
 }
 export const uploadPhoto = (file) => async (dispatch) => {
     let response = await profileAPI.uploadPhoto(file)
@@ -83,6 +93,10 @@ export const upgradeProfile = (profileData) => async (dispatch, getState) => {
     if (response.data.resultCode === 0) {
         dispatch(setProfile(userId));
     }
+}
+export const catchErrors = (status, message, statusCode) => (dispatch) => {
+    const data = { status, message, statusCode }
+    dispatch(catchErrorSuccess(data));
 }
 
 export default profileReducer;
