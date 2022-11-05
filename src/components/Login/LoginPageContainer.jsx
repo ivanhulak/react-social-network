@@ -1,11 +1,11 @@
 import React from "react";
 import LoginPage from './LoginPage';
 import { connect } from "react-redux";
-import { login } from '../../redux/auth-reducer';
+import { login } from '../../redux/auth-reducer.ts';
 
 const LoginPageContainer = (props) => {
 
-    return <LoginPage login={props.login} isAuth={props.isAuth} userId={props.userId} captchaURL={props.captchaURL}/>
+    return <LoginPage login={props.login} isAuth={props.isAuth} userId={props.userId} captchaURL={props.captchaURL} />
 }
 
 const mapStateToProps = (state) => ({
@@ -14,4 +14,4 @@ const mapStateToProps = (state) => ({
     captchaURL: state.auth.captchaURL
 })
 
-export default connect(mapStateToProps, {login})(LoginPageContainer);
+export default connect(mapStateToProps, { login })(LoginPageContainer);

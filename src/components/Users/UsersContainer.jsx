@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
     setIsFetching, setFollowingInProgress, requestUsers,
     followSuccess, unfollowSuccess
-} from "../../redux/users-reducer";
+} from "../../redux/users-reducer.ts";
 import Users from './Users';
 import Preloader from "../../common/Preloader";
 import { compose } from "redux";

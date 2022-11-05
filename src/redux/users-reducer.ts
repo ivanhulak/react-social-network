@@ -1,5 +1,6 @@
 import { usersAPI } from "../DAL/api.js";
 import { updateObjectInArray } from "../common/object-helpers";
+import { UsersType } from "../types/types.js";
 
 const FOLLOW = 'my-social-network/users/FOLLOW';
 const UNFOLLOW = 'my-social-network/users/UNFOLLOW';
@@ -10,15 +11,16 @@ const SET_IS_FETCHING = 'my-social-network/users/SET_IS_FETCHING';
 const SET_FOLLOWING_IN_PROGRESS = 'my-social-network/users/SET_FOLLOWING_IN_PROGRESS';
 
 let initialState = {
-    users: [],
+    users: [] as Array<UsersType>,
     totalItemsCount: 0,
     pageSize: 9,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: [],
+    followingInProgress: [] as Array<number> // Array of users id-s
 }
+type InitialStateType = typeof initialState
 
-const userReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -49,18 +51,27 @@ const userReducer = (state = initialState, action) => {
             return state;
     }
 }
-
-export const followSuccess = (userId) => ({ type: FOLLOW, userId });
-export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId });
-export const setUsers = (users) => ({ type: SET_USERS, users });
-export const setCurrentPage = (pageNumber) => ({ type: SET_CURRENT_PAGE, pageNumber });
-export const setTotalUserCount = (totalCount) => ({ type: SET_TOTAL_USER_COUNT, totalCount });
-export const setIsFetching = (isFetching) => ({ type: SET_IS_FETCHING, isFetching });
-export const setFollowingInProgress = (isFetching, userId) => ({
+// Types for Action Creators
+type FollowSuccessActionType = { type: typeof FOLLOW, userId: number }
+type UnfollowSuccessActionType = { type: typeof UNFOLLOW, userId: number }
+type SetUsersActionType = { type: typeof SET_USERS, users: UsersType }
+type SetCurrentPageActionType = { type: typeof SET_CURRENT_PAGE, pageNumber: number }
+type SetTotalUserCountActionType = { type: typeof SET_TOTAL_USER_COUNT, totalCount: number }
+type SetIsFetchingActionType = { type: typeof SET_IS_FETCHING, isFetching: boolean }
+type SetFollowingInProgressActionType = { type: typeof SET_FOLLOWING_IN_PROGRESS, isFetching: boolean, userId: number }
+// Action Creators
+export const followSuccess = (userId: number):FollowSuccessActionType => ({ type: FOLLOW, userId });
+export const unfollowSuccess = (userId: number):UnfollowSuccessActionType => ({ type: UNFOLLOW, userId });
+export const setUsers = (users: UsersType):SetUsersActionType => ({ type: SET_USERS, users });
+export const setCurrentPage = (pageNumber: number):SetCurrentPageActionType => ({ type: SET_CURRENT_PAGE, pageNumber });
+export const setTotalUserCount = (totalCount: number):SetTotalUserCountActionType => ({ type: SET_TOTAL_USER_COUNT, totalCount });
+export const setIsFetching = (isFetching: boolean):SetIsFetchingActionType => ({ type: SET_IS_FETCHING, isFetching });
+export const setFollowingInProgress = (isFetching: boolean, userId: number):SetFollowingInProgressActionType => ({
     type: SET_FOLLOWING_IN_PROGRESS, isFetching, userId
 });
 
-export const requestUsers = (page, pageSize) => async (dispatch) => {
+// Thunk Creators
+export const requestUsers = (page: number, pageSize: number) => async (dispatch: any) => {
     dispatch(setIsFetching(true));
     dispatch(setCurrentPage(page));
     let data = await usersAPI.getUsers(page, pageSize)
