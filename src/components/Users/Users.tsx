@@ -5,18 +5,17 @@ import Paginator from '../../common/Pagination/Paginator';
 import { UsersType } from "../../types/types";
 
 type PropsType = {
-    isFetching: boolean,
-    setIsFetching: (isFetching: boolean) => void,
-    setFollowingInProgress: any,
-    followingInProgress: Array<number>,
-    followSuccess: () => void,
-    unfollowSuccess: () => void,
-    currentPage: number,
-    totalItemsCount: number,
-    pageSize: number,
-    onPageChanged: (pageNumber:number) => void,
-    portionSize: number,
     users: Array<UsersType>
+    isFetching: boolean
+    setIsFetching: (isFetching: boolean) => void
+    setFollowingInProgress: (isFetching: boolean, userId: number) => void
+    followingInProgress: Array<number>
+    followSuccess: (userId: number) => void
+    unfollowSuccess: (userId: number) => void
+    currentPage: number
+    totalItemsCount: number
+    onPageChanged: (pageNumber: number) => void
+    pageSize: number
 }
 const Users: React.FC<PropsType> = (props) => {
     return (
@@ -42,6 +41,5 @@ const Users: React.FC<PropsType> = (props) => {
         </div>
     );
 }
-
 
 export default Users;

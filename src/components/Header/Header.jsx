@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Header.module.css';
-import logo from './../../images/logo_SN.jpg';
+import logo from '../../assets/images/logo_SN.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Header = (props) => {

@@ -11,9 +11,9 @@ let initialState = {
     isAuth: false,
     captchaURL: null as string | null,
 }
-type initialStateType = typeof initialState;
+type InitialStateType = typeof initialState;
 
-const authReducer = (state = initialState, action: any): initialStateType => {
+const authReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case AUTH_USER_PROFILE:
             return { ...state, ...action.payload }
@@ -32,11 +32,10 @@ type AuthUserProfilePayloadType = {
 }
 type AuthUserProfileActionType = { type: typeof AUTH_USER_PROFILE, payload: AuthUserProfilePayloadType }
 type SetCaptchaURLActionType = { type: typeof SET_CAPTCHA_URL, url: string }
-
 // Action Creators
-export const authUserProfile = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): AuthUserProfileActionType => ({ type: AUTH_USER_PROFILE, payload: { userId, email, login, isAuth } })
+export const authUserProfile = (userId: number | null, email: string | null, login: string | null, 
+        isAuth: boolean): AuthUserProfileActionType => ({ type: AUTH_USER_PROFILE, payload: { userId, email, login, isAuth } })
 export const setCaptchaURL = (url: string): SetCaptchaURLActionType => ({ type: SET_CAPTCHA_URL, url })
-
 
 // Thunk Creators
 export const AuthMe = () => async (dispatch: any) => {

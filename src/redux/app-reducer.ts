@@ -19,16 +19,10 @@ const appReducer = (state = initialState, action: any): InitialStateType => {
             return state;
     }
 }
-type initializedSuccessActionType = {
-    type: typeof INITIALIZED_SUCCESS
-}
-type handleErrorSuccessActionType = {
-    type: typeof GLOBAL_ERROR,
-    message: string
-}
+type initializedSuccessActionType = { type: typeof INITIALIZED_SUCCESS }
+type handleErrorSuccessActionType = { type: typeof GLOBAL_ERROR, message: string }
 export const initializedSuccess = (): initializedSuccessActionType => ({ type: INITIALIZED_SUCCESS })
 export const handleErrorSuccess = (message: string): handleErrorSuccessActionType => ({ type: GLOBAL_ERROR, message })
-
 
 export const initializeApp = () => (dispatch: any) => {
     let promise = dispatch(AuthMe());

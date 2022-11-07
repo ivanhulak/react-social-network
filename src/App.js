@@ -4,7 +4,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import Navbar from "./components/Navbar/Navbar";
 import LoginPageContainer from "./components/Login/LoginPageContainer.jsx";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { initializeApp, handleError } from './redux/app-reducer.ts';
+import { initializeApp, handleError } from './redux/app-reducer';
 import { connect, Provider } from "react-redux";
 import { compose } from "redux";
 import { withLocationAndMatch } from "./components/HOC/withLocationAndMatch";

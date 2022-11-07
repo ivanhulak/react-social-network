@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
     setIsFetching, setFollowingInProgress, requestUsers,
     followSuccess, unfollowSuccess
-} from "../../redux/users-reducer.ts";
+} from "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../../common/Preloader";
 import { compose } from "redux";
@@ -11,16 +11,33 @@ import {
     getCurrentPage, getFollowingInProgress, getIsFetching,
     getPageSize, getTotalItemsCount, getUsers
 } from "../../redux/selectors/users-selectors";
+import { UsersType } from "../../types/types";
+import { AppStateType } from "../../redux/redux-store";
 
-class UsersAPIComponent extends React.Component {
+type PropsType = MapStateToPropsType & MapDispatchToPropsType
+type MapStateToPropsType = {
+    totalItemsCount: number
+    users: Array<UsersType>
+    followingInProgress: Array<number>
+    isFetching: boolean
+    currentPage: number
+    pageSize: number
+}
+type MapDispatchToPropsType = {
+    requestUsers: (page: number, pageSize: number) => void
+    setIsFetching: (isFetching: boolean) => void
+    setFollowingInProgress: (isFetching: boolean, userId: number) => void
+    followSuccess: (userId: number) => void
+    unfollowSuccess: (userId: number) => void
+}
+
+class UsersAPIComponent extends React.Component<PropsType> {
     componentDidMount() {
         this.props.requestUsers(this.props.currentPage, this.props.pageSize);
     }
-
-    onPageChanged = (page) => {
+    onPageChanged = (page: number) => {
         this.props.requestUsers(page, this.props.pageSize)
     }
-
     render() {
         return <>
             {this.props.isFetching ? <Preloader /> : null}
@@ -39,7 +56,7 @@ class UsersAPIComponent extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         users: getUsers(state),
         totalItemsCount: getTotalItemsCount(state),
@@ -51,7 +68,8 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {
+    // TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultStateType
+    connect <MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
         setIsFetching, setFollowingInProgress,
         requestUsers, followSuccess, unfollowSuccess
     })

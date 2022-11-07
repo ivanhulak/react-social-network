@@ -81,7 +81,7 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
         if (response.data.resultCode === 0) {
             dispatch(setStatus(status));
         }
-    } catch (error) {
+    } catch (error: any) {
         dispatch(catchErrors(error.response.status, error.response.data.message, error.code))
     }
 }
