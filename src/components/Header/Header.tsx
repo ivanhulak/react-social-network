@@ -3,22 +3,25 @@ import styles from './Header.module.css';
 import logo from '../../assets/images/logo_SN.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Header = (props) => {
+type PropsType = {
+  userId: number | null, login: string | null, logout: () => void
+}
+const Header: React.FC<PropsType> = ({userId, login, logout}) => {
 
   let navigate = useNavigate();
   const routeChange = () => {
-    let path = `/profile/${props.userId}`;
+    let path = `/profile/${userId}`;
     navigate(path);
   }
 
   return (
     <header className={styles.header}>
       <img src={logo} alt="Logotype" />
-      {props.login
+      {login
         ? <div className={styles.headerInnerRow}>
-          <button onClick={routeChange}>{props.login}</button>
+          <button onClick={routeChange}>{login}</button>
           <div>
-            <button onClick={props.logout}>logout</button>
+            <button onClick={logout}>logout</button>
           </div>
         </div>
         : <div>

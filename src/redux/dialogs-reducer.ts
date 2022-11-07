@@ -1,8 +1,8 @@
 export const SEND_MESSAGE = 'my-social-network/dialogs/SEND_MESSAGE';
 export const DELETE_MESSAGE = 'my-social-network/dialogs/DELETE_MESSAGE';
 
-type DialogsType = { id: number, name: string, photo: string}
-type MesaggesType = { id: number, message: string }
+export type DialogsType = { id: number, name: string, photo: string}
+export type MessagesType = { id: number, message: string }
 
 let initialState = {
     dialogs: [
@@ -18,7 +18,7 @@ let initialState = {
         { id: 3, message: 'magic?' },
         { id: 4, message: 'Hello!' },
         { id: 5, message: 'Yo' },
-    ] as Array<MesaggesType>,
+    ] as Array<MessagesType>,
 }
 type InitialStateType = typeof initialState
 
@@ -37,10 +37,10 @@ const dialogsReducer = (state = initialState, action: any):InitialStateType => {
     }
 }
 
-type sendMessageActionType = { type: typeof SEND_MESSAGE, newMessageText: string }
-type deleteMessageActionType = { type: typeof DELETE_MESSAGE, messageId: number }
+type SendMessageActionType = { type: typeof SEND_MESSAGE, newMessageText: string }
+type DeleteMessageActionType = { type: typeof DELETE_MESSAGE, messageId: number }
 
-export const sendMessage = (newMessageText: string): sendMessageActionType => ({ type: SEND_MESSAGE, newMessageText });
-export const deleteMessage = (messageId: number): deleteMessageActionType => ({ type: DELETE_MESSAGE, messageId });
+export const sendMessage = (newMessageText: string): SendMessageActionType => ({ type: SEND_MESSAGE, newMessageText });
+export const deleteMessage = (messageId: number): DeleteMessageActionType => ({ type: DELETE_MESSAGE, messageId });
 
 export default dialogsReducer;
