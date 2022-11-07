@@ -16,10 +16,7 @@ type initialStateType = typeof initialState;
 const authReducer = (state = initialState, action: any): initialStateType => {
     switch (action.type) {
         case AUTH_USER_PROFILE:
-            return {
-                ...state,
-                ...action.payload,
-            }
+            return { ...state, ...action.payload }
         case SET_CAPTCHA_URL:
             return { ...state, captchaURL: action.url }
         default:

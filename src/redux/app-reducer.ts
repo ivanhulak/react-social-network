@@ -1,18 +1,15 @@
-import { AuthMe } from "./auth-reducer.ts";
+import { AuthMe } from "./auth-reducer";
 
 const INITIALIZED_SUCCESS = 'my-social-network/app/INITIALIZED_SUCCESS';
 const GLOBAL_ERROR = 'my-social-network/app/GLOBAL_ERROR';
 
-type initialStateType = {
-    initialized: boolean,
-    globalError: string,
-}
-let initialState: initialStateType = {
+let initialState = {
     initialized: false,
     globalError: '',
 }
+type InitialStateType = typeof initialState;
 
-const appReducer = (state = initialState, action: any): initialStateType => {
+const appReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case INITIALIZED_SUCCESS:
             return { ...state, initialized: true }

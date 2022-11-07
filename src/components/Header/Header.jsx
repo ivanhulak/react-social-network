@@ -16,7 +16,7 @@ const Header = (props) => {
       <img src={logo} alt="Logotype" />
       {props.login
         ? <div className={styles.headerInnerRow}>
-          <button onClick={routeChange}> {props.login} </button>
+          <button onClick={routeChange}>{props.login}</button>
           <div>
             <button onClick={props.logout}>logout</button>
           </div>

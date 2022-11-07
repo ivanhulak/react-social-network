@@ -1,6 +1,6 @@
 import { usersAPI } from "../DAL/api.js";
 import { updateObjectInArray } from "../common/object-helpers";
-import { UsersType } from "../types/types.js";
+import { UsersType } from "../types/types";
 
 const FOLLOW = 'my-social-network/users/FOLLOW';
 const UNFOLLOW = 'my-social-network/users/UNFOLLOW';

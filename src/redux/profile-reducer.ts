@@ -10,7 +10,6 @@ export const UPGRADE_PROFILE_SUCCESS = 'my-social-network/profile/UPGRADE_PROFIL
 export const LOAD = 'my-social-network/profile/LOAD';
 export const CATCH_ERRORS_SUCCESS = 'my-social-network/profile/CATCH_ERRORS_SUCCESS';
 
-
 let initialState = {
     posts: [
         { id: 1, postText: 'Hello! It is Ivan Hulak!', likes: 20, comments: 2, photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
@@ -21,9 +20,9 @@ let initialState = {
     status: '',
     errorsData: {},
 }
-type initialStateType = typeof initialState
+type InitialStateType = typeof initialState
 
-const profileReducer = (state = initialState, action: any): initialStateType => {
+const profileReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
@@ -33,14 +32,9 @@ const profileReducer = (state = initialState, action: any): initialStateType => 
                 comments: 2,
                 photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png'
             }
-            return {
-                ...state,
-                posts: [...state.posts, newPost],
-            }
+            return { ...state, posts: [...state.posts, newPost] }
         case DELETE_POST:
-            return {
-                ...state, posts: state.posts.filter(post => post.id !== action.postId)
-            }
+            return { ...state, posts: state.posts.filter(post => post.id !== action.postId) }
         case SET_USER_PROFILE:
             return { ...state, profile: action.profile }
         case SET_STATUS:
@@ -90,7 +84,6 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
     } catch (error) {
         dispatch(catchErrors(error.response.status, error.response.data.message, error.code))
     }
-
 }
 export const uploadPhoto = (file: Object) => async (dispatch: any) => {
     let response = await profileAPI.uploadPhoto(file)

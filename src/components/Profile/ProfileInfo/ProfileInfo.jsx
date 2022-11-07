@@ -47,10 +47,6 @@ const ProfileInfo = (props) => {
           </button>
         </div>}
       </div>
-
-
-
-
     </div>
   );
 }

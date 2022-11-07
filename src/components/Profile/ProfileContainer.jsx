@@ -1,7 +1,9 @@
 import React from "react";
 import Profile from "./Profile";
-import { setProfile, getStatus, updateStatus, uploadPhoto, 
-         upgradeProfile, loadDataToProfileDataForm } from "../../redux/profile-reducer.ts";
+import {
+  setProfile, getStatus, updateStatus, uploadPhoto,
+  upgradeProfile, loadDataToProfileDataForm
+} from "../../redux/profile-reducer.ts";
 import { connect } from "react-redux";
 import { withLocationAndMatch } from '../HOC/withLocationAndMatch';
 import { withAuthRedirect } from '../HOC/withAuthRedirect';
