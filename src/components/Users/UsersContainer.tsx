@@ -69,8 +69,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 export default compose(
     // TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultStateType
-    connect <MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
-        setIsFetching, setFollowingInProgress,
-        requestUsers, followSuccess, unfollowSuccess
-    })
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, 
+        { setIsFetching, setFollowingInProgress, requestUsers, followSuccess, unfollowSuccess })
 )(UsersAPIComponent)
