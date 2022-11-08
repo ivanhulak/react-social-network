@@ -1,5 +1,7 @@
-import { profileAPI } from '../DAL/api';
+import { ThunkAction } from 'redux-thunk';
+import { profileAPI, ResponseResultCodes } from '../DAL/api';
 import { PhotosType, PostsType, ProfileType } from '../types/types';
+import { AppStateType } from './redux-store';
 
 export const ADD_POST = 'my-social-network/profile/ADD_POST';
 export const DELETE_POST = 'my-social-network/profile/DELETE_POST';
@@ -22,7 +24,7 @@ let initialState = {
 }
 type InitialStateType = typeof initialState
 
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
@@ -57,6 +59,9 @@ type SetStatusActionType = { type: typeof SET_STATUS, status: string }
 type UploadPhotoSuccessActionType = { type: typeof UPLOAD_PHOTO_SUCCESS, photos: PhotosType }
 type LoadDataToProfileDataFormActionType = { type: typeof LOAD, profile: ProfileType }
 type CatchErrorSuccessActionType = { type: typeof CATCH_ERRORS_SUCCESS, data: any }
+// Actions Types
+type ActionTypes = AddPostActionType | DeletePostActionType | SetUserProfileActionType | SetStatusActionType | 
+                   UploadPhotoSuccessActionType | LoadDataToProfileDataFormActionType | CatchErrorSuccessActionType
 // Action creators
 export const addPost = (newPostText: string): AddPostActionType => ({ type: ADD_POST, newPostText });
 export const deletePost = (postId: number): DeletePostActionType => ({ type: DELETE_POST, postId }); // for testing
@@ -67,40 +72,41 @@ export const loadDataToProfileDataForm = (profile: ProfileType): LoadDataToProfi
 export const catchErrorSuccess = (data: any): CatchErrorSuccessActionType => ({ type: CATCH_ERRORS_SUCCESS, data });
 
 // Thunk Creators
-export const setProfile = (userId: number) => async (dispatch: any) => {
+type ThunkType = ThunkAction< Promise<void>, AppStateType, unknown, ActionTypes>
+export const setProfile = (userId: number): ThunkType => async (dispatch) => {
     let data = await profileAPI.getProfile(userId)
     dispatch(setUserProfile(data));
 }
-export const getStatus = (userId: number) => async (dispatch: any) => {
+export const getStatus = (userId: number): ThunkType => async (dispatch) => {
     let data = await profileAPI.getStatus(userId)
     dispatch(setStatus(data));
 }
-export const updateStatus = (status: string) => async (dispatch: any) => {
+export const updateStatus = (status: string): ThunkType => async (dispatch) => {
     try {
-        let response = await profileAPI.updateStatus(status)
-        if (response.data.resultCode === 0) {
+        let data = await profileAPI.updateStatus(status)
+        if (data.resultCode === ResponseResultCodes.Success) {
             dispatch(setStatus(status));
         }
     } catch (error: any) {
         dispatch(catchErrors(error.response.status, error.response.data.message, error.code))
     }
 }
-export const uploadPhoto = (file: Object) => async (dispatch: any) => {
-    let response = await profileAPI.uploadPhoto(file)
-    if (response.data.resultCode === 0) {
-        dispatch(uploadPhotoSuccess(response.data.data.photos));
+export const uploadPhoto = (file: any): ThunkType => async (dispatch) => {
+    let data = await profileAPI.uploadPhoto(file)
+    if (data.resultCode === ResponseResultCodes.Success) {
+        dispatch(uploadPhotoSuccess(data.data.photos));
     }
 }
-export const upgradeProfile = (profileData: ProfileType) => async (dispatch: any, getState: any) => {
-    const userId = getState().auth.userId;
-    let response = await profileAPI.upgradeProfile(profileData)
-    if (response.data.resultCode === 0) {
-        dispatch(setProfile(userId));
+export const upgradeProfile = (profileData: ProfileType): ThunkType => async (dispatch, getState: any) => {
+    const userId = getState().auth.userId
+    let data = await profileAPI.upgradeProfile(profileData)
+    if (data.resultCode === ResponseResultCodes.Success) {
+        dispatch(setProfile(userId))
     }
 }
-export const catchErrors = (status: string, message: string, statusCode: number) => (dispatch: any) => {
+export const catchErrors = (status: string, message: string, statusCode: number): ThunkAction<void, AppStateType, unknown, ActionTypes> => (dispatch) => {
     const data = { status, message, statusCode }
-    dispatch(catchErrorSuccess(data));
+    dispatch(catchErrorSuccess(data))
 }
 
-export default profileReducer;
+export default profileReducer

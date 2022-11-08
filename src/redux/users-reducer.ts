@@ -1,10 +1,8 @@
-import { usersAPI } from "../DAL/api.js";
+import { usersAPI } from "../DAL/api";
 import { updateObjectInArray } from "../common/object-helpers";
 import { UsersType } from "../types/types";
-// import { Dispatch } from "redux";
 import { AppStateType } from "./redux-store.js";
 import { ThunkAction } from "redux-thunk";
-
 
 const FOLLOW = 'my-social-network/users/FOLLOW';
 const UNFOLLOW = 'my-social-network/users/UNFOLLOW';
@@ -95,7 +93,8 @@ export const setFollowingInProgress = (isFetching: boolean, userId: number): Set
 // }
 // 2 variant
 // Thunk types with ThunkAction
-export const requestUsers = (page: number, pageSize: number): ThunkAction< Promise<void>, AppStateType, unknown, ActionsTypes> => {
+type ThunkType = ThunkAction< Promise<void>, AppStateType, unknown, ActionsTypes>
+export const requestUsers = (page: number, pageSize: number): ThunkType => {
     return async (dispatch) => {
         dispatch(setIsFetching(true));
         dispatch(setCurrentPage(page));
