@@ -4,6 +4,7 @@ import styles from './ProfileInfo.module.css';
 import ProfileInfoFields from "./ProfileInfoFields/ProfileInfoFields";
 import editIcon from '../../../assets/icons/edit_icon.svg';
 import ProfileDataForm from "./ProfileDataForm";
+import { EditButton } from "../../../common/Buttons/EditButton/EditButton";
 
 
 const ProfileInfo = (props) => {
@@ -41,11 +42,9 @@ const ProfileInfo = (props) => {
             ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} loadDataToProfileDataForm={props.loadDataToProfileDataForm} />
             : <ProfileInfoFields profile={props.profile} status={props.status} updateStatus={props.updateStatus} />}
         </div>
-        {props.isOwner && <div>
-          <button onClick={goToEditMode} className={styles.editBtn}>
-            <img className={styles.editIconImg} src={editIcon} alt="" />
-          </button>
-        </div>}
+        {props.isOwner && <EditButton onClickCallback={goToEditMode}>
+          <img className={styles.editIconImg} src={editIcon} alt="" />
+        </EditButton>}
       </div>
     </div>
   );

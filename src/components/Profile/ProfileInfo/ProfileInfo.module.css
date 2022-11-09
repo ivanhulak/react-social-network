@@ -33,22 +33,6 @@
     border-radius: 50%;
 }
 
-/* Edit Btn */
-.editBtn {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    transition: all .3s ease;
-}
-
-.editBtn:active {
-    transform: translate(5px, 5px);
-}
-
 .editIconImg {
     width: 30px;
     margin: 0;

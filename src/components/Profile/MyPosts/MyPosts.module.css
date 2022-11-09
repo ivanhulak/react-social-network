@@ -1,31 +1,14 @@
-.myPosts{
+.myPosts {
     padding: 0px 30px;
 }
-.myPosts textarea{
+
+.myPosts textarea {
     width: 350px;
     height: 50px;
     resize: vertical;
     margin: 0px 0px 10px 0px;
 }
 
-.myPosts h1{
+.myPosts h1 {
     margin: 0px 0px 10px 0px;
-}
-.myPosts button{
-    background-color: #eee;
-    font-size: 20px;
-    border: 1px solid #000;
-    border-radius: 24px;
-    padding: 5px 15px;
-    cursor: pointer;
-    transition: ease 0.3s all;
-}
-.myPosts button:hover{
-    background-color: #000;
-    color: #fff;
-}
-.myPosts button:active{
-    background-color: #666;
-    color: #fff;
-    transform: translate(2px, 3px);
 }

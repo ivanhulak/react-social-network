@@ -2,11 +2,12 @@ import React from "react";
 import styles from './Header.module.css';
 import logo from '../../assets/images/logo_SN.jpg';
 import { Link, useNavigate } from 'react-router-dom';
+import { SimpleBtn } from "../../common/Buttons/SimpleButton/SimpleBtn";
 
 type PropsType = {
   userId: number | null, login: string | null, logout: () => void
 }
-const Header: React.FC<PropsType> = ({userId, login, logout}) => {
+const Header: React.FC<PropsType> = ({ userId, login, logout }) => {
 
   let navigate = useNavigate();
   const routeChange = () => {
@@ -19,9 +20,9 @@ const Header: React.FC<PropsType> = ({userId, login, logout}) => {
       <img src={logo} alt="Logotype" />
       {login
         ? <div className={styles.headerInnerRow}>
-          <button onClick={routeChange}>{login}</button>
+          <SimpleBtn btn_text={login} onClickCallback={routeChange} />
           <div>
-            <button onClick={logout}>logout</button>
+            <SimpleBtn btn_text='logout' onClickCallback={logout} />
           </div>
         </div>
         : <div>

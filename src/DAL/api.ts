@@ -8,39 +8,39 @@ let instance = axios.default.create({
         'API-KEY': '0f7ca0a1-1142-4ef6-a871-38727982b107'
     }
 })
-export enum ResponseResultCodes{
+export enum ResultCodesEnum{
     Success = 0,
     Error = 1
 }
-export enum GetCaptchaResultCode{
-    GetCaptchaUrl = 10
+export enum CaptchaResultCodeEnum{
+    CaptchaIsRequired = 10
 }
 
 // ******************  Users API  ******************
-type GetUsersType = {
+type GetUsersResponseType = {
     items: Array<UsersType>
     totalCount: number
     error: string | null
 }
 export const usersAPI = {
     getUsers(currentPage: number = 1, pageSize: number = 9) {
-        return instance.get<GetUsersType>(`users?count=${pageSize}&page=${currentPage}`).then(response => response.data)
+        return instance.get<GetUsersResponseType>(`users?count=${pageSize}&page=${currentPage}`).then(response => response.data)
     },
 }
 
 // ******************  Profile API  ******************
-type UpdateProfileStatusType = {
-    resultCode: number
+type ProfileStatusResponseType = {
+    resultCode: ResultCodesEnum
     messages: Array<string>
     data: any
 }
-type UpdateProfileType = {
-    resultCode: number
+type UpdateProfileResponseType = {
+    resultCode: ResultCodesEnum
     messages: Array<string>
     data: any
 }
-type UpgradePhotoType = {
-    resultCode: number
+type UpgradePhotoResponseType = {
+    resultCode: ResultCodesEnum
     messages: Array<string>
     data: {photos: PhotosType}
 }
@@ -53,59 +53,59 @@ export const profileAPI = {
         return instance.get(`profile/status/${userId}`).then(response => response.data)
     },
     updateStatus(status: string) {
-        return instance.put<UpdateProfileStatusType>('profile/status', { status: status })
+        return instance.put<ProfileStatusResponseType>('profile/status', { status: status })
             .then(response => response.data);
     },
     uploadPhoto(photoFile: any) {
         const formData = new FormData();
         formData.append('image', photoFile)
-        return instance.put<UpgradePhotoType>('profile/photo', formData, {
+        return instance.put<UpgradePhotoResponseType>('profile/photo', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(response => response.data)
     },
     upgradeProfile(profileData: ProfileType) {
-        return instance.put<UpdateProfileType>('profile', profileData).then(response => response.data)
+        return instance.put<UpdateProfileResponseType>('profile', profileData).then(response => response.data)
     },
 
 }
 
 // ******************  Auth API  ******************
-type GetAuthMeType = {
+type AuthMeResponseType = {
     data: {
         id: number,
         email: string,
         login: string
     }
-    resultCode: number
+    resultCode: ResultCodesEnum | CaptchaResultCodeEnum
     messages: Array<string> 
 }
-type LoginType = {
+type LoginResponseType = {
     data: any
-    resultCode: number
+    resultCode: ResultCodesEnum | CaptchaResultCodeEnum
     messages: Array<string> 
 }
-type LogoutType = {
+type LogoutResponseType = {
     data: any
-    resultCode: number
+    resultCode: ResultCodesEnum | CaptchaResultCodeEnum
     messages: Array<string> 
 }
-type GetCaptchaType = {
+type GetCaptchaResponseType = {
     url: string
 }
 export const authAPI = {
     authMe() {
-        return instance.get<GetAuthMeType>('auth/me').then(response => response.data);
+        return instance.get<AuthMeResponseType>('auth/me').then(response => response.data);
     },
     login(email: string, password: string, rememberMe = false, captcha: string | null = null) {
-        return instance.post<LoginType>('auth/login', { email, password, rememberMe, captcha })
+        return instance.post<LoginResponseType>('auth/login', { email, password, rememberMe, captcha })
             .then(response => response.data)
     },
     logout() {
-        return instance.delete<LogoutType>('auth/login').then(response => response.data)
+        return instance.delete<LogoutResponseType>('auth/login').then(response => response.data)
     },
-    getCaptchaUrl() {
-        return instance.get<GetCaptchaType>('security/get-captcha-url').then(response => response.data)
+    CaptchaIsRequired() {
+        return instance.get<GetCaptchaResponseType>('security/get-captcha-url').then(response => response.data)
     }
 }

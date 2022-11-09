@@ -1,4 +1,4 @@
-import { authAPI, GetCaptchaResultCode, ResponseResultCodes } from '../DAL/api';
+import { authAPI, CaptchaResultCodeEnum, ResultCodesEnum, } from '../DAL/api';
 import { stopSubmit } from 'redux-form';
 import { ThunkAction } from 'redux-thunk';
 import { AppStateType } from './redux-store';
@@ -46,17 +46,17 @@ export const setCaptchaURL = (url: string): SetCaptchaURLActionType => ({ type: 
 type ThunkType = ThunkAction< Promise<void>, AppStateType, unknown, ActionsTypes>
 export const AuthMe = (): ThunkType => async (dispatch) => {
     const data = await authAPI.authMe()
-    if (data.resultCode === ResponseResultCodes.Success) {
+    if (data.resultCode === ResultCodesEnum.Success) {
         let { id, email, login } = data.data;
         dispatch(authUserProfile(id, email, login, true));
     }
 }
 export const login = (email: string, password: string, rememberMe: boolean, captcha: null) => async (dispatch: any) => {
     const data = await authAPI.login(email, password, rememberMe, captcha)
-    if (data.resultCode === ResponseResultCodes.Success) {
+    if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(AuthMe());
     } else {
-        if (data.resultCode === GetCaptchaResultCode.GetCaptchaUrl) {
+        if (data.resultCode === CaptchaResultCodeEnum.CaptchaIsRequired) {
             dispatch(getCaptchaUrl());
         }
         let errorMessage = data.messages.length > 0 ? data.messages[0] : 'Common error';
@@ -70,7 +70,7 @@ export const logout = (): ThunkType => async (dispatch) => {
     }
 }
 export const getCaptchaUrl = ():ThunkType => async (dispatch) => {
-    const data = await authAPI.getCaptchaUrl();
+    const data = await authAPI.CaptchaIsRequired();
     dispatch(setCaptchaURL(data.url))
 }
 

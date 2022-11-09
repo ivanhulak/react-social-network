@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import { profileAPI, ResponseResultCodes } from '../DAL/api';
+import { profileAPI, ResultCodesEnum } from '../DAL/api';
 import { PhotosType, PostsType, ProfileType } from '../types/types';
 import { AppStateType } from './redux-store';
 
@@ -84,7 +84,7 @@ export const getStatus = (userId: number): ThunkType => async (dispatch) => {
 export const updateStatus = (status: string): ThunkType => async (dispatch) => {
     try {
         let data = await profileAPI.updateStatus(status)
-        if (data.resultCode === ResponseResultCodes.Success) {
+        if (data.resultCode === ResultCodesEnum.Success) {
             dispatch(setStatus(status));
         }
     } catch (error: any) {
@@ -93,14 +93,14 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
 }
 export const uploadPhoto = (file: any): ThunkType => async (dispatch) => {
     let data = await profileAPI.uploadPhoto(file)
-    if (data.resultCode === ResponseResultCodes.Success) {
+    if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(uploadPhotoSuccess(data.data.photos));
     }
 }
 export const upgradeProfile = (profileData: ProfileType): ThunkType => async (dispatch, getState: any) => {
     const userId = getState().auth.userId
     let data = await profileAPI.upgradeProfile(profileData)
-    if (data.resultCode === ResponseResultCodes.Success) {
+    if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(setProfile(userId))
     }
 }
