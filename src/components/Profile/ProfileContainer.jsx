@@ -1,9 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
-import {
-  setProfile, getStatus, updateStatus, uploadPhoto,
-  upgradeProfile, loadDataToProfileDataForm
-} from "../../redux/profile-reducer.ts";
+import { setProfile, getStatus, updateStatus, uploadPhoto, upgradeProfile } from "../../redux/profile-reducer";
+import { actions } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import { withLocationAndMatch } from '../HOC/withLocationAndMatch';
 import { withAuthRedirect } from '../HOC/withAuthRedirect';
@@ -51,6 +49,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withAuthRedirect,
-  connect(mapStateToProps, { setProfile, getStatus, updateStatus, uploadPhoto, upgradeProfile, loadDataToProfileDataForm }),
-  withLocationAndMatch
-)(ProfileContainer)
+  connect(mapStateToProps, { setProfile, getStatus, updateStatus, uploadPhoto, upgradeProfile, 
+    loadDataToProfileDataForm: actions.loadDataToProfileDataForm }),
+    withLocationAndMatch)(ProfileContainer)

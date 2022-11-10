@@ -1,5 +1,4 @@
-export const SEND_MESSAGE = 'my-social-network/dialogs/SEND_MESSAGE';
-export const DELETE_MESSAGE = 'my-social-network/dialogs/DELETE_MESSAGE';
+import { InferActionsTypes } from "./redux-store";
 
 export type DialogsType = { id: number, name: string, photo: string}
 export type MessagesType = { id: number, message: string }
@@ -22,25 +21,25 @@ let initialState = {
 }
 type InitialStateType = typeof initialState
 
-const dialogsReducer = (state = initialState, action: any):InitialStateType => {
+const dialogsReducer = (state = initialState, action: ActionsTypes):InitialStateType => {
     switch (action.type) {
-        case SEND_MESSAGE:
+        case 'SN/dialogs/SEND_MESSAGE':
             let newMessage = { id: state.messages.length + 1, message: action.newMessageText };
             return {
                 ...state,
                 messages: [...state.messages, newMessage],
             };
-        case DELETE_MESSAGE:
+        case 'SN/dialogs/DELETE_MESSAGE':
             return { ...state, messages: state.messages.filter(m => m.id !== action.messageId) }
         default:
             return state;
     }
 }
 
-type SendMessageActionType = { type: typeof SEND_MESSAGE, newMessageText: string }
-type DeleteMessageActionType = { type: typeof DELETE_MESSAGE, messageId: number }
-
-export const sendMessage = (newMessageText: string): SendMessageActionType => ({ type: SEND_MESSAGE, newMessageText });
-export const deleteMessage = (messageId: number): DeleteMessageActionType => ({ type: DELETE_MESSAGE, messageId });
+type ActionsTypes = InferActionsTypes<typeof actions>
+export const actions = {
+    sendMessage: (newMessageText: string) => ({ type: 'SN/dialogs/SEND_MESSAGE', newMessageText } as const),
+    deleteMessage: (messageId: number) => ({ type: 'SN/dialogs/DELETE_MESSAGE', messageId } as const)
+}
 
 export default dialogsReducer;

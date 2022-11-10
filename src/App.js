@@ -66,7 +66,7 @@ const mapStateToProps = (state) => ({
 
 const AppContainer = compose(withLocationAndMatch, connect(mapStateToProps, { initializeApp, handleError }))(App);
 
-const MySocialNetworkApp = () => {
+export const MySocialNetworkApp = () => {
   return <BrowserRouter>
     <Provider store={store}>
       <AppContainer />

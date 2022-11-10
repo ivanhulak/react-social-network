@@ -1,9 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-    setIsFetching, setFollowingInProgress, requestUsers,
-    followSuccess, unfollowSuccess
-} from "../../redux/users-reducer";
+import { requestUsers } from  "../../redux/users-reducer";
+import { actions } from  "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../../common/Preloader/Preloader";
 import { compose } from "redux";
@@ -67,8 +65,10 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default compose(
-    // TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultStateType
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
-        { setIsFetching, setFollowingInProgress, requestUsers, followSuccess, unfollowSuccess })
+export default compose(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, 
+    { requestUsers,
+    setFollowingInProgress: actions.setFollowingInProgress, 
+    setIsFetching: actions.setIsFetching, 
+    followSuccess: actions.followSuccess, 
+    unfollowSuccess: actions.unfollowSuccess })
 )(UsersAPIComponent)
