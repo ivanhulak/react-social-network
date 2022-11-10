@@ -2,14 +2,14 @@ import React from "react";
 import styles from './App.module.css';
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Navbar from "./components/Navbar/Navbar";
-import LoginPageContainer from "./components/Login/LoginPageContainer.jsx";
+import LoginPageContainer from "./components/Login/LoginPageContainer";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { initializeApp, handleError } from './redux/app-reducer';
 import { connect, Provider } from "react-redux";
 import { compose } from "redux";
 import { withLocationAndMatch } from "./components/HOC/withLocationAndMatch";
 import { withLazyComponent } from "./components/HOC/withLazyComponent";
-import Preloader from "./common/Preloader";
+import Preloader from "./common/Preloader/Preloader";
 import store from './redux/redux-store';
 import { NotFound } from "./components/ErrorPages/NotFound";
 // Use this lazy loading

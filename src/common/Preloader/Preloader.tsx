@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Preloader.module.css';
-import loading from './../assets/images/load.gif'
+import loading from '../../assets/images/load.gif'
 
 const Preloader: React.FC = () => {
     return (

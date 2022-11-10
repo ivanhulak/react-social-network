@@ -13,7 +13,7 @@ const ProfileDataForm = ({ profile, handleSubmit, loadDataToProfileDataForm, pri
       <form onSubmit={handleSubmit}>
          <div>
             <label htmlFor="fullName">Full name</label>
-            {createField("name", "fullName", Input, { type: "text" }, "", [required, maxLength30])}
+            {createField("Name", "fullName", Input, { type: "text" }, "", [required, maxLength30])}
          </div>
          <div>Looking for job:{createField("", "lookingForAJob", Input, { type: "checkbox" }, "", [])}</div>
          <div>

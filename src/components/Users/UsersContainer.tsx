@@ -5,7 +5,7 @@ import {
     followSuccess, unfollowSuccess
 } from "../../redux/users-reducer";
 import Users from './Users';
-import Preloader from "../../common/Preloader";
+import Preloader from "../../common/Preloader/Preloader";
 import { compose } from "redux";
 import {
     getCurrentPage, getFollowingInProgress, getIsFetching,
@@ -69,6 +69,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 export default compose(
     // TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultStateType
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, 
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
         { setIsFetching, setFollowingInProgress, requestUsers, followSuccess, unfollowSuccess })
 )(UsersAPIComponent)
