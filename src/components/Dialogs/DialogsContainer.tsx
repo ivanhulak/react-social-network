@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { AppStateType } from '../../redux/redux-store';
 import { DialogsType, MessagesType } from '../../redux/dialogs-reducer';
 import { getDialogs, getMessages } from '../../redux/selectors/dialogs-selectors';
+import React from 'react';
 
 type MapStateToPropsType = { dialogs: Array<DialogsType>, messages: Array<MessagesType> }
 type MapDispatchToPropsType = { sendMessage: (message: string) => void }
@@ -17,6 +18,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default compose(withAuthRedirect,  
+export default compose<React.ComponentType>(withAuthRedirect,  
     connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, { sendMessage: actions.sendMessage }))
 (Dialogs);

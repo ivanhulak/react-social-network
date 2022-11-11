@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Preloader from "../../../common/Preloader/Preloader";
 import styles from './ProfileInfo.module.css';
 import ProfileInfoFields from "./ProfileInfoFields/ProfileInfoFields";
 import editIcon from '../../../assets/icons/edit_icon.svg';
 import ProfileDataForm from "./ProfileDataForm";
 import { EditButton } from "../../../common/Buttons/EditButton/EditButton";
+import { ProfileInfoPropsType } from "../Profile";
+import { ProfileType } from "../../../types/types";
 
 
-const ProfileInfo = (props) => {
+const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
   const [editMode, setEditMode] = useState(false);
 
   if (!props.profile) {
     return <Preloader />
   }
-  const onAvatarPhotoSelected = (e) => {
-    if (e.target.files.length) {
+  const onAvatarPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
       props.uploadPhoto(e.target.files[0]);
     }
   }
-  const onSubmit = (formData) => {
+  const onSubmit = (formData: any) => {
     console.log(formData);
     props.upgradeProfile(formData);
     setEditMode(false);

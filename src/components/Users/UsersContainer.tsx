@@ -5,14 +5,11 @@ import { actions } from  "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../../common/Preloader/Preloader";
 import { compose } from "redux";
-import {
-    getCurrentPage, getFollowingInProgress, getIsFetching,
-    getPageSize, getTotalItemsCount, getUsers
-} from "../../redux/selectors/users-selectors";
+import { getCurrentPage, getFollowingInProgress, getIsFetching, 
+         getPageSize, getTotalItemsCount, getUsers} from "../../redux/selectors/users-selectors";
 import { UsersType } from "../../types/types";
 import { AppStateType } from "../../redux/redux-store";
 
-type PropsType = MapStateToPropsType & MapDispatchToPropsType
 type MapStateToPropsType = {
     totalItemsCount: number
     users: Array<UsersType>
@@ -29,7 +26,7 @@ type MapDispatchToPropsType = {
     unfollowSuccess: (userId: number) => void
 }
 
-class UsersAPIComponent extends React.Component<PropsType> {
+class UsersAPIComponent extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
     componentDidMount() {
         this.props.requestUsers(this.props.currentPage, this.props.pageSize);
     }

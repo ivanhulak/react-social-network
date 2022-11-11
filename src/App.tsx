@@ -1,25 +1,31 @@
 import React from "react";
 import styles from './App.module.css';
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Preloader from "./common/Preloader/Preloader";
 import Navbar from "./components/Navbar/Navbar";
-import LoginPageContainer from "./components/Login/LoginPageContainer";
+import LoginPage from "./components/Login/LoginPage";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { initializeApp, handleError } from './redux/app-reducer';
 import { connect, Provider } from "react-redux";
 import { compose } from "redux";
 import { withLocationAndMatch } from "./components/HOC/withLocationAndMatch";
 import { withLazyComponent } from "./components/HOC/withLazyComponent";
-import Preloader from "./common/Preloader/Preloader";
-import store from './redux/redux-store';
+import store, { AppStateType } from './redux/redux-store';
 import { NotFound } from "./components/ErrorPages/NotFound";
-// Use this lazy loading
+// Use lazy loading
 const ProfileContainer = withLazyComponent(React.lazy(() => import('./components/Profile/ProfileContainer')));
 const DialogsContainer = withLazyComponent(React.lazy(() => import('./components/Dialogs/DialogsContainer')));
 const UsersContainer = withLazyComponent(React.lazy(() => import('./components/Users/UsersContainer')));
 
-class App extends React.Component {
+type MapStateToPropsType = {
+  initialized: boolean
+  globalError: string
+  errorsData: any
+}
 
-  catchUnhandledErrors = (error) => {
+class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
+
+  catchUnhandledErrors = (error: PromiseRejectionEvent) => {
     this.props.handleError(error.reason.message);
   }
 
@@ -35,36 +41,42 @@ class App extends React.Component {
       return <Preloader />
     }
     return (
-      <div className={styles.Container}>
+      <div className={styles.Container} >
         <div className={styles.wrapper}>
           <HeaderContainer />
-          <Navbar />
+          < Navbar />
           <div className={styles.wrapperContent}>
             {this.props.errorsData && <div>{this.props.errorsData.message}</div>}
             {this.props.globalError && <div>{this.props.globalError}</div>}
-            <Routes>
-              <Route path='/' element={<ProfileContainer />}>
-                <Route path="/profile" element={<ProfileContainer />} />
-                <Route path="/profile/:userId" element={<ProfileContainer />} />
+            < Routes >
+              <Route path='/' element={< ProfileContainer />}>
+                <Route path="/profile" element={< ProfileContainer />} />
+                < Route path="/profile/:userId" element={< ProfileContainer />} />
               </Route>
-              <Route path="/dialogs" element={<DialogsContainer />} />
-              <Route path="/users" element={<UsersContainer />} />
-              <Route path="/login" element={<LoginPageContainer />} />
-              <Route path="*" element={<NotFound />} />
+              < Route path="/dialogs" element={< DialogsContainer />} />
+              < Route path="/users" element={< UsersContainer />} />
+              {/* < Route path="/login" element={< LoginPage />} /> */}
+              < Route path="*" element={< NotFound />} />
             </Routes>
           </div>
         </div>
-      </div>)
+      </div>
+    )
   }
 }
-
-const mapStateToProps = (state) => ({
+type MapDispatchToPropsType = {
+  initializeApp: () => void
+  handleError: (error: any) => void
+}
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
   initialized: state.app.initialized,
   globalError: state.app.globalError,
   errorsData: state.profilePage.errorsData
 })
 
-const AppContainer = compose(withLocationAndMatch, connect(mapStateToProps, { initializeApp, handleError }))(App);
+const AppContainer = compose(withLocationAndMatch,
+  connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
+    { initializeApp, handleError }))(App);
 
 export const MySocialNetworkApp = () => {
   return <BrowserRouter>

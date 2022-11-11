@@ -10,12 +10,15 @@ type PropsType = {
     messages: Array<MessagesType>
     sendMessage: (message: string) => void
 }
+export type DialogsFormDataValuesType = {
+    sentMessage: string
+}
 const Dialogs: React.FC<PropsType> = ({dialogs, messages, sendMessage}) => {
 
     const dialogsElements = dialogs.map(d => <DialogItem id={d.id} name={d.name} photo={d.photo} key={d.id}/>)
     const messagesElements = messages.map(m => <MessageItem message={m.message} key={m.id}/>)
 
-    const onSendMessage = (formData: any) => {
+    const onSendMessage = (formData: DialogsFormDataValuesType) => {
         sendMessage(formData.sentMessage);
     }
     return (

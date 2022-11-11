@@ -2,15 +2,24 @@ import React from "react";
 import Post from './Post/Post';
 import MyPostsForm from "./MyPostsForm";
 import styles from './MyPosts.module.css'
+import { InjectedFormProps } from "redux-form";
+import { PostsType } from '../../../types/types';
 
-const MyPosts = React.memo((props) => {
+type PropsType = {
+    posts: Array<PostsType>
+    addPost: (postText: string) => void
+}
+export type MyPostsFormDataValuesType = {
+    postText: string
+}
+const MyPosts: React.FC<PropsType> = React.memo(({posts, addPost}) => {
 
-    const postsElements = props.posts
+    const postsElements = posts
         .map(p => <Post postText={p.postText} likesCount={p.likes}
             comments={p.comments} photo={p.photo} key={p.id} />)
 
-    const onAddPost = (formData) => {
-        props.addPost(formData.postText);
+    const onAddPost = (formData: MyPostsFormDataValuesType) => {
+        addPost(formData.postText);
         formData.postText = '';
     }
     return (

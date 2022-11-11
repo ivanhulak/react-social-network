@@ -1,7 +1,3 @@
-import { AnyAction } from "redux"
-import { ThunkAction } from "redux-thunk"
-import { AppStateType } from "../redux/redux-store"
-
 export type PostsType = {
    id: number,
    postText: string,
