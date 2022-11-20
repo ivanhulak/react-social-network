@@ -19,7 +19,6 @@ export const profileAPI = {
     uploadPhoto(photoFile: File) {
         const formData = new FormData();
         formData.append('image', photoFile)
-        debugger
         return instance.put<ResponseType<UploadPhotoDataType>>('profile/photo', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'

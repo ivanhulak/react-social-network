@@ -19,7 +19,7 @@ const UserItem = (props) => {
         <div className={styles.ItemStatus}>{props.status}</div>
         <div>
           {props.followed
-            ? <button disabled={props.followingInProgress.some(id => id === props.userId)}
+            ? <button disabled={props.followingInProgress.some(id => id === props.userId)} className={styles.followBtn}
               onClick={() => {
                 props.setIsFetching(true);
                 props.setFollowingInProgress(true, props.userId);
@@ -36,7 +36,7 @@ const UserItem = (props) => {
                     props.setFollowingInProgress(false, props.userId);
                   })
               }}>Unfollow</button>
-            : <button disabled={props.followingInProgress.some(id => id === props.userId)}
+            : <button disabled={props.followingInProgress.some(id => id === props.userId)} className={styles.followBtn}
               onClick={() => {
                 props.setIsFetching(true);
                 props.setFollowingInProgress(true, props.userId);

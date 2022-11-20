@@ -10,9 +10,10 @@ let initialState = {
     pageSize: 9,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: [] as Array<number> // Array of users id-s
+    followingInProgress: [] as Array<number>, // Array of users id-s
+    friends: [] as Array<UsersType>
 }
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 const userReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
@@ -41,6 +42,8 @@ const userReducer = (state = initialState, action: ActionsTypes): InitialStateTy
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
             }
+        case 'my-social-network/users/SET_FRIENDS':
+            return {...state, friends: action.friends}
         default:
             return state;
     }
@@ -56,7 +59,9 @@ export const actions = {
     setTotalUserCount: (totalCount: number) => ({ type: 'my-social-network/users/SET_TOTAL_USER_COUNT', totalCount } as const),
     setIsFetching: (isFetching: boolean) => ({ type: 'my-social-network/users/SET_IS_FETCHING', isFetching } as const),
     setFollowingInProgress: (isFetching: boolean, userId: number) => ({
-        type: 'my-social-network/users/SET_FOLLOWING_IN_PROGRESS', isFetching, userId } as const),
+        type: 'my-social-network/users/SET_FOLLOWING_IN_PROGRESS', isFetching, userId
+    } as const),
+    setFriends: (friends: Array<UsersType>) => ({type: 'my-social-network/users/SET_FRIENDS', friends} as const),
 }
 
 // Thunk types with ThunkAction
@@ -65,10 +70,18 @@ export const requestUsers = (page: number, pageSize: number): ThunkType => {
     return async (dispatch) => {
         dispatch(actions.setIsFetching(true));
         dispatch(actions.setCurrentPage(page));
-        let data = await usersAPI.getUsers(page, pageSize)
+        let data = await usersAPI.getUsers(page, pageSize);
         dispatch(actions.setUsers(data.items));
         dispatch(actions.setTotalUserCount(data.totalCount));
         dispatch(actions.setIsFetching(false));
+    }
+}
+
+export const getFriends = (): ThunkType => {
+    return async (dispatch) => {
+        let data = await usersAPI.getFriends();
+        dispatch(actions.setFriends(data.items));
+
     }
 }
 

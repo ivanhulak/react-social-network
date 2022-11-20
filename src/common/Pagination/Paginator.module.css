@@ -1,10 +1,25 @@
 .currentPage {
    font-weight: 700;
-   background: #666;
+   background-color: rgb(136, 109, 245);
+   color: #fff;
 }
 
 .pageNumber {
-   /* need to write styles to page btn */
+   font-size: 20px;
+   border: 1px solid #000;
+   border-radius: 24px;
+   padding: 5px 15px;
+   cursor: pointer;
+   transition: ease 0.3s all;
 }
 
-.prevAndNextBtn {}
+.pageNumber:hover {
+   background-color: #000;
+   color: #fff;
+}
+
+.pageNumber:active {
+   background-color: #666;
+   color: #fff;
+   transform: translate(2px, 3px);
+}

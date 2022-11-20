@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import styles from './Paginator.module.css';
 import cn from 'classnames';
+import { SimpleBtn } from '../Buttons/SimpleButton/SimpleBtn';
 
 type PropsType = {
    totalItemsCount: number
@@ -23,19 +24,17 @@ const Paginator: React.FC<PropsType> = ({ totalItemsCount, pageSize, currentPage
    }
 
    return <>
-      {portionNumber > 1 &&
-         <button className={styles.prevAndNextBtn} onClick={() => { setPortionNumber(portionNumber - 1) }}>Prev</button>}
+      {portionNumber > 1 && <SimpleBtn btn_text='Prev' onClickCallback={ () => { setPortionNumber(portionNumber - 1) } }/>}
       {pages.filter(p => p >= leftBorderElement && p <= rightBorderElement).map(p => {
          return (
             <div key={p}>
-               <button
-                  onClick={(e) => { onPageChanged(p) }}
+               <button onClick={(e) => { onPageChanged(p) }}
                   className={cn({ [styles.currentPage]: currentPage === p }, styles.pageNumber)}>{p}</button>
             </div>
          );
       })}
-      {portionNumber < portionCount &&
-         <button className={styles.prevAndNextBtn} onClick={() => { setPortionNumber(portionNumber + 1) }}>Next</button>}
+      {portionNumber < portionCount && 
+         <SimpleBtn btn_text='Next' onClickCallback={ () => { setPortionNumber(portionNumber + 1) } }/>}
    </>
 }
 

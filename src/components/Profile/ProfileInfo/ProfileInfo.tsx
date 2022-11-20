@@ -6,8 +6,6 @@ import editIcon from '../../../assets/icons/edit_icon.svg';
 import ProfileDataForm from "./ProfileDataForm";
 import { EditButton } from "../../../common/Buttons/EditButton/EditButton";
 import { ProfileInfoPropsType } from "../Profile";
-import { ProfileType } from "../../../types/types";
-
 
 const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
   const [editMode, setEditMode] = useState(false);
@@ -32,7 +30,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
     <div className={styles.profileInfo}>
       <img src="https://thumbs.dreamstime.com/b/sunny-beach-beautiful-tropical-island-paradise-middle-sea-39398691.jpg" alt="" />
       <div className={styles.profileInfoRow}>
-        <div>
+        <div className={styles.avatarBlock}>
           <div className={styles.avatar}>
             <img src={props.profile.photos.small || "https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png"} alt="" />
           </div>
@@ -45,7 +43,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
             : <ProfileInfoFields profile={props.profile} status={props.status} updateStatus={props.updateStatus} />}
         </div>
         {props.isOwner && <EditButton onClickCallback={goToEditMode}>
-          <img className={styles.editIconImg} src={editIcon} alt="" />
+          <img className={styles.editIconImg} src={editIcon} alt="Icon" />
         </EditButton>}
       </div>
     </div>

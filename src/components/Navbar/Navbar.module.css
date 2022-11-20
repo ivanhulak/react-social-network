@@ -12,3 +12,7 @@ a{
     color: #000;
     cursor: pointer;
 }
+.friendsTitle{
+    font-weight: 700;
+    color: rgb(136, 109, 245);
+}

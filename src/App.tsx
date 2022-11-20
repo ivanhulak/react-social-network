@@ -3,9 +3,9 @@ import styles from './App.module.css';
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Preloader from "./common/Preloader/Preloader";
 import Navbar from "./components/Navbar/Navbar";
-import LoginPage from "./components/Login/LoginPage";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { initializeApp, handleError } from './redux/app-reducer';
+import { getFriends } from "./redux/users-reducer";
 import { connect, Provider } from "react-redux";
 import { compose } from "redux";
 import { withLocationAndMatch } from "./components/HOC/withLocationAndMatch";
@@ -31,6 +31,7 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
 
   componentDidMount() {
     this.props.initializeApp();
+    this.props.getFriends();
     window.addEventListener("unhandledrejection", this.catchUnhandledErrors);
   }
   componentWillUnmount() {
@@ -67,6 +68,7 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
 type MapDispatchToPropsType = {
   initializeApp: () => void
   handleError: (error: any) => void
+  getFriends: () => void
 }
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
   initialized: state.app.initialized,
@@ -76,7 +78,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
 
 const AppContainer = compose(withLocationAndMatch,
   connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
-    { initializeApp, handleError }))(App);
+    { initializeApp, handleError, getFriends }))(App);
 
 export const MySocialNetworkApp = () => {
   return <BrowserRouter>

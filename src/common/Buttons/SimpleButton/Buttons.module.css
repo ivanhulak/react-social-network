@@ -8,12 +8,10 @@
    cursor: pointer;
    transition: ease 0.3s all;
 }
-
 .simpleBtn:hover {
    background-color: #000;
    color: #fff;
 }
-
 .simpleBtn:active {
    background-color: #666;
    color: #fff;
