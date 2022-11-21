@@ -11,7 +11,11 @@ let initialState = {
     currentPage: 1,
     isFetching: false,
     followingInProgress: [] as Array<number>, // Array of users id-s
-    friends: [] as Array<UsersType>
+    friends: [] as Array<UsersType>,
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 export type InitialStateType = typeof initialState
 
@@ -44,6 +48,8 @@ const userReducer = (state = initialState, action: ActionsTypes): InitialStateTy
             }
         case 'my-social-network/users/SET_FRIENDS':
             return {...state, friends: action.friends}
+        case 'my-social-network/users/SET_FILTER':
+            return {...state, filter: action.payload}
         default:
             return state;
     }
@@ -62,15 +68,17 @@ export const actions = {
         type: 'my-social-network/users/SET_FOLLOWING_IN_PROGRESS', isFetching, userId
     } as const),
     setFriends: (friends: Array<UsersType>) => ({type: 'my-social-network/users/SET_FRIENDS', friends} as const),
+    setFilter: (filter: FilterType) => ({type: 'my-social-network/users/SET_FILTER', payload: filter} as const),
 }
 
 // Thunk types with ThunkAction
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
-export const requestUsers = (page: number, pageSize: number): ThunkType => {
+export const requestUsers = (page: number, pageSize: number, filter: FilterType): ThunkType => {
     return async (dispatch) => {
         dispatch(actions.setIsFetching(true));
         dispatch(actions.setCurrentPage(page));
-        let data = await usersAPI.getUsers(page, pageSize);
+        dispatch(actions.setFilter(filter))
+        let data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend);
         dispatch(actions.setUsers(data.items));
         dispatch(actions.setTotalUserCount(data.totalCount));
         dispatch(actions.setIsFetching(false));
@@ -81,9 +89,9 @@ export const getFriends = (): ThunkType => {
     return async (dispatch) => {
         let data = await usersAPI.getFriends();
         dispatch(actions.setFriends(data.items));
-
     }
 }
 
 export default userReducer;
 
+export type FilterType = typeof initialState.filter;

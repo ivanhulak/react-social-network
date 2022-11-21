@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { requestUsers } from  "../../redux/users-reducer";
+import { FilterType, requestUsers } from  "../../redux/users-reducer";
 import { actions } from  "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../../common/Preloader/Preloader";
 import { compose } from "redux";
-import { getCurrentPage, getFollowingInProgress, getIsFetching, 
+import { getCurrentPage, getFilterUsers, getFollowingInProgress, getIsFetching, 
          getPageSize, getTotalItemsCount, getUsers} from "../../redux/selectors/users-selectors";
 import { UsersType } from "../../types/types";
 import { AppStateType } from "../../redux/redux-store";
@@ -17,9 +17,10 @@ type MapStateToPropsType = {
     isFetching: boolean
     currentPage: number
     pageSize: number
+    filter: FilterType
 }
 type MapDispatchToPropsType = {
-    requestUsers: (page: number, pageSize: number) => void
+    requestUsers: (page: number, pageSize: number, filter: FilterType) => void
     setIsFetching: (isFetching: boolean) => void
     setFollowingInProgress: (isFetching: boolean, userId: number) => void
     followSuccess: (userId: number) => void
@@ -28,11 +29,19 @@ type MapDispatchToPropsType = {
 
 class UsersAPIComponent extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
     componentDidMount() {
-        this.props.requestUsers(this.props.currentPage, this.props.pageSize);
+        const {currentPage, pageSize, filter} = this.props;
+        this.props.requestUsers(currentPage, pageSize, filter);
     }
     onPageChanged = (page: number) => {
-        this.props.requestUsers(page, this.props.pageSize)
+        const {pageSize, filter} = this.props;
+        this.props.requestUsers(page, pageSize, filter)
     }
+
+    onFilterChanged = (filter: FilterType) => {
+        const {pageSize} = this.props;
+        this.props.requestUsers(1, pageSize, filter)
+    }
+
     render() {
         return <>
             {this.props.isFetching ? <Preloader /> : null}
@@ -41,12 +50,13 @@ class UsersAPIComponent extends React.Component<MapStateToPropsType & MapDispatc
                 currentPage={this.props.currentPage}
                 users={this.props.users}
                 onPageChanged={this.onPageChanged}
+                onFilterChanged={this.onFilterChanged}
                 isFetching={this.props.isFetching}
                 setIsFetching={this.props.setIsFetching}
                 setFollowingInProgress={this.props.setFollowingInProgress}
                 followingInProgress={this.props.followingInProgress}
                 followSuccess={this.props.followSuccess}
-                unfollowSuccess={this.props.unfollowSuccess} />
+                unfollowSuccess={this.props.unfollowSuccess}/>
         </>
     }
 }
@@ -59,6 +69,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
+        filter: getFilterUsers(state)
     }
 }
 

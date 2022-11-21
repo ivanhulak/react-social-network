@@ -21,3 +21,6 @@ export const getFollowingInProgress = (state: AppStateType) => {
 export const getFriends = (state: AppStateType) => {
    return state.usersPage.friends;
 }
+export const getFilterUsers = (state: AppStateType) => {
+   return state.usersPage.filter;
+}

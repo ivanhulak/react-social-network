@@ -3,6 +3,8 @@ import UserItem from "./UserItem/UserItem";
 import styles from './Users.module.css';
 import Paginator from '../../common/Pagination/Paginator';
 import { UsersType } from "../../types/types";
+import UsersSearchForm from "./UsersSearchForm";
+import { FilterType } from "../../redux/users-reducer";
 
 type PropsType = {
     users: Array<UsersType>
@@ -15,11 +17,13 @@ type PropsType = {
     currentPage: number
     totalItemsCount: number
     onPageChanged: (pageNumber: number) => void
+    onFilterChanged: (filter: FilterType) => void
     pageSize: number
 }
 const Users: React.FC<PropsType> = (props) => {
     return (
         <div className={styles.users}>
+            <div className={styles.usersSearchForm}><UsersSearchForm onFilterChanged={props.onFilterChanged}/></div>
             <div className={styles.userItemsRow}>
                 {props.users.map(u => <UserItem key={u.id} userId={u.id}
                     userPhoto={u.photos.small}
@@ -37,7 +41,6 @@ const Users: React.FC<PropsType> = (props) => {
                 <Paginator currentPage={props.currentPage} totalItemsCount={props.totalItemsCount}
                     pageSize={props.pageSize} onPageChanged={props.onPageChanged} portionSize={10} />
             </div>
-
         </div>
     );
 }

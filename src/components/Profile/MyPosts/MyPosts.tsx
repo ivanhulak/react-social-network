@@ -2,7 +2,6 @@ import React from "react";
 import Post from './Post/Post';
 import MyPostsForm from "./MyPostsForm";
 import styles from './MyPosts.module.css'
-import { InjectedFormProps } from "redux-form";
 import { PostsType } from '../../../types/types';
 
 type PropsType = {

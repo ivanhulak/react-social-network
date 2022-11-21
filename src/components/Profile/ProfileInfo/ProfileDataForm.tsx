@@ -40,9 +40,8 @@ const ProfileDataForm: React.FC<InjectedFormProps<EditProfileFormDataValuesType,
                {createField<EditProfileFormValuesTypeKeys>("About me", "aboutMe", Textarea, { type: "text" }, "", [required])}
             </div>
             <div>Contacts:
-               {Object.keys(profile.contacts).
-                  map(key => <Contact key={key} 
-                                      contactTitle={key} 
+               {Object.keys(profile.contacts)
+                  .map(key => <Contact key={key} contactTitle={key} 
                                       contactValue={profile.contacts[key as keyof ContactsType]} />)}
             </div>
             <button className={styles.changeBtn} type="submit" >

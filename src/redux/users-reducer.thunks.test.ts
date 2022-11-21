@@ -31,7 +31,7 @@ usersAPIMock.getUsers.mockReturnValue(Promise.resolve(result))
 
 test('request users', () => {
 
-   const thunk = requestUsers(2, 1)
+   const thunk = requestUsers(2, 1, {term: '', friend: null})
    const dispatchMock = jest.fn()
    const getStateMock = jest.fn()
    

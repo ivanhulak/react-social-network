@@ -1,7 +1,9 @@
 .users {
     padding: 0px 20px;
 }
-
+.usersSearchForm{
+    margin-bottom: 30px;
+}
 .userItemsRow {
     display: flex;
     flex-wrap: wrap;
