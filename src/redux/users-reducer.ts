@@ -72,7 +72,7 @@ export const actions = {
 }
 
 // Thunk types with ThunkAction
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+export type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 export const requestUsers = (page: number, pageSize: number, filter: FilterType): ThunkType => {
     return async (dispatch) => {
         dispatch(actions.setIsFetching(true));

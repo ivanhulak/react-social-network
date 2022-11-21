@@ -12,10 +12,11 @@ import { withLocationAndMatch } from "./components/HOC/withLocationAndMatch";
 import { withLazyComponent } from "./components/HOC/withLazyComponent";
 import store, { AppStateType } from './redux/redux-store';
 import { NotFound } from "./components/ErrorPages/NotFound";
+import { LoginPage } from "./components/Login/LoginPage";
 // Use lazy loading
 const ProfileContainer = withLazyComponent(React.lazy(() => import('./components/Profile/ProfileContainer')));
 const DialogsContainer = withLazyComponent(React.lazy(() => import('./components/Dialogs/DialogsContainer')));
-const UsersContainer = withLazyComponent(React.lazy(() => import('./components/Users/UsersContainer')));
+const UsersPage = withLazyComponent(React.lazy(() => import('./components/Users/UsersPage')));
 
 type MapStateToPropsType = {
   initialized: boolean
@@ -55,8 +56,8 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
                 < Route path="/profile/:userId" element={< ProfileContainer />} />
               </Route>
               < Route path="/dialogs" element={< DialogsContainer />} />
-              < Route path="/users" element={< UsersContainer />} />
-              {/* < Route path="/login" element={< LoginPage />} /> */}
+              < Route path="/users" element={< UsersPage />} />
+              < Route path="/login" element={< LoginPage />} />
               < Route path="*" element={< NotFound />} />
             </Routes>
           </div>

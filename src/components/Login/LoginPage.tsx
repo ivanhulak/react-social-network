@@ -6,7 +6,8 @@ import { createField, Input } from '../../common/FormControls/FormControl';
 import { Navigate } from "react-router-dom";
 import { AppStateType } from "../../redux/redux-store";
 import { login } from '../../redux/auth-reducer';
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 let maxLength50 = maxLength(50);
@@ -48,28 +49,25 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataValuesType, PropsType> 
 }
 const LoginReduxForm = reduxForm<LoginFormDataValuesType, PropsType>({ form: 'login' })(LoginForm);
 
-
-
-type MapStateToPropsType = {
-   userId: number | null
-   captchaURL: string | null
-   isAuth: boolean
-}
-type MapDispatchToPropsType = {
-   login: (email: string, password: string, rememberMe: boolean, captcha: string) => void
-}
 export type LoginFormDataValuesType = {
    email: string
    password: string
    rememberMe: boolean
-   captcha: string
+   captcha: string | null
 }
 type LoginFormValuesTypeKeys = Extract<keyof LoginFormDataValuesType, string>
 
 
-const LoginPage: React.FC<MapStateToPropsType & MapDispatchToPropsType> = ({ login, isAuth, userId, captchaURL }) => {
+
+export const LoginPage: React.FC = () => {
+
+   const captchaURL = useSelector((state: AppStateType) => state.auth.captchaURL)
+   const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+   const userId = useSelector((state: AppStateType) => state.auth.userId)
+   const dispatch: any = useDispatch()
+
    const onSubmit = (formData: LoginFormDataValuesType) => {
-      login(formData.email, formData.password, formData.rememberMe, formData.captcha);
+      dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha));
    }
 
    if (isAuth) {
@@ -82,10 +80,3 @@ const LoginPage: React.FC<MapStateToPropsType & MapDispatchToPropsType> = ({ log
       </div>
    )
 }
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-   captchaURL: state.auth.captchaURL,
-   isAuth: state.auth.isAuth,
-   userId: state.auth.userId
-})
-
-export default connect<MapStateToPropsType, {}, {}, AppStateType>(mapStateToProps, { login })(LoginPage);

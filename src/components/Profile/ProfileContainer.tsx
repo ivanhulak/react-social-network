@@ -9,7 +9,6 @@ import { compose } from "redux";
 import { AppStateType } from "../../redux/redux-store";
 import { ProfileType } from "../../types/types";
 
-
 type MapStateToPropsType = {
   profile: ProfileType | null
   status: string
@@ -30,7 +29,6 @@ class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatch
     // @ts-ignore
     let userId = this.props.params.userId;
     Number(userId);
-    console.log(userId)
     if (!userId) {
       userId = this.props.userId;
       if (!userId) {
@@ -70,7 +68,6 @@ class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatch
   render() {
     //@ts-ignore
     let isOwner = this.checkIsOwner(this.props.params.userId, this.props.userId)
-    console.log(isOwner)
     return <Profile {...this.props} profile={this.props.profile} uploadPhoto={this.props.uploadPhoto}
       status={this.props.status} updateStatus={this.props.updateStatus} isOwner={isOwner}
       upgradeProfile={this.props.upgradeProfile} loadDataToProfileDataForm={this.props.loadDataToProfileDataForm} />

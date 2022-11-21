@@ -1,48 +1,63 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UserItem from "./UserItem/UserItem";
 import styles from './Users.module.css';
 import Paginator from '../../common/Pagination/Paginator';
-import { UsersType } from "../../types/types";
 import UsersSearchForm from "./UsersSearchForm";
-import { FilterType } from "../../redux/users-reducer";
+import { actions, FilterType, requestUsers } from "../../redux/users-reducer";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getCurrentPage, getFilterUsers, getFollowingInProgress, 
+         getPageSize, getTotalItemsCount, getUsers } from "../../redux/selectors/users-selectors";
 
 type PropsType = {
-    users: Array<UsersType>
     isFetching: boolean
-    setIsFetching: (isFetching: boolean) => void
-    setFollowingInProgress: (isFetching: boolean, userId: number) => void
-    followingInProgress: Array<number>
-    followSuccess: (userId: number) => void
-    unfollowSuccess: (userId: number) => void
-    currentPage: number
-    totalItemsCount: number
-    onPageChanged: (pageNumber: number) => void
-    onFilterChanged: (filter: FilterType) => void
-    pageSize: number
 }
-const Users: React.FC<PropsType> = (props) => {
+export const Users: React.FC<PropsType> = ({isFetching}) => {
+
+    const users = useSelector(getUsers)
+    const followingInProgress = useSelector(getFollowingInProgress)
+    const filter = useSelector(getFilterUsers)
+    const pageSize = useSelector(getPageSize)
+    const currentPage = useSelector(getCurrentPage)
+    const totalItemsCount = useSelector(getTotalItemsCount)
+    
+    const dispatch: any = useDispatch()
+
+    useEffect(() => {
+        dispatch(requestUsers(currentPage, pageSize, filter))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const onPageChanged = (page: number) => {
+        dispatch(requestUsers(page, pageSize, filter))
+    }
+
+    const onFilterChanged = (filter: FilterType) => {
+        dispatch(requestUsers(1, pageSize, filter))
+    }
+
     return (
         <div className={styles.users}>
-            <div className={styles.usersSearchForm}><UsersSearchForm onFilterChanged={props.onFilterChanged}/></div>
+            <div className={styles.usersSearchForm}>
+                <UsersSearchForm onFilterChanged={onFilterChanged} />
+            </div>
             <div className={styles.userItemsRow}>
-                {props.users.map(u => <UserItem key={u.id} userId={u.id}
+                {users.map(u => <UserItem key={u.id} userId={u.id}
                     userPhoto={u.photos.small}
                     followed={u.followed}
                     userName={u.name}
                     status={u.status}
-                    isFetching={props.isFetching}
-                    setIsFetching={props.setIsFetching}
-                    setFollowingInProgress={props.setFollowingInProgress}
-                    followingInProgress={props.followingInProgress}
-                    followSuccess={props.followSuccess}
-                    unfollowSuccess={props.unfollowSuccess} />)}
+                    isFetching={isFetching}
+                    setIsFetching={actions.setIsFetching}
+                    setFollowingInProgress={actions.setFollowingInProgress}
+                    followingInProgress={followingInProgress}
+                    followSuccess={actions.followSuccess}
+                    unfollowSuccess={actions.unfollowSuccess} />)}
             </div>
             <div className={styles.paginationBlock}>
-                <Paginator currentPage={props.currentPage} totalItemsCount={props.totalItemsCount}
-                    pageSize={props.pageSize} onPageChanged={props.onPageChanged} portionSize={10} />
+                <Paginator currentPage={currentPage} totalItemsCount={totalItemsCount}
+                    pageSize={pageSize} onPageChanged={onPageChanged} portionSize={10} />
             </div>
         </div>
     );
 }
-
-export default Users;
