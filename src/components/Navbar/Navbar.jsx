@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './Navbar.module.css';
 import { NavLink } from 'react-router-dom';
-import FriendsContainer from "./FriendsContainer";
+import { Friends } from "./Friends";
 
 const Navbar = () => {
   const navLinkStyles = ({isActive}) => {
@@ -17,7 +17,7 @@ const Navbar = () => {
       <NavLink to='/users' style={navLinkStyles}>Users</NavLink>
       <NavLink to='/settings' style={navLinkStyles}>Settings</NavLink>
       <div className={styles.friendsTitle}>Friends</div>
-      <FriendsContainer/>
+      <Friends/>
     </nav>
   );
 }

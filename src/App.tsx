@@ -1,6 +1,5 @@
 import React from "react";
 import styles from './App.module.css';
-import HeaderContainer from "./components/Header/HeaderContainer";
 import Preloader from "./common/Preloader/Preloader";
 import Navbar from "./components/Navbar/Navbar";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
@@ -13,6 +12,7 @@ import { withLazyComponent } from "./components/HOC/withLazyComponent";
 import store, { AppStateType } from './redux/redux-store';
 import { NotFound } from "./components/ErrorPages/NotFound";
 import { LoginPage } from "./components/Login/LoginPage";
+import { Header } from "./components/Header/Header";
 // Use lazy loading
 const ProfileContainer = withLazyComponent(React.lazy(() => import('./components/Profile/ProfileContainer')));
 const DialogsContainer = withLazyComponent(React.lazy(() => import('./components/Dialogs/DialogsContainer')));
@@ -45,7 +45,7 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
     return (
       <div className={styles.Container} >
         <div className={styles.wrapper}>
-          <HeaderContainer />
+          <Header />
           < Navbar />
           <div className={styles.wrapperContent}>
             {this.props.errorsData && <div>{this.props.errorsData.message}</div>}
