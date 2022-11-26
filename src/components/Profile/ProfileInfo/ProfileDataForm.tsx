@@ -6,12 +6,12 @@ import uploadIcon from '../../../assets/icons/upload_icon.svg';
 import { createField, Input, Textarea } from '../../../common/FormControls/FormControl';
 import { maxLength, required } from '../../../utils/validator';
 import { ContactsType, ProfileType } from '../../../types/types';
+import { actions } from '../../../redux/profile-reducer';
 
 let maxLength30 = maxLength(30);
 
 type PropsType = {
    profile: ProfileType
-   loadDataToProfileDataForm: (profile: ProfileType) => void
 }
 type EditProfileFormDataValuesType = {
    fullName: string
@@ -23,7 +23,7 @@ type EditProfileFormValuesTypeKeys = Extract<keyof EditProfileFormDataValuesType
 
 
 const ProfileDataForm: React.FC<InjectedFormProps<EditProfileFormDataValuesType, PropsType> & PropsType> =
-   ({ profile, handleSubmit, loadDataToProfileDataForm, pristine, reset, submitting }) => {
+   ({ profile, handleSubmit, pristine, reset, submitting }) => {
       return (
          <form onSubmit={handleSubmit}>
             <div>
@@ -41,17 +41,17 @@ const ProfileDataForm: React.FC<InjectedFormProps<EditProfileFormDataValuesType,
             </div>
             <div>Contacts:
                {Object.keys(profile.contacts)
-                  .map(key => <Contact key={key} contactTitle={key} 
-                                      contactValue={profile.contacts[key as keyof ContactsType]} />)}
+                  .map(key => <Contact key={key} contactTitle={key}
+                     contactValue={profile.contacts[key as keyof ContactsType]} />)}
             </div>
             <button className={styles.changeBtn} type="submit" >
                <span>Save</span>
                <img src={uploadIcon} alt="" />
             </button>
-            <button className={styles.changeBtn} type="button" onClick={() => loadDataToProfileDataForm(profile)}>
+            <button className={styles.changeBtn} onClick={() => { actions.loadDataToProfileDataForm(profile) }}>
                Load profile data
             </button>
-            <button className={styles.changeBtn} type="button" disabled={pristine || submitting} onClick={reset}>
+            <button className={styles.changeBtn} disabled={pristine || submitting} onClick={reset}>
                Undo Changes
             </button>
          </form>

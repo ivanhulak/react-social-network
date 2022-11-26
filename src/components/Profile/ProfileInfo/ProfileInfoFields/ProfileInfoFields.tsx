@@ -5,17 +5,15 @@ import styles from './ProfileInfoFields.module.css';
 
 type PropsType = {
    profile: ProfileType
-   status: string
-   updateStatus: (status: string) => void
 }
-const ProfileInfoFields: React.FC<PropsType> = ({ profile, status, updateStatus }) => {
+const ProfileInfoFields: React.FC<PropsType> = ({ profile }) => {
    return (
       <div>
          <div>
             <div className={styles.topInfoRow}>
                <div className={styles.fullName}>{profile.fullName}</div>
                <div className={styles.status}>Status:</div>
-               <ProfileStatusWithHooks status={status} updateStatus={updateStatus} />
+               <ProfileStatusWithHooks />
             </div>
             <div className={styles.middleInfoRow}>
                <div>Looking for job: {profile.lookingForAJob ? 'Yes' : 'No'}</div>

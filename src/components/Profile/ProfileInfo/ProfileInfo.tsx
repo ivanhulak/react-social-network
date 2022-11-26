@@ -5,22 +5,29 @@ import ProfileInfoFields from "./ProfileInfoFields/ProfileInfoFields";
 import editIcon from '../../../assets/icons/edit_icon.svg';
 import ProfileDataForm from "./ProfileDataForm";
 import { EditButton } from "../../../common/Buttons/EditButton/EditButton";
-import { ProfileInfoPropsType } from "../Profile";
+import { ProfileType } from "../../../types/types";
+import { useDispatch } from "react-redux";
+import { upgradeProfile, uploadPhoto } from "../../../redux/profile-reducer";
 
-const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
+export type ProfileInfoPropsType = {
+  profile: ProfileType | null
+  isOwner: boolean
+}
+
+const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, isOwner}) => {
   const [editMode, setEditMode] = useState(false);
+  const dispatch: any = useDispatch()
 
-  if (!props.profile) {
+  if (!profile) {
     return <Preloader />
   }
   const onAvatarPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
-      props.uploadPhoto(e.target.files[0]);
+      dispatch(uploadPhoto(e.target.files[0]));
     }
   }
   const onSubmit = (formData: any) => {
-    console.log(formData);
-    props.upgradeProfile(formData);
+    dispatch(upgradeProfile(formData));
     setEditMode(false);
   }
   const goToEditMode = () => {
@@ -32,17 +39,17 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
       <div className={styles.profileInfoRow}>
         <div className={styles.avatarBlock}>
           <div className={styles.avatar}>
-            <img src={props.profile.photos.small || "https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png"} alt="" />
+            <img src={profile.photos.small || "https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png"} alt="" />
           </div>
-          {props.isOwner && <input type="file" onChange={onAvatarPhotoSelected} />}
+          {isOwner && <input type="file" onChange={onAvatarPhotoSelected} />}
         </div>
 
         <div className={styles.ProfileDataForm}>
           {editMode
-            ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} loadDataToProfileDataForm={props.loadDataToProfileDataForm} />
-            : <ProfileInfoFields profile={props.profile} status={props.status} updateStatus={props.updateStatus} />}
+            ? <ProfileDataForm initialValues={profile} profile={profile} onSubmit={onSubmit} />
+            : <ProfileInfoFields profile={profile} />}
         </div>
-        {props.isOwner && <EditButton onClickCallback={goToEditMode}>
+        {isOwner && <EditButton onClickCallback={goToEditMode}>
           <img className={styles.editIconImg} src={editIcon} alt="Icon" />
         </EditButton>}
       </div>

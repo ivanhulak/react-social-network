@@ -1,55 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Profile from "./Profile";
-import { setProfile, getStatus, updateStatus, uploadPhoto, upgradeProfile } from "../../redux/profile-reducer";
-import { actions } from "../../redux/profile-reducer";
-import { connect } from "react-redux";
-import { withLocationAndMatch } from '../HOC/withLocationAndMatch';
-import { withAuthRedirect } from '../HOC/withAuthRedirect';
-import { compose } from "redux";
+import { setProfile, getStatus } from "../../redux/profile-reducer";
 import { AppStateType } from "../../redux/redux-store";
-import { ProfileType } from "../../types/types";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useParams, useNavigate, Params } from "react-router-dom";
 
-type MapStateToPropsType = {
-  profile: ProfileType | null
-  status: string
-  userId: number | null
-}
-type MapDispatchToPropsType = {
-  setProfile: (userId: number) => void
-  getStatus: (userId: number) => void
-  updateStatus: (status: string) => void
-  uploadPhoto: (photo: File) => void
-  upgradeProfile: (formData: ProfileType) => void
-  loadDataToProfileDataForm: (profile: ProfileType) => void
-}
+const ProfileContainer: React.FC = () => {
 
-class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
+  const authUserId = useSelector((state: AppStateType) => state.auth.userId)
+  const dispatch: any = useDispatch()
+  const navigate = useNavigate();
+  const params: Params<string> = useParams();
+  let userId = Number(params.userId)
 
-  refreshProfile() {
-    // @ts-ignore
-    let userId = this.props.params.userId;
-    Number(userId);
+  const refreshProfile = () => {
     if (!userId) {
-      userId = this.props.userId;
+      // @ts-ignore
+      userId = authUserId;
       if (!userId) {
-        // @ts-ignore
-        this.props.history.push('/login');
+        navigate('/login');
       }
     }
-    this.props.setProfile(userId);
-    this.props.getStatus(userId);
+    dispatch(setProfile(userId));
+    dispatch(getStatus(userId));
   }
-  componentDidMount() {
-    this.refreshProfile();
-  }
-  // @ts-ignore
-  componentDidUpdate(prevProps) {
-    // @ts-ignore
-    if (this.props.params.userId !== prevProps.params.userId) {
-      this.refreshProfile();
-    }
-  }
-  checkIsOwner = (paramsId: any, ownId: any) => {
+
+  const checkIsOwner = (paramsId: any, ownId: number | null) => {
     let isOwner;
     paramsId = Number(paramsId)
     if (paramsId) {
@@ -63,29 +40,14 @@ class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatch
     }
     return isOwner
   }
-  
-  
-  render() {
-    //@ts-ignore
-    let isOwner = this.checkIsOwner(this.props.params.userId, this.props.userId)
-    return <Profile {...this.props} profile={this.props.profile} uploadPhoto={this.props.uploadPhoto}
-      status={this.props.status} updateStatus={this.props.updateStatus} isOwner={isOwner}
-      upgradeProfile={this.props.upgradeProfile} loadDataToProfileDataForm={this.props.loadDataToProfileDataForm} />
-  }
-}
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
-  return {
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    userId: state.auth.userId,
-  }
-}
+  const isOwner: boolean = checkIsOwner(params.userId, authUserId)
 
-export default compose<React.ComponentType>(
-  withAuthRedirect,
-  connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
-    setProfile, getStatus, updateStatus, uploadPhoto, upgradeProfile,
-    loadDataToProfileDataForm: actions.loadDataToProfileDataForm
-  }),
-  withLocationAndMatch)(ProfileContainer)
+  useEffect(() => {
+    refreshProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.userId])
+
+  return <Profile isOwner={isOwner} />
+}
+export default ProfileContainer;
