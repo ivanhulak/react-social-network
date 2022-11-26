@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import UserItem from "./UserItem/UserItem";
+import { UserItem } from "./UserItem/UserItem";
 import styles from './Users.module.css';
 import Paginator from '../../common/Pagination/Paginator';
 import UsersSearchForm from "./UsersSearchForm";
-import { actions, FilterType, requestUsers } from "../../redux/users-reducer";
+import { FilterType, follow, requestUsers, unfollow } from "../../redux/users-reducer";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {
@@ -12,10 +12,8 @@ import {
 } from "../../redux/selectors/users-selectors";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-type PropsType = {
-    isFetching: boolean
-}
-export const Users: React.FC<PropsType> = ({ isFetching }) => {
+
+export const Users: React.FC = () => {
 
     const users = useSelector(getUsers)
     const followingInProgress = useSelector(getFollowingInProgress)
@@ -26,6 +24,13 @@ export const Users: React.FC<PropsType> = ({ isFetching }) => {
     const navigate = useNavigate()
     const [searchParams]: any = useSearchParams();
     const dispatch: any = useDispatch()
+    
+    const followCallback = (userId: number) => {
+        dispatch(follow(userId))
+    }
+    const unfollowCallback = (userId: number) => {
+        dispatch(unfollow(userId))
+    }
 
     useEffect(() => {
         const searchParamsObj = Object.fromEntries([...searchParams]);
@@ -71,13 +76,10 @@ export const Users: React.FC<PropsType> = ({ isFetching }) => {
                     userPhoto={u.photos.small}
                     followed={u.followed}
                     userName={u.name}
-                    status={u.status}
-                    isFetching={isFetching}
-                    setIsFetching={actions.setIsFetching}
-                    setFollowingInProgress={actions.setFollowingInProgress}
                     followingInProgress={followingInProgress}
-                    followSuccess={actions.followSuccess}
-                    unfollowSuccess={actions.unfollowSuccess} />)}
+                    follow={followCallback}
+                    unfollow={unfollowCallback}
+                    />)}
             </div>
             <div className={styles.paginationBlock}>
                 <Paginator currentPage={currentPage} totalItemsCount={totalItemsCount}

@@ -1,5 +1,5 @@
 import { UsersType } from "../types/types"
-import { instance } from "./api"
+import { instance, ResponseType } from "./api"
 
 export type GetUsersResponseType = {
    items: Array<UsersType >
@@ -13,5 +13,11 @@ export const usersAPI = {
    },
    getFriends(){
       return instance.get(`users?friend=${true}`).then(response => response.data);
+   },
+   follow(userId: number){
+      return instance.post<ResponseType>(`follow/${userId}`).then(response => response.data);
+   },
+   unfollow(userId: number){
+      return instance.delete<ResponseType>(`follow/${userId}`).then(response => response.data);
    },
 }

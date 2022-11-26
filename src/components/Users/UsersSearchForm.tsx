@@ -21,7 +21,6 @@ const UsersSearchForm: React.FC<PropsType> = React.memo(({ onFilterChanged }) =>
     const filter = useSelector((state: AppStateType) => state.usersPage.filter)
 
     const submit = (values: FormType, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
-        debugger
         const filter: FilterType = {
             term: values.term,
             friend: values.friend === 'null' ? null : (values.friend === 'true') ? true : false

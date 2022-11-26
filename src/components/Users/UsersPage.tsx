@@ -10,7 +10,7 @@ const UsersPage: React.FC = () => {
    return (
       <>
          {isFetching ? <Preloader /> : null}
-         <Users isFetching={isFetching}/>
+         <Users/>
       </>
    );
 }

@@ -3,11 +3,12 @@ import { updateObjectInArray } from "../common/object-helpers";
 import { UsersType } from "../types/types";
 import { AppStateType, InferActionsTypes } from "./redux-store.js";
 import { ThunkAction } from "redux-thunk";
+import { ResultCodesEnum } from "../DAL/api";
 
 let initialState = {
     users: [] as Array<UsersType>,
     totalItemsCount: 0,
-    pageSize: 9,
+    pageSize: 8,
     currentPage: 1,
     isFetching: false,
     followingInProgress: [] as Array<number>, // Array of users id-s
@@ -89,6 +90,30 @@ export const getFriends = (): ThunkType => {
     return async (dispatch) => {
         let data = await usersAPI.getFriends();
         dispatch(actions.setFriends(data.items));
+    }
+}
+export const follow = (userId: number): ThunkType => {
+    return async (dispatch) => {
+        dispatch(actions.setIsFetching(true));
+        dispatch(actions.setFollowingInProgress(true, userId));
+        let data = await usersAPI.follow(userId);
+        if (data.resultCode === ResultCodesEnum.Success){
+            dispatch(actions.followSuccess(userId))
+        }
+        dispatch(actions.setIsFetching(false));
+        dispatch(actions.setFollowingInProgress(false, userId));
+    }
+}
+export const unfollow = (userId: number): ThunkType => {
+    return async (dispatch) => {
+        dispatch(actions.setIsFetching(true))
+        dispatch(actions.setFollowingInProgress(true, userId));
+        let data = await usersAPI.unfollow(userId);
+        if (data.resultCode === ResultCodesEnum.Success){
+            dispatch(actions.unfollowSuccess(userId))
+        }
+        dispatch(actions.setIsFetching(false));
+        dispatch(actions.setFollowingInProgress(false, userId));
     }
 }
 
