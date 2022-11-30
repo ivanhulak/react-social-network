@@ -4,8 +4,10 @@ import { useSelector } from 'react-redux';
 import { updateStatus } from '../../../redux/profile-reducer';
 import { AppStateType } from '../../../redux/redux-store';
 
-
-const ProfileStatusWithHooks: React.FC = () => {
+type PropsType = {
+   isOwner: boolean
+}
+const ProfileStatusWithHooks: React.FC<PropsType> = ({isOwner}) => {
    const profileStatus = useSelector((state: AppStateType) => state.profilePage.status)
    const dispatch: any = useDispatch()
 
@@ -32,7 +34,9 @@ const ProfileStatusWithHooks: React.FC = () => {
       <div>
          {!editMode &&
             <div>
-               <span onDoubleClick={activateEditMode}>{profileStatus || 'Here, could be your status'}</span>
+               {isOwner 
+                  ? <span onDoubleClick={activateEditMode}>{profileStatus || 'Here, could be your status'}</span>
+                  : <span >{profileStatus || 'Here, could be your status'}</span>}
             </div>
          }
          {editMode &&

@@ -17,6 +17,7 @@ import { Header } from "./components/Header/Header";
 const ProfileContainer = withLazyComponent(React.lazy(() => import('./components/Profile/ProfileContainer')));
 const DialogsContainer = withLazyComponent(React.lazy(() => import('./components/Dialogs/DialogsContainer')));
 const UsersPage = withLazyComponent(React.lazy(() => import('./components/Users/UsersPage')));
+const ChatPage = withLazyComponent(React.lazy(() => import('./components/Chat/ChatPage')));
 
 type MapStateToPropsType = {
   initialized: boolean
@@ -56,6 +57,7 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
                 < Route path="/profile/:userId" element={< ProfileContainer />} />
               </Route>
               < Route path="/dialogs" element={< DialogsContainer />} />
+              < Route path="/chat" element={< ChatPage />} />
               < Route path="/users" element={< UsersPage />} />
               < Route path="/login" element={< LoginPage />} />
               < Route path="*" element={< NotFound />} />

@@ -14,7 +14,8 @@ const Navbar = () => {
     <nav className={styles.navBar}>
       <NavLink to='/profile' style={navLinkStyles}>Profile</NavLink>
       <NavLink to='/dialogs' style={navLinkStyles}>Messages</NavLink>
-      <NavLink to='/users' style={navLinkStyles}>Users</NavLink>
+      <NavLink to='/dialogs' style={navLinkStyles}>Messages</NavLink>
+      <NavLink to='/chat' style={navLinkStyles}>Chat</NavLink>
       <NavLink to='/settings' style={navLinkStyles}>Settings</NavLink>
       <div className={styles.friendsTitle}>Friends</div>
       <Friends/>

@@ -47,7 +47,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, isOwner}) => {
         <div className={styles.ProfileDataForm}>
           {editMode
             ? <ProfileDataForm initialValues={profile} profile={profile} onSubmit={onSubmit} />
-            : <ProfileInfoFields profile={profile} />}
+            : <ProfileInfoFields profile={profile} isOwner={isOwner}/>}
         </div>
         {isOwner && <EditButton onClickCallback={goToEditMode}>
           <img className={styles.editIconImg} src={editIcon} alt="Icon" />

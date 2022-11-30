@@ -5,15 +5,16 @@ import styles from './ProfileInfoFields.module.css';
 
 type PropsType = {
    profile: ProfileType
+   isOwner: boolean
 }
-const ProfileInfoFields: React.FC<PropsType> = ({ profile }) => {
+const ProfileInfoFields: React.FC<PropsType> = ({ profile, isOwner }) => {
    return (
       <div>
          <div>
             <div className={styles.topInfoRow}>
                <div className={styles.fullName}>{profile.fullName}</div>
                <div className={styles.status}>Status:</div>
-               <ProfileStatusWithHooks />
+               <ProfileStatusWithHooks isOwner={isOwner}/>
             </div>
             <div className={styles.middleInfoRow}>
                <div>Looking for job: {profile.lookingForAJob ? 'Yes' : 'No'}</div>
