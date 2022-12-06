@@ -53,7 +53,7 @@ const Messages: React.FC = () => {
       if (isAutoScroll) {
          messagesAnchorRef.current?.scrollIntoView({ behavior: 'smooth' })
       }
-   }, [messages])
+   }, [messages, isAutoScroll])
 
    return <div style={{ height: '400px', overflowY: 'auto' }} onScroll={scrollHandler}>
       {messages.map((m, index) => <Message key={index} message={m} />)}

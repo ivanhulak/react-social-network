@@ -18,6 +18,7 @@ const ProfileContainer = withLazyComponent(React.lazy(() => import('./components
 const DialogsContainer = withLazyComponent(React.lazy(() => import('./components/Dialogs/DialogsContainer')));
 const UsersPage = withLazyComponent(React.lazy(() => import('./components/Users/UsersPage')));
 const ChatPage = withLazyComponent(React.lazy(() => import('./components/Chat/ChatPage')));
+const CartPage = withLazyComponent(React.lazy(() => import('./components/CartPage/CartPage')));
 
 type MapStateToPropsType = {
   initialized: boolean
@@ -60,6 +61,7 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
               < Route path="/chat" element={< ChatPage />} />
               < Route path="/users" element={< UsersPage />} />
               < Route path="/login" element={< LoginPage />} />
+              < Route path="/shop" element={< CartPage />} />
               < Route path="*" element={< NotFound />} />
             </Routes>
           </div>
