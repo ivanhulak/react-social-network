@@ -12,7 +12,7 @@ let initialState = {
     ] as Array<PostsType>,
     profile: null as ProfileType | null,
     status: '',
-    errorsData: {},
+    errorsData: {} as any,
 }
 type InitialStateType = typeof initialState
 

@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
-import Profile from "./Profile";
 import { setProfile, getStatus } from "../../redux/profile-reducer";
 import { AppStateType } from "../../redux/redux-store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate, Params } from "react-router-dom";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
-const ProfileContainer: React.FC = () => {
+const ProfilePage: React.FC = () => {
 
   const authUserId = useSelector((state: AppStateType) => state.auth.userId)
+  const profile = useSelector((state: AppStateType) => state.profilePage.profile)
   const dispatch: any = useDispatch()
+
   const navigate = useNavigate();
   const params: Params<string> = useParams();
   let userId = Number(params.userId)
@@ -48,6 +51,9 @@ const ProfileContainer: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.userId])
 
-  return <Profile isOwner={isOwner} />
+  return <div>
+      <ProfileInfo profile={profile} isOwner={isOwner} />
+      <MyPostsContainer />
+    </div>
 }
-export default ProfileContainer;
+export default ProfilePage;

@@ -1,96 +1,72 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from './App.module.css';
 import Preloader from "./common/Preloader/Preloader";
 import Navbar from "./components/Navbar/Navbar";
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { initializeApp, handleError } from './redux/app-reducer';
 import { getFriends } from "./redux/users-reducer";
-import { connect, Provider } from "react-redux";
-import { compose } from "redux";
-import { withLocationAndMatch } from "./components/HOC/withLocationAndMatch";
 import { withLazyComponent } from "./components/HOC/withLazyComponent";
-import store, { AppStateType } from './redux/redux-store';
+import { AppStateType } from './redux/redux-store';
 import { NotFound } from "./components/ErrorPages/NotFound";
 import { LoginPage } from "./components/Login/LoginPage";
 import { Header } from "./components/Header/Header";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 // Use lazy loading
-const ProfileContainer = withLazyComponent(React.lazy(() => import('./components/Profile/ProfileContainer')));
+const ProfilePage = withLazyComponent(React.lazy(() => import('./components/Profile/ProfilePage')));
 const DialogsContainer = withLazyComponent(React.lazy(() => import('./components/Dialogs/DialogsContainer')));
 const UsersPage = withLazyComponent(React.lazy(() => import('./components/Users/UsersPage')));
 const ChatPage = withLazyComponent(React.lazy(() => import('./components/Chat/ChatPage')));
 const CartPage = withLazyComponent(React.lazy(() => import('./components/CartPage/CartPage')));
 
-type MapStateToPropsType = {
-  initialized: boolean
-  globalError: string
-  errorsData: any
-}
 
-class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
+export const App: React.FC = () => {
+  const initialized = useSelector((state: AppStateType) => state.app.initialized)
+  const globalError = useSelector((state: AppStateType) => state.app.globalError)
+  const errorsData = useSelector((state: AppStateType) => state.profilePage.errorsData)
+  const dispatch: any = useDispatch()
 
-  catchUnhandledErrors = (error: PromiseRejectionEvent) => {
-    this.props.handleError(error.reason.message);
+  const catchUnhandledErrors = (error: PromiseRejectionEvent) => {
+    dispatch(handleError(error.reason.message));
   }
 
-  componentDidMount() {
-    this.props.initializeApp();
-    this.props.getFriends();
-    window.addEventListener("unhandledrejection", this.catchUnhandledErrors);
-  }
-  componentWillUnmount() {
-    window.removeEventListener("unhandledrejection", this.catchUnhandledErrors);
-  }
-  render() {
-    if (!this.props.initialized) {
-      return <Preloader />
+  useEffect(() => {
+    dispatch(initializeApp())
+    dispatch(getFriends())
+    window.addEventListener("unhandledrejection", catchUnhandledErrors);
+
+    return () => {
+      window.removeEventListener("unhandledrejection", catchUnhandledErrors);
     }
-    return (
-      <div className={styles.Container} >
-        <div className={styles.wrapper}>
-          <Header />
-          < Navbar />
-          <div className={styles.wrapperContent}>
-            {this.props.errorsData && <div>{this.props.errorsData.message}</div>}
-            {this.props.globalError && <div>{this.props.globalError}</div>}
-            < Routes >
-              <Route path='/' element={< ProfileContainer />}>
-                <Route path="/profile" element={< ProfileContainer />} />
-                < Route path="/profile/:userId" element={< ProfileContainer />} />
-              </Route>
-              < Route path="/dialogs" element={< DialogsContainer />} />
-              < Route path="/chat" element={< ChatPage />} />
-              < Route path="/users" element={< UsersPage />} />
-              < Route path="/login" element={< LoginPage />} />
-              < Route path="/shop" element={< CartPage />} />
-              < Route path="*" element={< NotFound />} />
-            </Routes>
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return (
+      <>
+      {!initialized ? <Preloader /> :
+        <div className={styles.Container} >
+          <div className={styles.wrapper}>
+            <Header />
+            < Navbar />
+            <div className={styles.wrapperContent}>
+              {errorsData && <div>{errorsData.messages}</div>}
+              {globalError && <div>{globalError}</div>}
+              < Routes >
+                <Route path='/' element={< ProfilePage />}>
+                  <Route path="/profile" element={< ProfilePage />} />
+                  < Route path="/profile/:userId" element={< ProfilePage />} />
+                </Route>
+                < Route path="/dialogs" element={< DialogsContainer />} />
+                < Route path="/chat" element={< ChatPage />} />
+                < Route path="/users" element={< UsersPage />} />
+                < Route path="/login" element={< LoginPage />} />
+                < Route path="/shop" element={< CartPage />} />
+                < Route path="*" element={< NotFound />} />
+              </Routes>
+            </div>
           </div>
         </div>
-      </div>
-    )
-  }
+      }
+      </>
+  );
 }
-type MapDispatchToPropsType = {
-  initializeApp: () => void
-  handleError: (error: any) => void
-  getFriends: () => void
-}
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-  initialized: state.app.initialized,
-  globalError: state.app.globalError,
-  errorsData: state.profilePage.errorsData
-})
-
-const AppContainer = compose(withLocationAndMatch,
-  connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
-    { initializeApp, handleError, getFriends }))(App);
-
-export const MySocialNetworkApp = () => {
-  return <BrowserRouter>
-    <Provider store={store}>
-      <AppContainer />
-    </Provider>
-  </BrowserRouter>
-}
-
-export default MySocialNetworkApp;

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { CartItem } from './CartItem/CartItem';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import data from '../../cart.db/cart.db';
 import { CartProductsType } from '../../redux/shop-reducer';
 import { CartFooter } from './CartFooter/CartFooter';
+import { ThemeSwitcher } from './ThemeSwitcher/ThemeSwitcher';
 
 const StyledCart = styled.div`
    margin-left: 10px;
@@ -18,7 +19,7 @@ const CartBlock = styled.div`
    margin: 30px 0px 20px;
 `;
 
-export type TotalType = {count: number, price: number}
+export type TotalType = { count: number, price: number }
 
 const CartPage: React.FC = () => {
    const [cart, setCart] = useState(data)
@@ -27,7 +28,7 @@ const CartPage: React.FC = () => {
       price: cart.reduce((prev, curr) => prev + curr.priceTotal, 0)
    })
 
-   useEffect( () => {
+   useEffect(() => {
       setTotal({
          count: cart.reduce((prev, curr) => prev + curr.count, 0),
          price: cart.reduce((prev, curr) => prev + curr.priceTotal, 0)
@@ -71,12 +72,13 @@ const CartPage: React.FC = () => {
    return (
       <StyledCart>
          <CartTitle>Корзина товаров</CartTitle>
+         <ThemeSwitcher />
          <CartBlock>
             {cart.map((product: CartProductsType) => <CartItem key={product.id}
                product={product} deleteProduct={deleteProduct} incrementFn={incrementFn} decrementFn={decrementFn}
                changeValueHandler={changeValueHandler} />)}
          </CartBlock>
-         <CartFooter total={total} makeOrder={makeOrder}/>
+         <CartFooter total={total} makeOrder={makeOrder} />
       </StyledCart>
    );
 }

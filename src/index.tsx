@@ -2,13 +2,18 @@ import React from 'react';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import MySocialNetworkApp from './App';
+import { App } from './App';
+import { BrowserRouter } from 'react-router-dom';
+import store from './redux/redux-store';
+import { Provider } from 'react-redux';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement );
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  // <React.StrictMode>
-    <MySocialNetworkApp />
-  // </React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
 );
 
 
