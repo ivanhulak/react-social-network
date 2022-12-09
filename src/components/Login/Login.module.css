@@ -1,41 +1,39 @@
-.formBlock {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-}
-
 .loginForm {
-   padding: 30px 20px;
-   border: 3px solid rgb(136, 109, 245);
+   padding: 50px 100px;
+   border: 3px solid #886DF5;
    border-radius: 15px;
 }
 
 .title {
    font-size: 22px;
-   color: rgb(136, 109, 245);
+   color: #886DF5;
    font-weight: 700;
    text-align: center;
    margin-bottom: 15px;
 }
 
-.email label,
-.password label {
-   color: rgb(136, 109, 245);
+.email p,
+.password p {
+   color: #886DF5;
    font-weight: 600;
 }
 
-.email input {
+.email input,
+.password input {
    width: 20vmax;
    margin-top: 5px;
+   font-size: 18px;
+   border: 1px solid #e3e3e3;
+   border-radius: 18px;
+   padding: 10px 20px;
+}
+.email input:focus ,
+.password input:focus {
+   border: 1px solid #886DF5;
 }
 
 .email {
    margin-bottom: 10px;
-}
-
-.password input {
-   width: 20vmax;
-   margin-top: 5px;
 }
 
 .password {
@@ -59,8 +57,8 @@
 }
 
 .formBtn:hover {
-   background-color: rgb(136, 109, 245);
-   border: 1px solid rgb(136, 109, 245);
+   background-color: #886DF5;
+   border: 1px solid #886DF5;
 }
 
 .fullFormError {

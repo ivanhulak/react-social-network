@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from './Header.module.css';
 import logo from '../../assets/images/logo_SN.jpg';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,13 +9,13 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../redux/auth-reducer";
 
 
-export const Header: React.FC = () => {
+export const Header: React.FC = React.memo(() => {
 
   const userId = useSelector(getUserId)
   const login = useSelector(getLogin)
   const dispatch: any = useDispatch()
+  const navigate = useNavigate();
 
-  let navigate = useNavigate();
   const routeChange = () => {
     let path = `/profile/${userId}`;
     navigate(path);
@@ -23,6 +23,11 @@ export const Header: React.FC = () => {
   const logoutCallback = () => {
     dispatch(logout())
   }
+
+  useEffect(() => {
+    navigate('/login')
+    // eslint-disable-next-line
+  }, [login])
 
   return (
     <header className={styles.header}>
@@ -36,10 +41,10 @@ export const Header: React.FC = () => {
         </div>
         : <div>
           <Link to='/login'>
-            <button>Login</button>
+            <SimpleBtn btn_text='Login' />
           </Link>
         </div>
       }
     </header>
   );
-}
+})

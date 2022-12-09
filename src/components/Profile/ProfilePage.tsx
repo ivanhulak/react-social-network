@@ -4,8 +4,8 @@ import { AppStateType } from "../../redux/redux-store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate, Params } from "react-router-dom";
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import { Profile } from "./ProfileInfo/ProfileInfoFields/Profile";
 
 const ProfilePage: React.FC = () => {
 
@@ -52,7 +52,7 @@ const ProfilePage: React.FC = () => {
   }, [params.userId])
 
   return <div>
-      <ProfileInfo profile={profile} isOwner={isOwner} />
+      <Profile profile={profile} isOwner={isOwner} />
       <MyPostsContainer />
     </div>
 }

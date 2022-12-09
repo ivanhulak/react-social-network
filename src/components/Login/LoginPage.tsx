@@ -8,11 +8,10 @@ import { AppStateType } from "../../redux/redux-store";
 import { login } from '../../redux/auth-reducer';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
+import styled from "styled-components";
 
 let maxLength50 = maxLength(50);
 let maxLength16 = maxLength(16);
-
 
 type PropsType = {
    captchaURL: string | null
@@ -24,11 +23,11 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataValuesType, PropsType> 
       <form onSubmit={handleSubmit} className={styles.loginForm + ' ' + (props.error ? styles.fullFormError : '')}>
          <div className={styles.title}>Sign in</div>
          <div className={styles.email}>
-            <label htmlFor="email">E-mail</label>
+            <p>E-mail</p>
             {createField<LoginFormValuesTypeKeys>('e-mail', 'email', Input, { type: "text" }, "", [required, maxLength50, email])}
          </div>
          <div className={styles.password}>
-            <label htmlFor="password">Password</label>
+            <p>Password</p>
             {createField<LoginFormValuesTypeKeys>('password', 'password', Input, { type: "password" }, "", [required, maxLength16])}
          </div>
          <div className={styles.rememberMe}>
@@ -57,8 +56,11 @@ export type LoginFormDataValuesType = {
 }
 type LoginFormValuesTypeKeys = Extract<keyof LoginFormDataValuesType, string>
 
-
-
+const StyledForm = styled.div`
+   display: flex;
+   justify-content: center;
+   align-items: center;
+`;
 export const LoginPage: React.FC = () => {
 
    const captchaURL = useSelector((state: AppStateType) => state.auth.captchaURL)
@@ -75,8 +77,8 @@ export const LoginPage: React.FC = () => {
    }
 
    return (
-      <div className={styles.formBlock}>
+      <StyledForm>
          <LoginReduxForm onSubmit={onSubmit} captchaURL={captchaURL} />
-      </div>
+      </StyledForm>
    )
 }

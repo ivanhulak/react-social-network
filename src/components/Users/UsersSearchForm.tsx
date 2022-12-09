@@ -5,10 +5,10 @@ import styles from './UsersSearchForm.module.css';
 import { useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/redux-store';
 
-const usersSearchFormValidate = (values: FormType) => {
-    const errors = {}
-    return errors;
-}
+// const usersSearchFormValidate = (values: FormType) => {
+//     const errors = {}
+//     return errors;
+// }
 type FriendType = 'true' | 'false' | 'null'
 type FormType = {
     term: string,
@@ -31,8 +31,7 @@ const UsersSearchForm: React.FC<PropsType> = React.memo(({ onFilterChanged }) =>
     return (
         <Formik enableReinitialize={true}
             initialValues={{ term: filter.term, friend: String(filter.friend) as FriendType }}
-            onSubmit={submit}
-            validate={usersSearchFormValidate}>
+            onSubmit={submit}>
 
             {({ handleSubmit, isSubmitting, }) => (
                 <form onSubmit={handleSubmit} className={styles.searchFormRow}>
