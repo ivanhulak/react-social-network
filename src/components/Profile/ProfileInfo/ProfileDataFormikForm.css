@@ -1,3 +1,37 @@
-.styled-input{
-  border: 1px solid red;
+.styled-input {
+  max-width: 100%;
+  border-radius: 21px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.styled-input:focus {
+  border: 1px solid #926BFF;
+}
+
+.lookJobCheckbox{
+  position: relative;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  accent-color: #926BFF;
+  transform: translateY(3px);
+}
+.lookJobTextarea{
+  cursor: pointer;
+  max-width: 100%;
+  min-height: 70px;
+  resize: vertical;
+}
+.aboutMeTextarea{
+  cursor: pointer;
+  padding: 5px;
+  max-width: 100%;
+  min-height: 75px;
+  resize: vertical;
+  border: 1px solid transparent;
+}
+.aboutMeTextarea:focus{
+  border: 1px solid #B7A8F5;
+  outline: none !important;
 }

@@ -60,7 +60,7 @@ export const Profile: React.FC<ProfileInfoPropsType> = ({ profile, isOwner }) =>
                <div>
                   {editMode
                      ? <ProfileDataFormikForm profile={profile} onSubmitCallback={onSubmitCallback}
-                        isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected}/>
+                        isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected} goToEditMode={goToEditMode}/>
                      : <UserProfileBlock profile={profile} goToEditMode={goToEditMode}
                            isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected}/>}
                </div>
