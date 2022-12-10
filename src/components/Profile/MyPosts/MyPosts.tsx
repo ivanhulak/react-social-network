@@ -2,23 +2,24 @@ import React from "react";
 import Post from './Post/Post';
 import MyPostsForm from "./MyPostsForm";
 import styles from './MyPosts.module.css'
-import { PostsType } from '../../../types/types';
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../../redux/redux-store";
+import { useDispatch } from "react-redux";
+import { actions } from "../../../redux/profile-reducer";
 
-type PropsType = {
-    posts: Array<PostsType>
-    addPost: (postText: string) => void
-}
 export type MyPostsFormDataValuesType = {
     postText: string
 }
-const MyPosts: React.FC<PropsType> = React.memo(({posts, addPost}) => {
+const MyPosts: React.FC = React.memo(() => {
+    const posts = useSelector((state: AppStateType) => state.profilePage.posts)
+    const dispatch: any = useDispatch()
 
     const postsElements = posts
         .map(p => <Post postText={p.postText} likesCount={p.likes}
             comments={p.comments} photo={p.photo} key={p.id} />)
 
     const onAddPost = (formData: MyPostsFormDataValuesType) => {
-        addPost(formData.postText);
+        dispatch(actions.addPost(formData.postText));
         formData.postText = '';
     }
     return (

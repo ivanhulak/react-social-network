@@ -1,13 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
-import add_big_image from '../../../../assets/profile-icons/add-big-image.svg';
+import add_big_image from './../../../assets/profile-icons/add-big-image.svg';
 import styled from 'styled-components';
-import { ProfileType } from '../../../../types/types';
-import Preloader from '../../../../common/Preloader/Preloader';
+import { ProfileType } from '../../../types/types';
+import Preloader from '../../../common/Preloader/Preloader';
 import { useDispatch } from 'react-redux';
-import { upgradeProfile, uploadPhoto } from '../../../../redux/profile-reducer';
-import ProfileDataForm from '../ProfileDataForm';
+import { upgradeProfile, uploadPhoto } from '../../../redux/profile-reducer';
 import { UserProfileBlock } from './UserProfile';
-import { ProfileDataFormikForm } from '../ProfileDataFormikForm';
+import { EditProfileFormikForm } from './EditProfileFormikForm';
 
 const StyledProfile = styled.div`
    margin-left: 10px;
@@ -59,10 +58,10 @@ export const Profile: React.FC<ProfileInfoPropsType> = ({ profile, isOwner }) =>
                </BigImage>
                <div>
                   {editMode
-                     ? <ProfileDataFormikForm profile={profile} onSubmitCallback={onSubmitCallback}
-                        isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected} goToEditMode={goToEditMode}/>
+                     ? <EditProfileFormikForm profile={profile} onSubmitCallback={onSubmitCallback}
+                        isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected} goToEditMode={goToEditMode} />
                      : <UserProfileBlock profile={profile} goToEditMode={goToEditMode}
-                           isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected}/>}
+                        isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected} />}
                </div>
             </StyledProfile>
          }

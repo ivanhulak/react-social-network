@@ -35,8 +35,6 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
             return { ...state, status: action.status }
         case 'SN/profile/UPLOAD_PHOTO_SUCCESS':
             return { ...state, profile: { ...state.profile, photos: action.photos } as ProfileType }
-        case 'SN/profile/LOAD':
-            return { ...state, profile: { ...state.profile, profile: action.profile } as ProfileType }
         case 'SN/profile/CATCH_ERRORS_SUCCESS':
             return { ...state, errorsData: action.data }
         default:
@@ -51,7 +49,6 @@ export const actions = {
     setUserProfile: (profile: ProfileType) => ({ type: 'SN/profile/SET_USER_PROFILE', profile } as const),
     setStatus: (status: string) => ({ type: 'SN/profile/SET_STATUS', status } as const),
     uploadPhotoSuccess: (photos: PhotosType) => ({ type: 'SN/profile/UPLOAD_PHOTO_SUCCESS', photos } as const),
-    loadDataToProfileDataForm: (profile: ProfileType) => ({ type: 'SN/profile/LOAD', profile } as const),
     catchErrorSuccess: (data: any) => ({ type: 'SN/profile/CATCH_ERRORS_SUCCESS', data } as const)
 }
 
@@ -85,14 +82,11 @@ export const upgradeProfile = (profileData: ProfileType): BaseThunkType<FormActi
     const userId = getState().auth.userId
     let data = await profileAPI.upgradeProfile(profileData)
     if (data.resultCode === ResultCodesEnum.Success) {
-        if (userId != null){
+        if (userId !== null){
             dispatch(setProfile(userId))
         } else {
             throw new Error('UserId cannot be null')
         }
-    } else {
-        dispatch(stopSubmit('editProfile', {_error: data.messages[0]}))
-        return Promise.reject(data.messages[0])
     }
 }
 export const catchErrors = (status: string, message: string, statusCode: number): BaseThunkType<ActionTypes, void> => (dispatch) => {
