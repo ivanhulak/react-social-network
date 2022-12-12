@@ -25,7 +25,10 @@ const FriendImage = styled.div`
 `;
 const FriendName = styled.div`
    font-size: 18px;
-   color: #000;
+   color: ${({theme}) => theme.friendColor};
+   &:hover{
+      color: ${({theme}) => theme.navlink};
+   }
 `;
 
 export const Friend: React.FC<FriendType> = ({ id, name, photos }) => {

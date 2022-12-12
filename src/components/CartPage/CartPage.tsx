@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { CartItem } from './CartItem/CartItem';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import data from '../../cart.db/cart.db';
 import { CartProductsType } from '../../redux/shop-reducer';
 import { CartFooter } from './CartFooter/CartFooter';
-import { ThemeSwitcher } from './ThemeSwitcher/ThemeSwitcher';
 
 const StyledCart = styled.div`
    margin-left: 10px;
@@ -72,7 +71,6 @@ const CartPage: React.FC = () => {
    return (
       <StyledCart>
          <CartTitle>Корзина товаров</CartTitle>
-         <ThemeSwitcher />
          <CartBlock>
             {cart.map((product: CartProductsType) => <CartItem key={product.id}
                product={product} deleteProduct={deleteProduct} incrementFn={incrementFn} decrementFn={decrementFn}

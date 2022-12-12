@@ -1,46 +1,102 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { Friends } from "./FriendsBlock/Friends";
 import { AppStateType } from '../../redux/redux-store'
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import chat from '../../assets/navbar-icons/chat.svg';
+import shop from '../../assets/navbar-icons/shop.svg';
+import users from '../../assets/navbar-icons/profile-2user.svg';
+import settings from '../../assets/navbar-icons/settings.svg';
+import dots from '../../assets/navbar-icons/dot-horizontal.svg';
+import { ProfileIcon } from "./Icons/ProfileIcon";
+import { MessagesIcon } from "./Icons/MessagesIcon";
+import { ChatIcon } from "./Icons/ChatIcon";
+import { UsersIcon } from "./Icons/UsersIcon";
+import { SettingsIcon } from "./Icons/SettingsIcon";
+import { ShopIcon } from "./Icons/ShopIcon";
+import { DotsIcon } from "./Icons/DotsIcon";
 
 const StyledNavbar = styled.nav`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   font-size: 22px;
   padding: 20px 10px;
-  background-color: rgb(227, 227, 227);
+  background-color: ${({theme}) => theme.additional};
+  max-height: 82.5vh;
+  overflow: scroll;
   grid-area: nav;
+  .nav-list__link{
+    color: ${({theme}) => theme.navlink};
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: 0.01em;
+    img{
+      margin-right: 20px;
+    }
+  }
+  .nav-list__link--active{
+    font-weight: 500;
+    color: #886DF5;
+  }
+  .page-name{
+    margin-left: 20px;
+  }
 `;
 const FriendsTitle = styled.div`
-  
-  font-weight: 700;
-  color: #886DF5;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: 0.01em;
+  color: ${({theme}) => theme.friendColor};
 `;
-const navLinkStyles = ({ isActive }: any) => {
-  return {
-    color: isActive ? '#886DF5' : `#000`,
-    fontWeight: isActive ? '700' : "400",
-  }
-}
+
 
 const Navbar: React.FC = () => {
+  const [isFriendsVisible, setIsFriendsVisible] = useState(false)
   const isAuth: boolean = useSelector((state: AppStateType) => state.auth.isAuth)
   return (
     <StyledNavbar>
       {isAuth && <>
-        <NavLink to='/profile' style={navLinkStyles}>Profile</NavLink>
-        <NavLink to='/dialogs' style={navLinkStyles}>Messages</NavLink>
-        <NavLink to='/chat' style={navLinkStyles}>Chat</NavLink>
+        <NavLink to="/profile"
+          className={({ isActive }) => isActive ? 'nav-list__link nav-list__link--active' : 'nav-list__link'}>
+          <ProfileIcon />
+          <span className="page-name">Profile</span>
+        </NavLink>
+
+        <NavLink to='/dialogs'
+          className={({ isActive }) => isActive ? 'nav-list__link nav-list__link--active' : 'nav-list__link'}>
+          <MessagesIcon/>
+          <span className="page-name">Messages</span>
+        </NavLink>
+        <NavLink to='/chat'
+          className={({ isActive }) => isActive ? 'nav-list__link nav-list__link--active' : 'nav-list__link'}>
+          <ChatIcon />
+          <span className="page-name">Chat</span>
+        </NavLink>
       </>}
-      <NavLink to='/users' style={navLinkStyles}>Users</NavLink>
-      <NavLink to='/settings' style={navLinkStyles}>Settings</NavLink>
-      <NavLink to='/shop' style={navLinkStyles}>Shop</NavLink>
+      <NavLink to='/users'
+        className={({ isActive }) => isActive ? 'nav-list__link nav-list__link--active' : 'nav-list__link'}>
+        <UsersIcon />
+        <span className="page-name">Users</span>
+      </NavLink>
+      <NavLink to='/settings'
+        className={({ isActive }) => isActive ? 'nav-list__link nav-list__link--active' : 'nav-list__link'}>
+        <SettingsIcon />
+        <span className="page-name">Settings</span>
+      </NavLink>
+      <NavLink to='/shop'
+        className={({ isActive }) => isActive ? 'nav-list__link nav-list__link--active' : 'nav-list__link'}>
+        <ShopIcon />
+        <span className="page-name">Shop</span>
+      </NavLink>
       {isAuth && <>
-        <FriendsTitle>Friends</FriendsTitle>
-        <Friends />
+        <FriendsTitle onClick={() => setIsFriendsVisible(prev => !prev)}>
+          <DotsIcon />
+          <span className="page-name">Friends</span>
+        </FriendsTitle>
+        {isFriendsVisible && <Friends />}
       </>}
     </StyledNavbar>
   );

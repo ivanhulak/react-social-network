@@ -3,7 +3,8 @@ export type PostsType = {
    postText: string,
    likes: number,
    comments: number,
-   photo: string
+   sendings: number,
+   photo: any
 }
 export type ContactsType = {
    facebook: string

@@ -5,9 +5,10 @@ import { Switch } from './Switch/Switch';
 
 export const ThemeSwitcher: React.FC = () => {
    return (
-      <div>
+      <div style={{ width: '155px' }}>
          <SunIcon />
-         <Switch />
+         {/* <Switch toggleTheme={toggleTheme}/> */}
+         <Switch/>
          <MoonIcon />
       </div>
    );

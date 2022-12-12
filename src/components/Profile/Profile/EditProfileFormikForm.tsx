@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import { Field, Formik, getIn } from "formik";
 import * as yup from 'yup';
 import styled from 'styled-components';
@@ -15,6 +15,7 @@ import { ProfileType } from '../../../types/types';
 import { ProfileAvatar } from './ProfileAvatar';
 import { EditProfileButton, FullName, LookJob, ProfSkills, ProfSkillsInfo } from './UserProfile';
 import ProfileStatus from './ProfileStatus';
+import { OwnerContext } from '../ProfilePage';
 
 const UserProfileEditMode = styled.div`
    display: flex;
@@ -108,7 +109,7 @@ const CloseEditingButton = styled.button`
       transform: translate(4px, 4px);
    }
 `;
-const ErrorMessage = styled.div`
+export const ErrorMessage = styled.div`
   color: red;
   font-size: 14px;
   font-weight: 400;
@@ -149,7 +150,6 @@ const validationSchema = yup.object().shape({
       .matches(URL, 'Enter a valid url')
       .required('Please enter website'),
   })
-
 })
 // -------------------------------------------
 type ProfileDataFormType = {
@@ -162,11 +162,12 @@ type ProfileDataFormType = {
 type PropsType = {
   onSubmitCallback: (formData: any) => void
   profile: ProfileType
-  isOwner: boolean
   onAvatarPhotoSelected: (e: ChangeEvent<HTMLInputElement>) => void
   goToEditMode: () => void
 }
-export const EditProfileFormikForm: React.FC<PropsType> = React.memo(({ goToEditMode, isOwner, profile, onSubmitCallback, onAvatarPhotoSelected }) => {
+export const EditProfileFormikForm: React.FC<PropsType> = React.memo(({ goToEditMode, profile, onSubmitCallback, onAvatarPhotoSelected }) => {
+  //@ts-ignore
+  const {isOwner} = useContext(OwnerContext)
   const submit = (values: ProfileDataFormType, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
     const profile = {
       fullName: values.fullName,

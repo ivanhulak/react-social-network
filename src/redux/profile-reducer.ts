@@ -1,14 +1,15 @@
-import { FormAction, stopSubmit } from 'redux-form';
+import { FormAction } from 'redux-form';
 import { ResultCodesEnum } from '../DAL/api';
 import { profileAPI } from '../DAL/profile-api';
 import { PhotosType, PostsType, ProfileType } from '../types/types';
 import { BaseThunkType, InferActionsTypes } from './redux-store';
+import heart from '../assets/posts-icons/heart.jpg';
 
 let initialState = {
     posts: [
-        { id: 1, postText: 'Hello! It is Ivan Hulak!', likes: 20, comments: 2, photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
-        { id: 2, postText: 'New Post', likes: 12, comments: 1, photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
-        { id: 3, postText: 'React app', likes: 1, comments: 5, photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png' },
+        { id: 1, postText: 'Love saves the world', likes: 107, comments: 27, sendings: 8, photo: {heart} },
+        { id: 2, postText: 'I am learning React', likes: 1227, comments: 227, sendings: 19, photo: {heart} },
+        { id: 3, postText: 'Live is a journey, not a race', likes: 189, comments: 17, sendings: 4, photo: {heart} },
     ] as Array<PostsType>,
     profile: null as ProfileType | null,
     status: '',
@@ -24,7 +25,8 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
                 postText: action.newPostText,
                 likes: 20,
                 comments: 2,
-                photo: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png'
+                sendings: 8,
+                photo: {heart}
             }
             return { ...state, posts: [...state.posts, newPost] }
         case 'SN/profile/DELETE_POST':

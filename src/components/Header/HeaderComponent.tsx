@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import styles from './Header.module.css';
 import logo from '../../assets/images/logo_SN.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { SimpleBtn } from "../../common/Buttons/SimpleButton/SimpleBtn";
@@ -7,9 +6,30 @@ import { useSelector } from "react-redux";
 import { getLogin, getUserId } from "../../redux/selectors/header-selectors";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/auth-reducer";
+import styled from "styled-components";
+import { ThemeSwitcher } from "./ThemeSwitcher/ThemeSwitcher";
 
-
-export const Header: React.FC = React.memo(() => {
+const Header = styled.header`
+  background-color: ${({theme}) => theme.additional};
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  grid-area: header;
+  .logotype{
+    max-width: 50px;
+    border-radius: 50%;
+  }
+  .headerInnerRow{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`;
+export const HeaderComponent: React.FC = React.memo(() => {
 
   const userId = useSelector(getUserId)
   const login = useSelector(getLogin)
@@ -30,21 +50,19 @@ export const Header: React.FC = React.memo(() => {
   }, [login])
 
   return (
-    <header className={styles.header}>
-      <img src={logo} alt="Logotype" />
+    <Header>
+      <img src={logo} alt="Logotype" className="logotype" />
       {login
-        ? <div className={styles.headerInnerRow}>
+        ? <div className='headerInnerRow'>
           <SimpleBtn btn_text={login} onClickCallback={routeChange} />
-          <div>
-            <SimpleBtn btn_text='logout' onClickCallback={logoutCallback} />
-          </div>
+          <SimpleBtn btn_text='logout' onClickCallback={logoutCallback} />
         </div>
         : <div>
-          <Link to='/login'>
-            <SimpleBtn btn_text='Login' />
-          </Link>
+          <Link to='/login'><SimpleBtn btn_text='Login' /></Link>
         </div>
       }
-    </header>
+      {/* <ThemeSwitcher toggleTheme={toggleTheme}/> */}
+      <ThemeSwitcher />
+    </Header>
   );
 })

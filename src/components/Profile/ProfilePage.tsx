@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { createContext, useEffect } from "react";
 import { setProfile, getStatus } from "../../redux/profile-reducer";
 import { AppStateType } from "../../redux/redux-store";
 import { useSelector } from "react-redux";
@@ -7,12 +7,12 @@ import { useParams, useNavigate, Params } from "react-router-dom";
 import { Profile } from "./Profile/Profile";
 import MyPosts from "./MyPosts/MyPosts";
 
+
+export const OwnerContext = createContext(true);
+
 const ProfilePage: React.FC = () => {
-
   const authUserId = useSelector((state: AppStateType) => state.auth.userId)
-  const profile = useSelector((state: AppStateType) => state.profilePage.profile)
   const dispatch: any = useDispatch()
-
   const navigate = useNavigate();
   const params: Params<string> = useParams();
   let userId = Number(params.userId)
@@ -52,8 +52,12 @@ const ProfilePage: React.FC = () => {
   }, [params.userId])
 
   return <div>
-    <Profile profile={profile} isOwner={isOwner} />
-    <MyPosts />
+    {//@ts-ignore
+    <OwnerContext.Provider value={{ isOwner: isOwner }}>
+      <Profile/>
+      <MyPosts />
+    </OwnerContext.Provider>
+    }
   </div>
 }
 export default ProfilePage;

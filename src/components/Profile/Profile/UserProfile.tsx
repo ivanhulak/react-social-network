@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import instagram from './../../../assets/profile-icons/instagram.svg';
 import facebook from './../../../assets/profile-icons/facebook.svg';
 import github from './../../../assets/profile-icons/github.svg';
@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import ProfileStatus from './ProfileStatus';
 import { ProfileAvatar } from './ProfileAvatar';
 import { ProfileType } from '../../../types/types';
+import { OwnerContext } from '../ProfilePage';
 
 const UserProfile = styled.div`
    display: flex;
@@ -93,6 +94,7 @@ export const ProfSkillsInfo = styled.div`
    font-size: 18px;
    padding: 10px 20px;
    border-radius: 0px 24px 24px 24px;
+   min-height: 30px;
    .lookJobTextarea{
       cursor: pointer;
       max-width: 100%;
@@ -166,11 +168,12 @@ export const EditProfileButton = styled.button`
 
 type PropsType = {
    profile: ProfileType
-   isOwner: boolean,
    onAvatarPhotoSelected: (e: ChangeEvent<HTMLInputElement>) => void,
    goToEditMode: () => void
 }
-export const UserProfileBlock: React.FC<PropsType> = ({ profile, isOwner, onAvatarPhotoSelected, goToEditMode }) => {
+export const UserProfileBlock: React.FC<PropsType> = ({ profile, onAvatarPhotoSelected, goToEditMode }) => {
+   //@ts-ignore
+   const {isOwner} = useContext(OwnerContext)
    return (
       <UserProfile>
          <ProfileAvatar profile={profile} isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected} />

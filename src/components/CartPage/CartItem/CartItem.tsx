@@ -6,6 +6,7 @@ import increment from '../../../assets/images/cart/up-arrow.png';
 import decrement from '../../../assets/images/cart/down-arrow.png';
 import { CartProductsType } from '../../../redux/shop-reducer';
 import priceFormatter from '../../../utils/priceFormatter';
+import { DeleteProductIcon } from './DeleteProductIcon';
 
 const StyledCartItem = styled.div`
    border-top: 3px solid #E3E3E3;
@@ -31,6 +32,7 @@ const ProductImage = styled.img`
 const ProductTitle = styled.h2`
    font-weight: 700;
    flex: 0 1 35%;
+   color: ${({ theme }) => theme.headersColor};
 `;
 const ProductPrice = styled.div`
    font-weight: 700;
@@ -42,13 +44,6 @@ const RemoveProductButton = styled.button`
    position: absolute;
    top: 10px;
    right: 10px;
-   width: 20px;
-   height: 20px;
-   background: url(${closeBtn}) 0 0/cover no-repeat;
-   transition: all 0.3s ease;
-   &:hover {
-      background: url(${closeBtnHovered}) 0 0/cover no-repeat;
-   }
 `;
 const StyledInput = styled.input`
    padding: 10px;
@@ -109,7 +104,7 @@ export const CartItem: React.FC<PropsType> = ({ product, deleteProduct, incremen
             <DecrementBtn onClick={() => decrementFn(id)} />
          </div>
          <ProductPrice>{priceFormatter.format(priceTotal)} грн</ProductPrice>
-         <RemoveProductButton onClick={() => deleteProduct(id)}/>
+         <RemoveProductButton onClick={() => deleteProduct(id)}><DeleteProductIcon/></RemoveProductButton>
       </StyledCartItem>
    );
 }

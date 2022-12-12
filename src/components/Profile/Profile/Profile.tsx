@@ -1,16 +1,17 @@
 import React, { ChangeEvent, useState } from 'react';
 import add_big_image from './../../../assets/profile-icons/add-big-image.svg';
 import styled from 'styled-components';
-import { ProfileType } from '../../../types/types';
 import Preloader from '../../../common/Preloader/Preloader';
 import { useDispatch } from 'react-redux';
 import { upgradeProfile, uploadPhoto } from '../../../redux/profile-reducer';
 import { UserProfileBlock } from './UserProfile';
 import { EditProfileFormikForm } from './EditProfileFormikForm';
+import { useSelector } from 'react-redux';
+import { AppStateType } from '../../../redux/redux-store';
 
 const StyledProfile = styled.div`
-   margin-left: 10px;
-   margin-bottom: 100px;
+   margin: 0px 10px;
+   margin-bottom: 40px;
 `;
 const BigImage = styled.div`
    display: flex;
@@ -27,11 +28,8 @@ const BigImage = styled.div`
    }
 `;
 
-export type ProfileInfoPropsType = {
-   profile: ProfileType | null
-   isOwner: boolean
-}
-export const Profile: React.FC<ProfileInfoPropsType> = ({ profile, isOwner }) => {
+export const Profile: React.FC = () => {
+   const profile = useSelector((state: AppStateType) => state.profilePage.profile)
    const [editMode, setEditMode] = useState(false);
    const dispatch: any = useDispatch()
 
@@ -59,9 +57,9 @@ export const Profile: React.FC<ProfileInfoPropsType> = ({ profile, isOwner }) =>
                <div>
                   {editMode
                      ? <EditProfileFormikForm profile={profile} onSubmitCallback={onSubmitCallback}
-                        isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected} goToEditMode={goToEditMode} />
+                           onAvatarPhotoSelected={onAvatarPhotoSelected} goToEditMode={goToEditMode} />
                      : <UserProfileBlock profile={profile} goToEditMode={goToEditMode}
-                        isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected} />}
+                        onAvatarPhotoSelected={onAvatarPhotoSelected} />}
                </div>
             </StyledProfile>
          }
