@@ -11,8 +11,25 @@ import {
     getPageSize, getTotalItemsCount, getUsers
 } from "../../redux/selectors/users-selectors";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import styled from "styled-components";
 
-
+const StyledUsers = styled.div`
+    padding: 0px 20px;
+    .usersSearchForm{
+        margin-bottom: 30px;
+    }
+    .userItemsRow{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .paginationBlock{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+`;
 export const Users: React.FC = () => {
 
     const users = useSelector(getUsers)
@@ -67,11 +84,11 @@ export const Users: React.FC = () => {
     }
 
     return (
-        <div className={styles.users}>
-            <div className={styles.usersSearchForm}>
+        <StyledUsers>
+            <div className='usersSearchForm'>
                 <UsersSearchForm onFilterChanged={onFilterChanged} />
             </div>
-            <div className={styles.userItemsRow}>
+            <div className='userItemsRow'>
                 {users.map(u => <UserItem key={u.id} userId={u.id}
                     userPhoto={u.photos.small}
                     followed={u.followed}
@@ -81,10 +98,10 @@ export const Users: React.FC = () => {
                     unfollow={unfollowCallback}
                     />)}
             </div>
-            <div className={styles.paginationBlock}>
+            <div className='paginationBlock'>
                 <Paginator currentPage={currentPage} totalItemsCount={totalItemsCount}
                     pageSize={pageSize} onPageChanged={onPageChanged} portionSize={10} />
             </div>
-        </div>
+        </StyledUsers>
     );
 }

@@ -168,15 +168,14 @@ export const EditProfileButton = styled.button`
 
 type PropsType = {
    profile: ProfileType
-   onAvatarPhotoSelected: (e: ChangeEvent<HTMLInputElement>) => void,
    goToEditMode: () => void
 }
-export const UserProfileBlock: React.FC<PropsType> = ({ profile, onAvatarPhotoSelected, goToEditMode }) => {
+export const UserProfileBlock: React.FC<PropsType> = ({ profile, goToEditMode }) => {
    //@ts-ignore
    const {isOwner} = useContext(OwnerContext)
    return (
       <UserProfile>
-         <ProfileAvatar profile={profile} isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected} />
+         <ProfileAvatar profile={profile} isOwner={isOwner} />
          <UserInfo>
             <div style={{ maxWidth: '243px' }}>
                <div style={{ fontWeight: '700', fontSize: '30px' }}>{profile.fullName}</div>

@@ -14,6 +14,8 @@ import { useDispatch } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "./theme";
 import { GlobalStyles } from './global';
+import { useLocalStorage } from "./utils/useLocalStorage";
+import { detectDarkMode } from "./utils/detectDarkMode";
 // Use lazy loading
 const ProfilePage = withLazyComponent(React.lazy(() => import('./components/Profile/ProfilePage')));
 const DialogsContainer = withLazyComponent(React.lazy(() => import('./components/Dialogs/DialogsContainer')));
@@ -22,7 +24,7 @@ const ChatPage = withLazyComponent(React.lazy(() => import('./components/Chat/Ch
 const CartPage = withLazyComponent(React.lazy(() => import('./components/CartPage/CartPage')));
 
 const Container = styled.div`
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 `;
 const Wrapper = styled.div`
@@ -34,7 +36,7 @@ const Wrapper = styled.div`
   grid-template-columns: 250px 1fr;
 `;
 const WrapperContent = styled.div`
-  height: 82.5vh;
+  height: calc(100vh - 142px);
   overflow: scroll;
   scroll-behavior: smooth;
   grid-area: content;
@@ -58,7 +60,7 @@ type SwitchThemeType = {
 }
 export const SwithThemeContext = createContext<SwitchThemeType>({} as SwitchThemeType)
 export const App: React.FC = () => {
-  const [theme, setTheme] = useState('dark')
+  const [theme, setTheme] = useLocalStorage('darkTheme', detectDarkMode())
   const isDarkTheme = theme === 'dark'
   const initialized = useSelector((state: AppStateType) => state.app.initialized)
   const globalError = useSelector((state: AppStateType) => state.app.globalError)

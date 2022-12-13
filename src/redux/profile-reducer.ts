@@ -74,10 +74,12 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
         dispatch(catchErrors(error.response.status, error.response.data.message, error.code))
     }
 }
-export const uploadPhoto = (file: File): ThunkType => async (dispatch) => {
+export const uploadPhoto = (file: any): ThunkType => async (dispatch) => {
     let data = await profileAPI.uploadPhoto(file)
     if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(actions.uploadPhotoSuccess(data.data.photos));
+    } else if (data.resultCode === ResultCodesEnum.Error){
+        alert(`Error! ${data.messages[0]}`)
     }
 }
 export const upgradeProfile = (profileData: ProfileType): BaseThunkType<FormAction> => async (dispatch, getState) => {

@@ -17,7 +17,7 @@ const CreatePostForm = styled.form`
       display: block;
       min-height: 80px;
       padding: 15px 130px 15px 15px;
-      width: 100%;
+      width: 98%;
       color: #E3E3E3;
       font-weight: 600;
       font-size: 20px;
@@ -38,7 +38,7 @@ const CreatePostForm = styled.form`
 `;
 const CreateButton = styled.button`
    position: absolute;
-   right: 10px;
+   right: 35px;
    bottom: 10px;
    z-index: 3;
    background-color: #B7A8F5;
@@ -50,20 +50,20 @@ const CreateButton = styled.button`
 `;
 const validationSchema = yup.object().shape({
    postText: yup.string()
-     .typeError('Needs to be a string')
-     .min(4, 'Too Short!')
-     .max(450, 'Too Long!'),
- })
+      .typeError('Needs to be a string')
+      .min(4, 'Too Short!')
+      .max(450, 'Too Long!'),
+})
 export const PostsFormikForm: React.FC = () => {
    const dispatch: any = useDispatch()
    const submit = (values: MyPostsFormDataValuesType, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
       const postData = {
-        postText: values.postText
+         postText: values.postText
       }
       dispatch(actions.addPost(postData.postText));
       alert(JSON.stringify(postData));
       setSubmitting(false);
-    }
+   }
    return (
       <Formik
          initialValues={{ postText: '' }}
@@ -74,7 +74,7 @@ export const PostsFormikForm: React.FC = () => {
             <CreatePostForm onSubmit={handleSubmit}>
                {errors.postText && <ErrorMessage>{errors.postText}</ErrorMessage>}
                <Field as='textarea' type="text" name="postText" placeholder='Type some text...'
-                   className={errors.postText ? 'createPost-textarea textarea-error' : 'createPost-textarea'}/>
+                  className={errors.postText ? 'createPost-textarea textarea-error' : 'createPost-textarea'} />
                <CreateButton type="submit" disabled={isSubmitting}>Create</CreateButton>
             </CreatePostForm>
          )}

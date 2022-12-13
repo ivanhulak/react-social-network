@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import closeBtn from '../../../assets/images/cart/close-icon.svg';
-import closeBtnHovered from '../../../assets/images/cart/close-icon-hovered.svg';
 import increment from '../../../assets/images/cart/up-arrow.png';
 import decrement from '../../../assets/images/cart/down-arrow.png';
 import { CartProductsType } from '../../../redux/shop-reducer';

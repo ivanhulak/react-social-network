@@ -3,7 +3,7 @@ import add_big_image from './../../../assets/profile-icons/add-big-image.svg';
 import styled from 'styled-components';
 import Preloader from '../../../common/Preloader/Preloader';
 import { useDispatch } from 'react-redux';
-import { upgradeProfile, uploadPhoto } from '../../../redux/profile-reducer';
+import { upgradeProfile } from '../../../redux/profile-reducer';
 import { UserProfileBlock } from './UserProfile';
 import { EditProfileFormikForm } from './EditProfileFormikForm';
 import { useSelector } from 'react-redux';
@@ -33,11 +33,6 @@ export const Profile: React.FC = () => {
    const [editMode, setEditMode] = useState(false);
    const dispatch: any = useDispatch()
 
-   const onAvatarPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files?.length) {
-         dispatch(uploadPhoto(e.target.files[0]));
-      }
-   }
    const onSubmitCallback = (formData: any) => {
       dispatch(upgradeProfile(formData));
       setEditMode(false);
@@ -57,9 +52,8 @@ export const Profile: React.FC = () => {
                <div>
                   {editMode
                      ? <EditProfileFormikForm profile={profile} onSubmitCallback={onSubmitCallback}
-                           onAvatarPhotoSelected={onAvatarPhotoSelected} goToEditMode={goToEditMode} />
-                     : <UserProfileBlock profile={profile} goToEditMode={goToEditMode}
-                        onAvatarPhotoSelected={onAvatarPhotoSelected} />}
+                           goToEditMode={goToEditMode} />
+                     : <UserProfileBlock profile={profile} goToEditMode={goToEditMode} />}
                </div>
             </StyledProfile>
          }

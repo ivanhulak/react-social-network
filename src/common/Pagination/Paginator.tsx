@@ -1,9 +1,34 @@
 import React from 'react';
 import { useState } from 'react';
-import styles from './Paginator.module.css';
 import cn from 'classnames';
 import { SimpleBtn } from '../Buttons/SimpleButton/SimpleBtn';
+import styled from 'styled-components';
 
+const StyledPages = styled.div`
+   .currentPage {
+      font-weight: 700;
+      background-color: rgb(136, 109, 245);
+      color: #fff;
+   }
+   .pageNumber {
+      color: ${({ theme }) => theme.BlackWhite};
+      font-size: 20px;
+      border: 1px solid ${({ theme }) => theme.paginationBtn};
+      border-radius: 24px;
+      padding: 5px 15px;
+      cursor: pointer;
+      transition: ease 0.3s all;
+      &:hover {
+         background-color: ${({ theme }) => theme.headersColor};
+         color: #fff;
+      }
+      &:active {
+         background-color: #666;
+         color: #fff;
+         transform: translate(2px, 3px);
+      }
+   }
+`;
 type PropsType = {
    totalItemsCount: number
    pageSize: number
@@ -27,10 +52,10 @@ const Paginator: React.FC<PropsType> = ({ totalItemsCount, pageSize, currentPage
       {portionNumber > 1 && <SimpleBtn btn_text='Prev' onClickCallback={ () => { setPortionNumber(portionNumber - 1) } }/>}
       {pages.filter(p => p >= leftBorderElement && p <= rightBorderElement).map(p => {
          return (
-            <div key={p}>
+            <StyledPages key={p}>
                <button onClick={(e) => { onPageChanged(p) }}
-                  className={cn({ [styles.currentPage]: currentPage === p }, styles.pageNumber)}>{p}</button>
-            </div>
+                  className={cn({ ['currentPage']: currentPage === p }, 'pageNumber')}>{p}</button>
+            </StyledPages>
          );
       })}
       {portionNumber < portionCount && 

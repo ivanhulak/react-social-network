@@ -162,10 +162,9 @@ type ProfileDataFormType = {
 type PropsType = {
   onSubmitCallback: (formData: any) => void
   profile: ProfileType
-  onAvatarPhotoSelected: (e: ChangeEvent<HTMLInputElement>) => void
   goToEditMode: () => void
 }
-export const EditProfileFormikForm: React.FC<PropsType> = React.memo(({ goToEditMode, profile, onSubmitCallback, onAvatarPhotoSelected }) => {
+export const EditProfileFormikForm: React.FC<PropsType> = React.memo(({ goToEditMode, profile, onSubmitCallback }) => {
   //@ts-ignore
   const {isOwner} = useContext(OwnerContext)
   const submit = (values: ProfileDataFormType, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
@@ -199,7 +198,7 @@ export const EditProfileFormikForm: React.FC<PropsType> = React.memo(({ goToEdit
       onSubmit={submit}>
       {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
         <UserProfileEditMode>
-          <ProfileAvatar profile={profile} isOwner={isOwner} onAvatarPhotoSelected={onAvatarPhotoSelected} />
+          <ProfileAvatar profile={profile} isOwner={isOwner} />
           <EditProfileForm onSubmit={handleSubmit} >
             <div style={{ maxWidth: '243px' }}>
               <FullName>

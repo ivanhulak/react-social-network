@@ -7,6 +7,9 @@ export type ThemeType = {
   navlink_icon: string
   navlink: string
   friendColor: string
+  usersSearch: string
+  paginationBtn: string
+  BlackWhite: string
 }
 export const lightTheme = {
   body: '#fff',
@@ -17,6 +20,9 @@ export const lightTheme = {
   navlink_icon: '#000',
   navlink: '#000',
   friendColor: '#000',
+  usersSearch: 'rgba(136, 109, 245, 0.2)',
+  paginationBtn: '#000',
+  BlackWhite: '#000',
 }
 export const darkTheme = {
   body: '#000',
@@ -27,4 +33,7 @@ export const darkTheme = {
   navlink_icon: '#B7A8F5',
   navlink: '#B7A8F5',
   friendColor: '#e3e3e3',
+  usersSearch: '#B7A8F5',
+  paginationBtn: '#8000FF',
+  BlackWhite: '#fff',
 }

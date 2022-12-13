@@ -4,11 +4,6 @@ import { Friends } from "./FriendsBlock/Friends";
 import { AppStateType } from '../../redux/redux-store'
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import chat from '../../assets/navbar-icons/chat.svg';
-import shop from '../../assets/navbar-icons/shop.svg';
-import users from '../../assets/navbar-icons/profile-2user.svg';
-import settings from '../../assets/navbar-icons/settings.svg';
-import dots from '../../assets/navbar-icons/dot-horizontal.svg';
 import { ProfileIcon } from "./Icons/ProfileIcon";
 import { MessagesIcon } from "./Icons/MessagesIcon";
 import { ChatIcon } from "./Icons/ChatIcon";
@@ -24,7 +19,7 @@ const StyledNavbar = styled.nav`
   font-size: 22px;
   padding: 20px 10px;
   background-color: ${({theme}) => theme.additional};
-  max-height: 82.5vh;
+  max-height: calc(100vh - 142px);
   overflow: scroll;
   grid-area: nav;
   .nav-list__link{

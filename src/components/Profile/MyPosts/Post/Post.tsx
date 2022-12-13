@@ -18,7 +18,7 @@ const PostWrapper = styled.div`
     border-radius: 37px;
     margin-bottom: 40px;
 `;
-const PostHeader = styled.div`
+export const PostHeader = styled.div`
     background-color: #B7A8F5;
     display: flex;
     gap: 23px;
