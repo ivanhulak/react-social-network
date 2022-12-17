@@ -1,10 +1,8 @@
 export type PostsType = {
-   id: number,
-   postText: string,
-   likes: number,
-   comments: number,
-   sendings: number,
-   photo: any
+   id: string
+   name: { first: string, last: string, title: string }
+   picture: { large: string, medium: string, thumbnail: string }
+   postText: string
 }
 export type ContactsType = {
    facebook: string

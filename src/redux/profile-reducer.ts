@@ -3,14 +3,10 @@ import { ResultCodesEnum } from '../DAL/api';
 import { profileAPI } from '../DAL/profile-api';
 import { PhotosType, PostsType, ProfileType } from '../types/types';
 import { BaseThunkType, InferActionsTypes } from './redux-store';
-import heart from '../assets/posts-icons/heart.jpg';
+import { v4 as uuidv4 } from 'uuid';
 
 let initialState = {
-    posts: [
-        { id: 1, postText: 'Love saves the world', likes: 107, comments: 27, sendings: 8, photo: {heart} },
-        { id: 2, postText: 'I am learning React', likes: 1227, comments: 227, sendings: 19, photo: {heart} },
-        { id: 3, postText: 'Live is a journey, not a race', likes: 189, comments: 17, sendings: 4, photo: {heart} },
-    ] as Array<PostsType>,
+    posts: [] as Array<PostsType>,
     profile: null as ProfileType | null,
     status: '',
     errorsData: {} as any,
@@ -21,12 +17,10 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
     switch (action.type) {
         case 'SN/profile/ADD_POST':
             let newPost = {
-                id: 5,
+                id: uuidv4(),
+                name: {first:'Ivan', last: 'Hulak', title: 'Mr'},
+                picture: {large: 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png', medium: '', thumbnail: ''},
                 postText: action.newPostText,
-                likes: 20,
-                comments: 2,
-                sendings: 8,
-                photo: {heart}
             }
             return { ...state, posts: [...state.posts, newPost] }
         case 'SN/profile/DELETE_POST':
@@ -47,7 +41,7 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
 type ActionTypes = InferActionsTypes<typeof actions>
 export const actions = {
     addPost: (newPostText: string) => ({ type: 'SN/profile/ADD_POST', newPostText } as const),
-    deletePost: (postId: number) => ({ type: 'SN/profile/DELETE_POST', postId } as const), // for testing
+    deletePost: (postId: string) => ({ type: 'SN/profile/DELETE_POST', postId } as const), // for testing
     setUserProfile: (profile: ProfileType) => ({ type: 'SN/profile/SET_USER_PROFILE', profile } as const),
     setStatus: (status: string) => ({ type: 'SN/profile/SET_STATUS', status } as const),
     uploadPhotoSuccess: (photos: PhotosType) => ({ type: 'SN/profile/UPLOAD_PHOTO_SUCCESS', photos } as const),

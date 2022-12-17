@@ -7,11 +7,12 @@ export const instance = axios.default.create({
         'API-KEY': '0f7ca0a1-1142-4ef6-a871-38727982b107'
     }
 })
-export enum ResultCodesEnum{
+
+export enum ResultCodesEnum {
     Success = 0,
     Error = 1
 }
-export enum ResultCodeForCaptchaEnum{
+export enum ResultCodeForCaptchaEnum {
     CaptchaIsRequired = 10
 }
 

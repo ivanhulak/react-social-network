@@ -1,5 +1,5 @@
-import React, { createContext, useEffect, useState } from "react";
-import Preloader from "./common/Preloader/Preloader";
+import React, { createContext, useEffect } from "react";
+import {Preloader} from "./common/Preloader/Preloader";
 import Navbar from "./components/Navbar/Navbar";
 import { Routes, Route } from 'react-router-dom';
 import { initializeApp, handleError } from './redux/app-reducer';
@@ -97,26 +97,25 @@ export const App: React.FC = () => {
             <GlobalStyles />
             <Container >
               <Wrapper>
-                {/* <HeaderComponent toggleTheme={toggleTheme} /> */}
                 <HeaderComponent />
                 <Navbar />
                 <WrapperContent>
                   {errorsData && <div>{errorsData.messages}</div>}
                   {globalError && <div>{globalError}</div>}
-                  < Routes >
-                    <Route path='/' element={< ProfilePage />}>
-                      <Route path="/profile" element={< ProfilePage />} />
-                      < Route path="/profile/:userId" element={< ProfilePage />} />
+                  <Routes >
+                    <Route path='/' element={<ProfilePage />}>
+                      <Route path="/profile" element={<ProfilePage />} />
+                      <Route path="/profile/:userId" element={<ProfilePage />} />
                     </Route>
-                    < Route path="/dialogs" element={< DialogsContainer />} />
-                    < Route path="/chat" element={< ChatPage />} />
-                    < Route path="/users" element={< UsersPage />} />
-                    < Route path="/login" element={< LoginPage />} />
-                    < Route path="/shop" element={< CartPage />} />
-                    < Route path="*" element={< NotFound />} />
+                    <Route path="/dialogs" element={<DialogsContainer />} />
+                    <Route path="/chat" element={<ChatPage />} />
+                    <Route path="/users" element={<UsersPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/shop" element={<CartPage />} />
+                    <Route path="*" element={< NotFound />} />
                   </Routes>
                 </WrapperContent>
-                <Footer>React Social Network  2023</Footer>
+                <Footer>React Social Network 2023</Footer>
               </Wrapper>
             </Container>
           </ThemeProvider>

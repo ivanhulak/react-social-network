@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Post from './Post/Post';
 import { PostsFormikForm } from "./PostsFormikForm";
 import { useSelector } from "react-redux";
@@ -8,6 +8,10 @@ import add_icon from '../../../assets/posts-icons/add.svg'
 import minus_icon from '../../../assets/posts-icons/minus-circle.svg'
 import paperclip_icon from '../../../assets/posts-icons/paperclip.svg'
 import { OwnerContext } from "../ProfilePage";
+import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
+import { PostsType } from "../../../types/types";
+import { Preloader } from "../../../common/Preloader/Preloader";
 
 const PostsBlock = styled.div`
     position: relative;
@@ -34,7 +38,7 @@ const PostsBlock = styled.div`
         position: absolute;
         top: 180px;
         left: 0px;
-        width: 100%;
+        width: 98%;
     }
 `;
 const CreatePost = styled.div`
@@ -57,7 +61,37 @@ const MyPosts: React.FC = React.memo(() => {
     const [addingMode, setAddingMode] = useState(true)
     //@ts-ignore
     const { isOwner } = useContext(OwnerContext)
-    const posts = useSelector((state: AppStateType) => state.profilePage.posts)
+    const myPosts = useSelector((state: AppStateType) => state.profilePage.posts)
+
+    const [posts, setPosts] = useState<Array<PostsType>>([])
+    const [isFetching, setIsFetching] = useState(true)
+    const [currentPage, setCurrentPage] = useState(1)
+
+    useEffect(() => {
+        if (isFetching) {
+            axios.get(`https://randomuser.me/api/1.4/?inc=name,picture&page=${currentPage}&results=3`)
+                .then(response =>
+                    axios.get(`https://quotes15.p.rapidapi.com/quotes/random/`, {
+                        headers: {
+                            'X-RapidAPI-Key': 'f266b5dd6dmshbd943994baec7b5p12a697jsndd144bdc18a5',
+                            'X-RapidAPI-Host': 'quotes15.p.rapidapi.com'
+                        }
+                    }).then(res => {
+                        response.data.results.forEach((item: any) => {
+                            item['id'] = uuidv4()
+                            item['postText'] = res.data.content
+                        })
+                        setPosts([...posts, ...response.data.results])
+                        setCurrentPage(prev => prev + 1)
+                    }))
+                .finally(() => setIsFetching(false))
+        }
+        // eslint-disable-next-line
+    }, [isFetching])
+
+    const downloadMorePostsHandler = () => {
+        setIsFetching(true)
+    }
     return (
         <PostsBlock >
             {isOwner &&
@@ -71,14 +105,19 @@ const MyPosts: React.FC = React.memo(() => {
                         <PostsFormikForm />
                     </div>
                 </>}
-            <div className={addingMode ? 'postsAdding' : 'posts'}>
+            {isFetching ? <Preloader/> : <div className={addingMode ? 'postsAdding' : 'posts'}>
+                {myPosts.map(item => <Post key={item.id}
+                    name={item.name.first}
+                    surname={item.name.last}
+                    photo={item.picture.thumbnail || 'https://www.shareicon.net/data/512x512/2016/05/29/772559_user_512x512.png'}
+                    postText={item.postText} />)}
                 {posts.map(p => <Post key={p.id}
-                    postText={p.postText}
-                    likes={p.likes}
-                    comments={p.comments}
-                    sendings={p.sendings}
-                    photo={p.photo} />)}
-            </div>
+                    name={p.name.first}
+                    surname={p.name.last}
+                    photo={p.picture.thumbnail}
+                    postText={p.postText} />)}
+                <button onClick={downloadMorePostsHandler}>See More</button>
+            </div>}
         </PostsBlock>
     );
 })

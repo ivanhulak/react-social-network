@@ -61,7 +61,6 @@ export const PostsFormikForm: React.FC = () => {
          postText: values.postText
       }
       dispatch(actions.addPost(postData.postText));
-      alert(JSON.stringify(postData));
       setSubmitting(false);
    }
    return (

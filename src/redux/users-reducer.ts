@@ -48,9 +48,9 @@ const userReducer = (state = initialState, action: ActionsTypes): InitialStateTy
                     : state.followingInProgress.filter(id => id !== action.userId)
             }
         case 'my-social-network/users/SET_FRIENDS':
-            return {...state, friends: action.friends}
+            return { ...state, friends: action.friends }
         case 'my-social-network/users/SET_FILTER':
-            return {...state, filter: action.payload}
+            return { ...state, filter: action.payload }
         default:
             return state;
     }
@@ -68,8 +68,8 @@ export const actions = {
     setFollowingInProgress: (isFetching: boolean, userId: number) => ({
         type: 'my-social-network/users/SET_FOLLOWING_IN_PROGRESS', isFetching, userId
     } as const),
-    setFriends: (friends: Array<UsersType>) => ({type: 'my-social-network/users/SET_FRIENDS', friends} as const),
-    setFilter: (filter: FilterType) => ({type: 'my-social-network/users/SET_FILTER', payload: filter} as const),
+    setFriends: (friends: Array<UsersType>) => ({ type: 'my-social-network/users/SET_FRIENDS', friends } as const),
+    setFilter: (filter: FilterType) => ({ type: 'my-social-network/users/SET_FILTER', payload: filter } as const),
 }
 
 // Thunk types with ThunkAction
@@ -81,6 +81,7 @@ export const requestUsers = (page: number, pageSize: number, filter: FilterType)
         dispatch(actions.setFilter(filter))
         let data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend);
         dispatch(actions.setUsers(data.items));
+        // console.log(data.items)
         dispatch(actions.setTotalUserCount(data.totalCount));
         dispatch(actions.setIsFetching(false));
     }
@@ -97,7 +98,7 @@ export const follow = (userId: number): ThunkType => {
         dispatch(actions.setIsFetching(true));
         dispatch(actions.setFollowingInProgress(true, userId));
         let data = await usersAPI.follow(userId);
-        if (data.resultCode === ResultCodesEnum.Success){
+        if (data.resultCode === ResultCodesEnum.Success) {
             dispatch(actions.followSuccess(userId))
         }
         dispatch(actions.setIsFetching(false));
@@ -109,7 +110,7 @@ export const unfollow = (userId: number): ThunkType => {
         dispatch(actions.setIsFetching(true))
         dispatch(actions.setFollowingInProgress(true, userId));
         let data = await usersAPI.unfollow(userId);
-        if (data.resultCode === ResultCodesEnum.Success){
+        if (data.resultCode === ResultCodesEnum.Success) {
             dispatch(actions.unfollowSuccess(userId))
         }
         dispatch(actions.setIsFetching(false));

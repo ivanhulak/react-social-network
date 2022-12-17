@@ -1,22 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import heart from '../../../../assets/posts-icons/heart.jpg'
-import likes_icon from '../../../../assets/posts-icons/heart.svg'
+import dislike_icon from '../../../../assets/posts-icons/heart.svg'
+import like_icon from '../../../../assets/posts-icons/heart_active.svg'
 import comments_icon from '../../../../assets/posts-icons/comments.svg'
 import sendings_icon from '../../../../assets/posts-icons/pointer.svg'
 
-type PropsType = {
-    photo: string
-    postText: string
-    likes: number
-    comments: number
-    sendings: number
-}
+
 const PostWrapper = styled.div`
     border: 5px solid #B7A8F5;
+    height: fit-content;
+    margin: 0 auto 40px;
+    width: 60%;
     box-shadow: 0px 0px 24px 4px #B7A8F5;
     border-radius: 37px;
-    margin-bottom: 40px;
 `;
 export const PostHeader = styled.div`
     background-color: #B7A8F5;
@@ -27,10 +23,13 @@ export const PostHeader = styled.div`
     border-radius: 30px;
     margin-bottom: 12px;
     .avatar{
-        border-radius: 50%;
-        width: 76px;
-        height: 76px;
+        flex: 0 0 80px;
         overflow: hidden;
+        img{
+            max-width: 75px;
+            min-width: 60px;
+            border-radius: 50%;
+        }
     }
     .fullName{
         font-weight: 700;
@@ -43,21 +42,17 @@ export const PostHeader = styled.div`
         letter-spacing: 0.015em;
     }
 `;
+const PostImageContainer = styled.div`
+    padding: 10px 20px;
+    overflow: hidden;
+    .container{}
+`;
 type PropType = {
     image?: string
 }
-const PostImageContainer = styled.div`
-    padding: 0px 20px;
-    .container{
-    max-width: 810px;
-    margin: 0 auto;
-    /* border: 4px solid #000; */
-    }
-`;
 const PostImage = styled.div<PropType>`
-    margin: 0 auto;
-    width: 800px;
-    height: 650px;
+    width: 100%;
+    height: 300px;
     border-radius: 79px;
     overflow: hidden;
     background-position: center;
@@ -69,7 +64,7 @@ const PostActivity = styled.div`
     color: #8000FF;
     font-weight: 600;
     font-size: 24px;
-    padding: 25px 0px 40px 35px;
+    padding: 25px 35px;
     .likes,
     .comments,
     .send{
@@ -79,13 +74,23 @@ const PostActivity = styled.div`
     }
 `;
 
-const Post: React.FC<PropsType> = ({ postText, likes, comments, sendings, photo }) => {
+type PropsType = {
+    name: string
+    surname: string
+    photo: string
+    postText: string
+}
+const Post: React.FC<PropsType> = ({ postText, name, surname, photo }) => {
+    const [like, setLike] = useState(false)
+    // const getRandomInt = () => {
+    //     return Math.floor(Math.random() * 1000);
+    // }
     return (
         <PostWrapper>
             <PostHeader>
                 <div className="avatar"><img src={photo} alt="" /></div>
                 <div>
-                    <div className="fullName">Ivan Hulak</div>
+                    <div className="fullName">{`${name} ${surname}`}</div>
                     <div className="postText">{postText}</div>
                 </div>
             </PostHeader>
@@ -93,17 +98,17 @@ const Post: React.FC<PropsType> = ({ postText, likes, comments, sendings, photo 
                 <div className="container">
                     <PostImage image={photo}></PostImage>
                     <PostActivity>
-                        <div className="likes">
-                            <img src={likes_icon} alt="" />
-                            <span>{likes}</span>
-                        </div>
+                        <button className="likes" onClick={() => setLike(prevState => !prevState)}>
+                            <img src={like ? like_icon : dislike_icon} alt="" />
+                            <span>160</span>
+                        </button>
                         <div className="comments">
                             <img src={comments_icon} alt="" />
-                            <span>{comments}</span>
+                            <span>18</span>
                         </div>
                         <div className="send">
                             <img src={sendings_icon} alt="" />
-                            <span>{sendings}</span>
+                            <span>3</span>
                         </div>
                     </PostActivity>
                 </div>

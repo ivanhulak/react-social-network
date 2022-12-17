@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import add_big_image from './../../../assets/profile-icons/add-big-image.svg';
 import styled from 'styled-components';
-import Preloader from '../../../common/Preloader/Preloader';
+import {Preloader} from '../../../common/Preloader/Preloader';
 import { useDispatch } from 'react-redux';
 import { upgradeProfile } from '../../../redux/profile-reducer';
 import { UserProfileBlock } from './UserProfile';
