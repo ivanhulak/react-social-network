@@ -166,10 +166,7 @@ export const EditProfileButton = styled.button`
    }
 `;
 
-type PropsType = {
-   profile: ProfileType
-   goToEditMode: () => void
-}
+type PropsType = { profile: ProfileType, goToEditMode: () => void }
 export const UserProfileBlock: React.FC<PropsType> = ({ profile, goToEditMode }) => {
    //@ts-ignore
    const {isOwner} = useContext(OwnerContext)

@@ -1,9 +1,10 @@
 import React from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
-import DialogsForm from "./DialogsForm";
-import {DialogsType, MessagesType} from '../../redux/dialogs-reducer';
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../redux/redux-store";
+import { DialogsFormikForm } from "./DialogsFormikForm";
 
 const StyledDialogs = styled.div`
     padding: 0px 30px;
@@ -21,19 +22,14 @@ const StyledDialogs = styled.div`
         }
     }
 `;
-type PropsType = {
-    dialogs: Array<DialogsType>
-    messages: Array<MessagesType>
-    sendMessage: (message: string) => void
-}
+
 export type DialogsFormDataValuesType = {
     sentMessage: string
 }
-const Dialogs: React.FC<PropsType> = ({dialogs, messages, sendMessage}) => {
-
-    const onSendMessage = (formData: DialogsFormDataValuesType) => {
-        sendMessage(formData.sentMessage);
-    }
+const Dialogs: React.FC = () => {
+    const dialogs = useSelector((state: AppStateType) => state.dialogsPage.dialogs)
+    const messages = useSelector((state: AppStateType) => state.dialogsPage.messages)
+    
     return (
         <StyledDialogs>
             <div className='dialogsRow'>
@@ -44,7 +40,7 @@ const Dialogs: React.FC<PropsType> = ({dialogs, messages, sendMessage}) => {
                     {messages.map(m => <MessageItem message={m.message} key={m.id}/>)}
                 </div>
             </div>
-            <DialogsForm onSubmit={onSendMessage}/>
+            <DialogsFormikForm/>
         </StyledDialogs>
     );
 }

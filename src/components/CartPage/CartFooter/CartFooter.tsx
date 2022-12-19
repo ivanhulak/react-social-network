@@ -34,10 +34,7 @@ const OrderButton = styled.button`
    }
 `;
 
-type PropsType = {
-   total: TotalType,
-   makeOrder: () => void
-}
+type PropsType = {total: TotalType, makeOrder: () => void}
 export const CartFooter: React.FC<PropsType> = ({total, makeOrder}) => {
    return (
       <CartBlockFooter>

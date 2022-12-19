@@ -61,7 +61,6 @@ export const HeaderComponent: React.FC = React.memo(() => {
           <Link to='/login'><SimpleBtn btn_text='Login' /></Link>
         </div>
       }
-      {/* <ThemeSwitcher toggleTheme={toggleTheme}/> */}
       <ThemeSwitcher />
     </Header>
   );

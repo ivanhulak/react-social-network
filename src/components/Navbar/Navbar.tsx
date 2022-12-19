@@ -47,7 +47,6 @@ const FriendsTitle = styled.div`
   color: ${({theme}) => theme.friendColor};
 `;
 
-
 const Navbar: React.FC = () => {
   const [isFriendsVisible, setIsFriendsVisible] = useState(false)
   const isAuth: boolean = useSelector((state: AppStateType) => state.auth.isAuth)

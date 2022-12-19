@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Field, Formik, getIn } from "formik";
 import * as yup from 'yup';
 import styled from 'styled-components';
@@ -229,8 +229,7 @@ export const EditProfileFormikForm: React.FC<PropsType> = React.memo(({ goToEdit
                 <p><Field as='textarea' name="aboutMe" onChange={handleChange}
                   onBlur={handleBlur} value={values.aboutMe}
                   className={errors.aboutMe ? 'aboutMeTextarea textarea-error' : 'aboutMeTextarea'} /></p>
-                {errors.aboutMe && touched.aboutMe
-                  && <ErrorMessage>{errors.aboutMe}</ErrorMessage>}
+                {errors.aboutMe && touched.aboutMe && <ErrorMessage>{errors.aboutMe}</ErrorMessage>}
               </AboutMe>
             </div>
             <Contacts>

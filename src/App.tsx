@@ -9,8 +9,7 @@ import { AppStateType } from './redux/redux-store';
 import { NotFound } from "./components/ErrorPages/NotFound";
 import { LoginPage } from "./components/Login/LoginPage";
 import { HeaderComponent } from "./components/Header/HeaderComponent";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "./theme";
 import { GlobalStyles } from './global';
@@ -18,7 +17,7 @@ import { useLocalStorage } from "./utils/useLocalStorage";
 import { detectDarkMode } from "./utils/detectDarkMode";
 // Use lazy loading
 const ProfilePage = withLazyComponent(React.lazy(() => import('./components/Profile/ProfilePage')));
-const DialogsContainer = withLazyComponent(React.lazy(() => import('./components/Dialogs/DialogsContainer')));
+const Dialogs = withLazyComponent(React.lazy(() => import('./components/Dialogs/Dialogs')));
 const UsersPage = withLazyComponent(React.lazy(() => import('./components/Users/UsersPage')));
 const ChatPage = withLazyComponent(React.lazy(() => import('./components/Chat/ChatPage')));
 const CartPage = withLazyComponent(React.lazy(() => import('./components/CartPage/CartPage')));
@@ -54,10 +53,7 @@ const Footer = styled.div`
   font-weight: 300;
   font-size: 18px;
 `;
-type SwitchThemeType = {
-  toggleTheme: () => void,
-  isDarkTheme: boolean
-}
+type SwitchThemeType = {toggleTheme: () => void, isDarkTheme: boolean}
 export const SwithThemeContext = createContext<SwitchThemeType>({} as SwitchThemeType)
 export const App: React.FC = () => {
   const [theme, setTheme] = useLocalStorage('darkTheme', detectDarkMode())
@@ -74,7 +70,6 @@ export const App: React.FC = () => {
     toggleTheme: toggleTheme,
     isDarkTheme: isDarkTheme
   }
-
   const catchUnhandledErrors = (error: PromiseRejectionEvent) => {
     dispatch(handleError(error.reason.message));
   }
@@ -107,7 +102,7 @@ export const App: React.FC = () => {
                       <Route path="/profile" element={<ProfilePage />} />
                       <Route path="/profile/:userId" element={<ProfilePage />} />
                     </Route>
-                    <Route path="/dialogs" element={<DialogsContainer />} />
+                    <Route path="/dialogs" element={<Dialogs />} />
                     <Route path="/chat" element={<ChatPage />} />
                     <Route path="/users" element={<UsersPage />} />
                     <Route path="/login" element={<LoginPage />} />

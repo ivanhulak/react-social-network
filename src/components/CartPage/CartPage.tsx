@@ -19,7 +19,6 @@ const CartBlock = styled.div`
 `;
 
 export type TotalType = { count: number, price: number }
-
 const CartPage: React.FC = () => {
    const [cart, setCart] = useState(data)
    const [total, setTotal] = useState<TotalType>({

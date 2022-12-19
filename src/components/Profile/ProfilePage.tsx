@@ -7,7 +7,6 @@ import { useParams, useNavigate, Params } from "react-router-dom";
 import { Profile } from "./Profile/Profile";
 import MyPosts from "./MyPosts/MyPosts";
 
-
 export const OwnerContext = createContext(true);
 
 const ProfilePage: React.FC = () => {

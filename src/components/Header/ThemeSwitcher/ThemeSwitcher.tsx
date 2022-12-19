@@ -7,7 +7,6 @@ export const ThemeSwitcher: React.FC = () => {
    return (
       <div style={{ width: '155px' }}>
          <SunIcon />
-         {/* <Switch toggleTheme={toggleTheme}/> */}
          <Switch/>
          <MoonIcon />
       </div>

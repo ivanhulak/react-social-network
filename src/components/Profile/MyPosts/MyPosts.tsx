@@ -6,7 +6,7 @@ import { AppStateType } from "../../../redux/redux-store";
 import styled from "styled-components";
 import add_icon from '../../../assets/posts-icons/add.svg'
 import minus_icon from '../../../assets/posts-icons/minus-circle.svg'
-import paperclip_icon from '../../../assets/posts-icons/paperclip.svg'
+import paperclip_icon from '../../../assets/posts-icons/paperclip.svg';
 import { OwnerContext } from "../ProfilePage";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
@@ -54,6 +54,23 @@ const CreatePost = styled.div`
     transition: all 0.4s ease;
     .add-icon-image{
         margin-left: 76px;
+    }
+`;
+const StyledMoreButton = styled.button`
+    position: absolute;
+    bottom: 0px;
+    right: 50%;
+    transform: translateX(50%);
+    background-color: #8000FF;
+    font-size: 18px;
+    letter-spacing: 0.015em;
+    color: #fff;
+    padding: 7px 20px;
+    border-radius: 32px;
+    opacity: 0.4;
+    transition: all 0.4s ease;
+    &:hover{
+        opacity: 1;
     }
 `;
 
@@ -116,7 +133,7 @@ const MyPosts: React.FC = React.memo(() => {
                     surname={p.name.last}
                     photo={p.picture.thumbnail}
                     postText={p.postText} />)}
-                <button onClick={downloadMorePostsHandler}>See More</button>
+                <StyledMoreButton onClick={downloadMorePostsHandler}>See More</StyledMoreButton>
             </div>}
         </PostsBlock>
     );

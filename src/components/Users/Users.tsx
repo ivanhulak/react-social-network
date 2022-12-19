@@ -31,7 +31,6 @@ const StyledUsers = styled.div`
     }
 `;
 export const Users: React.FC = () => {
-
     const users = useSelector(getUsers)
     const followingInProgress = useSelector(getFollowingInProgress)
     const filter = useSelector(getFilterUsers)

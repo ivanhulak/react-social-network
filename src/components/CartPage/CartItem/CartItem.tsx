@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import increment from '../../../assets/images/cart/up-arrow.png';
-import decrement from '../../../assets/images/cart/down-arrow.png';
+import increment from '../../../assets/images/cart/chevron-up.svg';
+import decrement from '../../../assets/images/cart/chevron-down.svg';
 import { CartProductsType } from '../../../redux/shop-reducer';
 import priceFormatter from '../../../utils/priceFormatter';
 import { DeleteProductIcon } from './DeleteProductIcon';
@@ -18,6 +18,10 @@ const StyledCartItem = styled.div`
    position: relative;
    &:not(:last-child){
       margin-bottom: 20px;
+   }
+   .countDiv{
+      position: relative;
+      margin: 0px 80px 0px 40px;
    }
 `;
 const StyledImageDivContainer = styled.div`
@@ -57,10 +61,10 @@ const StyledInput = styled.input`
 `;
 const IncrementBtn = styled.button`
    position: absolute;
-   top: -4px;
-   right:-27px;
-   width: 20px;
-   height: 20px;
+   top: -10px;
+   right:-35px;
+   width: 35px;
+   height: 35px;
    background: url(${increment}) 0 0/cover no-repeat;
    transition: all 0.3s ease;
    &:active{
@@ -69,10 +73,10 @@ const IncrementBtn = styled.button`
 `;
 const DecrementBtn = styled.button`
    position: absolute;
-   top: 22px;
-   right:-27px;
-   width: 20px;
-   height: 20px;
+   top: 15px;
+   right:-35px;
+   width: 35px;
+   height: 35px;
    background: url(${decrement}) 0 0/cover no-repeat;
    transition: all 0.3s ease;
    &:active{
@@ -96,8 +100,12 @@ export const CartItem: React.FC<PropsType> = ({ product, deleteProduct, incremen
             <ProductImage src={image} />
          </StyledImageDivContainer>
          <ProductTitle>{name}</ProductTitle>
-         <div style={{ position: 'relative', margin: '0px 80px 0px 40px' }}>
-            <StyledInput type="number" value={count} onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeValueHandler(id, +e.target.value)} />
+         <div className='countDiv'>
+            <StyledInput 
+               type="number" 
+               value={count} 
+               onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeValueHandler(id, +e.target.value)} 
+            />
             <IncrementBtn onClick={() => incrementFn(id)} />
             <DecrementBtn onClick={() => decrementFn(id)} />
          </div>

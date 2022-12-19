@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ProfileType } from '../../../types/types';
 import Avatar from 'react-avatar-edit';
@@ -16,10 +16,10 @@ export const UserAvatar = styled.div`
       max-width: 213px;
    }
 `;
-type CursorType = {
-   cursor: string
-}
+type CursorType = {cursor: string}
 export const AvatarImage = styled.div<CursorType>`
+   border: 3px solid transparent;
+   transition: all 0.4s ease;
    max-width: 213px;
    max-height: 213px;
    overflow: hidden;
@@ -29,11 +29,11 @@ export const AvatarImage = styled.div<CursorType>`
    img{
       width: 100%;
    }
+   &:hover{
+      border: 3px solid #B7A8F5;
+   }
 `;
-type PropsType = {
-   profile: ProfileType
-   isOwner: boolean
-}
+type PropsType = {profile: ProfileType, isOwner: boolean}
 
 export const ProfileAvatar: React.FC<PropsType> = ({ profile, isOwner }) => {
    const [dialogs, setDialogs] = useState(false)

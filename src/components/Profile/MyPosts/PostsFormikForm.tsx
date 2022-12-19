@@ -54,13 +54,16 @@ const validationSchema = yup.object().shape({
       .min(4, 'Too Short!')
       .max(450, 'Too Long!'),
 })
+
 export const PostsFormikForm: React.FC = () => {
    const dispatch: any = useDispatch()
-   const submit = (values: MyPostsFormDataValuesType, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
+   const submit = (values: MyPostsFormDataValuesType, { setSubmitting, resetForm }: 
+      { setSubmitting: (isSubmitting: boolean) => void, resetForm: (value: any) =>  void }) => {
       const postData = {
          postText: values.postText
       }
       dispatch(actions.addPost(postData.postText));
+      resetForm('')
       setSubmitting(false);
    }
    return (
@@ -79,5 +82,4 @@ export const PostsFormikForm: React.FC = () => {
          )}
       </Formik>
    );
-
 }

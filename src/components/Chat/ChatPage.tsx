@@ -103,7 +103,6 @@ const StyledMessage = styled.div<{ messageAlign: string }>`
       margin-bottom: 5px;
    }
 `;
-
 const Message: React.FC<{ message: ChatMessageAPIType }> = ({ message }) => {
    const ownerUserId = useSelector((state: AppStateType) => state.auth.userId)
    return (
@@ -191,6 +190,5 @@ const AddMessageForm: React.FC = () => {
             </SendButton>
          </div>
       </StyledSendMessage>
-      
    );
 }
