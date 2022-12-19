@@ -101,7 +101,7 @@ const validationSchema = yup.object().shape({
    password: yup.string()
       .typeError('Needs to be a string')
       .required('Field is required')
-      .min(5, 'Too Short!')
+      .min(3, 'Too Short!')
       .max(16, 'Too Long!'),
 })
 export type LoginFormDataValuesType = {
