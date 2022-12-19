@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/406.7f530c87.chunk.css","mappings":"AAAA,kCACI,cACJ","sources":["components/Dialogs/DialogItem/DialogItem.module.css"],"sourcesContent":[".dialogItem img{\n    max-width: 50px;\n}"],"names":[],"sourceRoot":""}
