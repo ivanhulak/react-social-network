@@ -5,10 +5,9 @@ import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/redux-store';
 import { ErrorMessage } from '../Profile/Profile/EditProfileFormikForm';
-import { login } from '../../redux/auth-reducer';
-import { useDispatch } from 'react-redux';
 import show_icon from '../../assets/icons/eye-open.png';
 import hide_icon from '../../assets/icons/eye-closed.png';
+import { LoginFormDataValuesType } from './LoginPage';
 
 type HasErrorType = { hasError: boolean }
 const StyledLoginForm = styled.form<HasErrorType>`
@@ -104,24 +103,27 @@ const validationSchema = yup.object().shape({
       .min(3, 'Too Short!')
       .max(16, 'Too Long!'),
 })
-export type LoginFormDataValuesType = {
-   email: string
-   password: string
-   rememberMe: boolean
-   captcha: string | null
+
+type PropsType = {
+   onSubmitCallback: (formData: LoginFormDataValuesType) => void
 }
-export const LoginFormikForm: React.FC = React.memo(() => {
+export const LoginFormikForm: React.FC<PropsType> = React.memo(({ onSubmitCallback }) => {
    const [showPassword, setShowPassword] = useState(false)
-   const dispatch: any = useDispatch()
    const captchaURL = useSelector((state: AppStateType) => state.auth.captchaURL)
 
    const submit = (values: LoginFormDataValuesType, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
-      dispatch(login(values.email, values.password, values.rememberMe, values.captcha));
+      const formData = {
+         email: values.email,
+         password: values.password,
+         rememberMe: values.rememberMe,
+         captcha: values.captcha,
+      }
+      onSubmitCallback(formData)
       setSubmitting(false);
    }
    return (
       <Formik
-         initialValues={{ email: '', password: '', rememberMe: false, captcha: '' }}
+         initialValues={{ email: '', password: '', rememberMe: false, captcha: null }}
          validateOnBlur
          validationSchema={validationSchema}
          onSubmit={submit}>
@@ -153,9 +155,9 @@ export const LoginFormikForm: React.FC = React.memo(() => {
                         placeholder={'Password'}
                         className={errors.password ? 'password-input password-input-error' : 'password-input'}
                      />
-                     <button className='showPassword' onClick={() => setShowPassword(prev => !prev)}>
+                     <span className='showPassword' onClick={() => setShowPassword(prev => !prev)}>
                         {showPassword ? <img src={hide_icon} alt="" /> : <img src={show_icon} alt="" />}
-                     </button>
+                     </span>
                      {errors.password && touched.password && <ErrorMessage>{errors.password}</ErrorMessage>}
                   </div>
                </div>

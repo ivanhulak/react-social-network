@@ -1,5 +1,5 @@
 import React, { createContext, useEffect } from "react";
-import {Preloader} from "./common/Preloader/Preloader";
+import { Preloader } from "./common/Preloader/Preloader";
 import Navbar from "./components/Navbar/Navbar";
 import { Routes, Route } from 'react-router-dom';
 import { initializeApp, handleError } from './redux/app-reducer';
@@ -53,7 +53,7 @@ const Footer = styled.div`
   font-weight: 300;
   font-size: 18px;
 `;
-type SwitchThemeType = {toggleTheme: () => void, isDarkTheme: boolean}
+type SwitchThemeType = { toggleTheme: () => void, isDarkTheme: boolean }
 export const SwithThemeContext = createContext<SwitchThemeType>({} as SwitchThemeType)
 export const App: React.FC = () => {
   const [theme, setTheme] = useLocalStorage('darkTheme', detectDarkMode())

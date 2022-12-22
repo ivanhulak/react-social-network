@@ -1,7 +1,6 @@
 import { ResultCodeForCaptchaEnum, ResultCodesEnum } from '../DAL/api';
 import { securityAPI } from '../DAL/security-api';
 import { authAPI } from '../DAL/auth-api';
-import { FormAction, stopSubmit } from 'redux-form';
 import { InferActionsTypes, BaseThunkType } from './redux-store';
 
 let initialState = {
@@ -35,7 +34,7 @@ const actions = {
 
 
 // Thunk Creators
-type ThunkType = BaseThunkType<ActionsTypes | FormAction>
+type ThunkType = BaseThunkType<ActionsTypes>
 
 export const AuthMe = (): ThunkType => async (dispatch) => {
     const data = await authAPI.authMe()
@@ -52,8 +51,6 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
         if (data.resultCode === ResultCodeForCaptchaEnum.CaptchaIsRequired) {
             dispatch(getCaptchaUrl());
         }
-        let errorMessage = data.messages.length > 0 ? data.messages[0] : 'Common error';
-        dispatch(stopSubmit('login', { _error: errorMessage }));
     }
 }
 export const logout = (): ThunkType => async (dispatch) => {

@@ -31,7 +31,8 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMid
 
 // @ts-ignore
 export default store;
-// window.store = store;
+// @ts-ignore
+window.store = store;
 
 // 1) createStore() from redux
 // 2) combineReducers({reducers})
