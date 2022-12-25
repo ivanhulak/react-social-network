@@ -45,6 +45,8 @@ export const AuthMe = (): ThunkType => async (dispatch) => {
     if (data.resultCode === ResultCodesEnum.Success) {
         let { id, email, login } = data.data;
         dispatch(actions.authUserProfile(id, email, login, true));
+    } else if(data.resultCode === ResultCodesEnum.Error){
+        dispatch(actions.setError(data.messages[0]))
     }
 }
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null):ThunkType => async (dispatch) => {
