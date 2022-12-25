@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-social-network/static/css/main.b67d837a.css",
-    "main.js": "/react-social-network/static/js/main.8c58b4ec.js",
+    "main.js": "/react-social-network/static/js/main.3b8303af.js",
     "static/js/515.532cf147.chunk.js": "/react-social-network/static/js/515.532cf147.chunk.js",
     "static/js/773.3e7471b2.chunk.js": "/react-social-network/static/js/773.3e7471b2.chunk.js",
     "static/js/209.3c63b4da.chunk.js": "/react-social-network/static/js/209.3c63b4da.chunk.js",
@@ -42,7 +42,7 @@
     "static/media/chevron-up.svg": "/react-social-network/static/media/chevron-up.aca7a0fe33b7adca218a617b7154b5a2.svg",
     "static/media/chevron-down.svg": "/react-social-network/static/media/chevron-down.9af28971e3bc9e3c3bdc9b9e91ab29da.svg",
     "main.b67d837a.css.map": "/react-social-network/static/css/main.b67d837a.css.map",
-    "main.8c58b4ec.js.map": "/react-social-network/static/js/main.8c58b4ec.js.map",
+    "main.3b8303af.js.map": "/react-social-network/static/js/main.3b8303af.js.map",
     "515.532cf147.chunk.js.map": "/react-social-network/static/js/515.532cf147.chunk.js.map",
     "773.3e7471b2.chunk.js.map": "/react-social-network/static/js/773.3e7471b2.chunk.js.map",
     "209.3c63b4da.chunk.js.map": "/react-social-network/static/js/209.3c63b4da.chunk.js.map",
@@ -50,6 +50,6 @@
   },
   "entrypoints": [
     "static/css/main.b67d837a.css",
-    "static/js/main.8c58b4ec.js"
+    "static/js/main.3b8303af.js"
   ]
 }
