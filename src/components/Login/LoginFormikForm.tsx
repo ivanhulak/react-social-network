@@ -110,6 +110,7 @@ type PropsType = {
 export const LoginFormikForm: React.FC<PropsType> = React.memo(({ onSubmitCallback }) => {
    const [showPassword, setShowPassword] = useState(false)
    const captchaURL = useSelector((state: AppStateType) => state.auth.captchaURL)
+   const loginError = useSelector((state: AppStateType) => state.auth.error)
 
    const submit = (values: LoginFormDataValuesType, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
       const formData = {
@@ -128,7 +129,7 @@ export const LoginFormikForm: React.FC<PropsType> = React.memo(({ onSubmitCallba
          validationSchema={validationSchema}
          onSubmit={submit}>
          {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, resetForm }) => (
-            <StyledLoginForm onSubmit={handleSubmit} hasError={(errors.email && errors.password) ? true : false}>
+            <StyledLoginForm onSubmit={handleSubmit} hasError={((errors.email && errors.password) || loginError) ? true : false}>
                <h1 className='title'>Sign in</h1>
                <div className='email'>
                   <p>E-mail</p>
@@ -179,12 +180,12 @@ export const LoginFormikForm: React.FC<PropsType> = React.memo(({ onSubmitCallba
                         placeholder={'Anti-bot symbols'}
                         className='captcha-input' />
                   </div>
-
                </div>}
                <ButtonsBlock>
                   <button type="submit" disabled={isSubmitting} className='formBtn'>Submit</button>
                   <button type="reset" onClick={() => resetForm()} className='formBtn'>Clear</button>
                </ButtonsBlock>
+               {loginError && <div style={{color: 'red', textAlign: 'center'}}>{loginError}</div>}
             </StyledLoginForm>
          )}
       </Formik>

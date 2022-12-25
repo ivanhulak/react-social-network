@@ -9,6 +9,7 @@ let initialState = {
     login: null as string | null,
     isAuth: false,
     captchaURL: null as string | null,
+    error: null as string | null
 }
 type InitialStateType = typeof initialState;
 
@@ -18,6 +19,8 @@ const authReducer = (state = initialState, action: ActionsTypes): InitialStateTy
             return { ...state, ...action.payload }
         case 'SN/auth/SET_CAPTCHA_URL':
             return { ...state, captchaURL: action.url }
+        case 'SN/auth/SET_ERROR':
+            return { ...state, error: action.error }
         default:
             return state;
     }
@@ -29,7 +32,8 @@ type ActionsTypes = InferActionsTypes<typeof actions>
 const actions = {
     authUserProfile: (userId: number | null, email: string | null, login: string | null,
         isAuth: boolean) => ({ type: 'SN/auth/AUTH_USER_PROFILE', payload: { userId, email, login, isAuth }} as const),
-    setCaptchaURL: (url: string) => ({ type: 'SN/auth/SET_CAPTCHA_URL', url } as const )
+    setCaptchaURL: (url: string) => ({ type: 'SN/auth/SET_CAPTCHA_URL', url } as const ),
+    setError: (error: string | null) => ({type: 'SN/auth/SET_ERROR', error} as const)
 }
 
 
@@ -45,11 +49,14 @@ export const AuthMe = (): ThunkType => async (dispatch) => {
 }
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null):ThunkType => async (dispatch) => {
     const data = await authAPI.login(email, password, rememberMe, captcha)
+    console.log(data)
     if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(AuthMe());
     } else {
         if (data.resultCode === ResultCodeForCaptchaEnum.CaptchaIsRequired) {
             dispatch(getCaptchaUrl());
+        } else if(data.resultCode === ResultCodesEnum.Error){
+            dispatch(actions.setError(data.messages[0]))
         }
     }
 }
@@ -57,6 +64,7 @@ export const logout = (): ThunkType => async (dispatch) => {
     const data = await authAPI.logout()
     if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(actions.authUserProfile(null, null, null, false));
+        dispatch(actions.setError(null))
     }
 }
 export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
